@@ -3,13 +3,20 @@
 
     global $grosh_meta;
 
-    function loopFeature($image,$id){
+    function loopFeature($image,$id,$type){
+
+        $class = "";
+        if($type == "animation"){
+          $class = "block";
+        }else{
+          $class = "none";
+        }
 
         $result = '<li class="col-md-4 col-sm-6">   
 
          <div class="thumb-post">
 
-           <div class="category-post"><i class="fa fa-video-camera" aria-hidden="true"></i></div>
+           <div class="category-post" id="icon-video" style="display:'.$class.'"><i class="fa fa-video-camera" aria-hidden="true"></i></div>
 
             <img class="img-responsive" src="'.$image.'" alt="thumbnail"/>
 
@@ -46,16 +53,16 @@
           foreach ($grosh_meta['feature-product-home'] as $v) {
 
             $product_number = get_post_meta( $v, 'product_number', true );
+            $product_type = get_post_meta( $v, 'file_type', true );
 
             $large_image = "";
 
             if(IsNullOrEmptyString($product_number)){
-              $large_image = "http://placehold.it/1200x496";
+              $large_image = "http://placehold.it/300x169";
             }else{
-              $large_image = getProductImage($product_number, false);
+              $large_image = getProductImage($product_number, true);
             }
-
-            echo loopFeature($large_image,$v);
+            echo loopFeature($large_image,$v,$product_type);
             
           }
 
@@ -85,6 +92,7 @@
           $image = "";
 
           $product_number = get_post_meta( $id, 'product_number', true );
+          $product_type = get_post_meta( $id, 'file_type', true );
 
           $large_image = "";
 
@@ -102,7 +110,7 @@
 
           }
 
-          echo loopFeature($large_image,$id);
+          echo loopFeature($large_image,$id,$product_type);
 
           endwhile;
 
