@@ -1,1 +1,1 @@
-# grosh-theme
+# Grosh Wordpress Theme Repo README
