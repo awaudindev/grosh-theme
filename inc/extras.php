@@ -58,10 +58,7 @@ function main_product_category( $atts, $content = ""){
 
 				$thumbnail = ($image) ? $image : wc_placeholder_img_src();
 	                         
-	            $result .= '<li class="product text-center"><img src="' . $thumbnail . '" alt="' . $term->name . '" /><h2 class="woocommerce-loop-product__title"><a href="' .  esc_url( get_term_link( $term ) ) . '" class="' . $term->slug . '">'.$term->name.' (' .$term->count. ')</a></h2>';
-	                                                                     
-	            $result .= '</li>';
-	                                                                     
+	            $result .= '<li class="product text-center"><a href="' .  esc_url( get_term_link( $term ) ) . '" class="' . $term->slug . '"><img src="' . $thumbnail . '" alt="' . $term->name . '" /><h2 class="woocommerce-loop-product__title">'.$term->name.' (' .$term->count. ')</h2></a></li>';                                                    
 	 
 	    }
 	     
