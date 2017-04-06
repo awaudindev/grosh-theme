@@ -209,6 +209,9 @@ add_action( 'widgets_init', 'grosh_widgets_init' );
  * Enqueue scripts and styles.
  */
 function grosh_scripts() {
+
+	global $post;
+
 	wp_enqueue_style( 'bootstrap', get_template_directory_uri() . '/assets/stylesheets/bootstrap.css' );
 	wp_enqueue_style( 'select', get_template_directory_uri() . '/assets/stylesheets/bootstrap-select.css' );
 	wp_enqueue_style( 'animate', get_template_directory_uri() . '/assets/stylesheets/animate.css' );
@@ -227,6 +230,25 @@ function grosh_scripts() {
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
+	}
+
+	if( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'main_product') ) {
+		wp_enqueue_script( 'masonryjs', 'https://cdnjs.cloudflare.com/ajax/libs/masonry/4.1.1/masonry.pkgd.min.js', array(),'',true);
+
+		add_action('wp_footer', 
+	    function(){ ?>
+	    <script type="text/javascript">
+	      jQuery(function($){
+
+	        $(document).ready( function() {
+	        	$('.woocommerce .products').masonry();
+	        });
+
+	      });
+	    </script>
+
+	    <?php } 
+	  ,30);
 	}
 }
 add_action( 'wp_enqueue_scripts', 'grosh_scripts' );
