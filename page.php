@@ -12,7 +12,12 @@
  * @package grosh
  */
 
-get_header(); ?>
+global $post;
+
+get_header(); 
+
+$col = (is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'main_product')) ? 12 : 9;
+?>
 <div class="page-header">
 	<div class="container">
 		<div class="row">
@@ -24,7 +29,7 @@ get_header(); ?>
 		<main id="main" class="site-main" role="main">
 			<div class="container">
 				<div class="row">
-					<div class="col-md-9">
+					<div class="col-md-<?php echo $col; ?>">
 						<?php
 						while ( have_posts() ) : the_post();
 
@@ -38,7 +43,7 @@ get_header(); ?>
 						endwhile; // End of the loop.
 						?>
 					</div>	
-					<?php get_sidebar();?>
+					<?php if($col < 10){ get_sidebar(); } ?>
 				</div>
 			</div>	
 		</main>
