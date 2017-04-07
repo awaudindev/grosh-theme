@@ -3,7 +3,7 @@
 
     global $grosh_meta;
 
-    function loopFeature($image,$id,$type){
+    function loopFeature($image,$id,$type,$product_number){
 
         $class = "";
         if($type == "animation"){
@@ -16,7 +16,7 @@
 
          <div class="thumb-post">
 
-           <div class="category-post" id="icon-video" style="display:'.$class.'"><i class="fa fa-video-camera" aria-hidden="true"></i></div>
+           <div class="category-post" id="icon-video" data-id="'.$product_number.'" style="display:'.$class.'"><i class="fa fa-video-camera" aria-hidden="true"></i></div>
 
             <img class="img-responsive" src="'.$image.'" alt="thumbnail"/>
 
@@ -62,7 +62,7 @@
             }else{
               $large_image = getProductImage($product_number, true);
             }
-            echo loopFeature($large_image,$v,$product_type);
+            echo loopFeature($large_image,$v,$product_type,$product_number);
             
           }
 
@@ -110,7 +110,7 @@
 
           }
 
-          echo loopFeature($large_image,$id,$product_type);
+          echo loopFeature($large_image,$id,$product_type,$product_number);
 
           endwhile;
 

@@ -10,6 +10,10 @@ jQuery(document).ready(function($){
 		toggleSearch();
 		//closeNav();
 	});
+	$('.category-post').on('click', function(event){
+		var product_number = $(this).data('id');
+		$('#popupMsg').modal('show');
+	});
 	function toggleSearch(type) {
 		if(type=="close") {
 			//close serach 
