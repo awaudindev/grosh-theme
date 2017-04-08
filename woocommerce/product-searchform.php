@@ -22,10 +22,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 ?>
-
-<form role="search" method="get" class="woocommerce-product-search" action="<?php echo esc_url( home_url( '/'  ) ); ?>">
-	<label class="screen-reader-text" for="woocommerce-product-search-field"><?php _e( 'Search for:', 'woocommerce' ); ?></label>
-	<input type="search" id="woocommerce-product-search-field" class="search-field" placeholder="<?php echo esc_attr_x( 'Search Products&hellip;', 'placeholder', 'woocommerce' ); ?>" value="<?php echo get_search_query(); ?>" name="s" title="<?php echo esc_attr_x( 'Search for:', 'label', 'woocommerce' ); ?>" />
-	<input type="submit" value="<?php echo esc_attr_x( 'Search', 'submit button', 'woocommerce' ); ?>" />
-	<input type="hidden" name="post_type" value="product" />
-</form>
+<div id="searchForm">
+	<form role="search" method="get" class="woocommerce-product-search" action="<?php echo esc_url( home_url( '/'  ) ); ?>">
+		<input type="search" id="woocommerce-product-search-field" class="form-control" placeholder="Find the perfect digital backdrop  ..." value="<?php echo get_search_query(); ?>" name="s" title="<?php echo esc_attr_x( 'Search for:', 'label', 'woocommerce' ); ?>">
+		<button type="submit" class="btn btn-default"><span class="glyphicon icon-search" aria-hidden="true"></span></button>
+		<input type="hidden" name="post_type" value="product" />
+	</form>
+</div>

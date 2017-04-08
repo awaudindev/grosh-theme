@@ -36,12 +36,7 @@
 	             </div>
 	        </div>
 	    </div>
-      	<div id="searchForm">
-            <div class="clearfix">
-                <input type="text" class="form-control" placeholder="Find the perfect digital backdrop  ...">
-                <button type="submit" class="btn btn-default"><span class="glyphicon icon-search" aria-hidden="true"></span></button>
-            </div>
-        </div>  
+      	<?php get_product_search_form(); ?>  
       	<a class="left carousel-control" href="#myCarousel" data-slide="prev">
         	<i class="glyphicon glyphicon-chevron-left"></i>
       	</a>
