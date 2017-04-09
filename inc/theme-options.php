@@ -247,7 +247,7 @@
     Redux::setSection( $opt_name, array(
         'title'      => __( 'Feature Home Product', 'redux-framework-demo' ),
         'desc'       => '',
-        'id'         => 'opt-text-subsection',
+        'id'         => 'homepage-subsection',
         'subsection' => true,
         'fields'     => array(
             array(
@@ -263,7 +263,52 @@
                     'orderby'        => 'title',
                     'order'          => 'ASC',
                 )
+            )
+        )
+    ) );
+
+    Redux::setSection( $opt_name, array(
+        'title'      => __( 'Product Rental Price', 'redux-framework-demo' ),
+        'desc'       => '',
+        'id'         => 'price-subsection',
+        'subsection' => true,
+        'fields'     => array(
+            array(
+                'id'       => 'base-image-price',
+                'type'     => 'text',
+                'title'    => __('Base Image Price', 'redux-framework-demo'),
+                'subtitle' => __('', 'redux-framework-demo'),
+                'desc'     => __('', 'redux-framework-demo'),
+                'validate' => 'numeric',
+                'msg'      => 'Only accept number'
             ),
+            array(
+                'id'       => 'recurring-image-price',
+                'type'     => 'text',
+                'title'    => __('Recurring Image Price', 'redux-framework-demo'),
+                'subtitle' => __('', 'redux-framework-demo'),
+                'desc'     => __('', 'redux-framework-demo'),
+                'validate' => 'numeric',
+                'msg'      => 'Only accept number'
+            ),
+            array(
+                'id'       => 'base-motion-price',
+                'type'     => 'text',
+                'title'    => __('Base Motion Price', 'redux-framework-demo'),
+                'subtitle' => __('', 'redux-framework-demo'),
+                'desc'     => __('', 'redux-framework-demo'),
+                'validate' => 'numeric',
+                'msg'      => 'Only accept number'
+            ),
+            array(
+                'id'       => 'recurring-motion-price',
+                'type'     => 'text',
+                'title'    => __('Recurring Motion Price', 'redux-framework-demo'),
+                'subtitle' => __('', 'redux-framework-demo'),
+                'desc'     => __('', 'redux-framework-demo'),
+                'validate' => 'numeric',
+                'msg'      => 'Only accept number'
+            )
         )
     ) );
 
