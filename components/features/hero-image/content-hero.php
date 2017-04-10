@@ -67,7 +67,7 @@
           	</div>
           	<div class="col-md-4 col-sm-4">
             	<div class="icon-feat text-center"><img src="<?php bloginfo('template_url'); ?>/assets/images/icon-mobileapps.png" alt="Mobile Apps" /></div>
-            	<h5 class="title-entry text-center padTop20 padBot10"><a href="#">View show packages</a></h5>
+            	<h5 class="title-entry text-center padTop20 padBot10"><a href="<?php echo get_permalink( get_page_by_path( 'packages' ) ); ?>">View show packages</a></h5>
 	            <p class="text-center">
 	              Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
 	              Aenean ac dui odio. Nulla ut neque maximus, feugiat leo eu, efficitur 

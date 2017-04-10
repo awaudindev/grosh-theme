@@ -24,6 +24,8 @@ global $grosh_meta;
 
 $post_meta = get_post_meta( $post->ID );
 
+$bundles =  json_decode( $post_meta["wcpb_bundle_products"][0], true );
+
 ?>
 
 <?php
@@ -110,6 +112,51 @@ $post_meta = get_post_meta( $post->ID );
 		?>
 		</div>
 		<div class="col-md-6">
+			<?php if( is_array( $bundles ) ) { ?>
+			<div class="clearfix">
+			<h3 class="product_title">One Package with</h3>
+			<?php 
+				foreach ( $bundles as $key => $value ) {
+					$bundle = new WC_Product( $key );
+
+					$img_oid = $bundle->get_image_id(); 
+
+			          $image = "";
+
+			          $product_number = get_post_meta( $id, 'product_number', true );
+			          $product_type = get_post_meta( $id, 'file_type', true );
+
+			          $large_image = "";
+
+			          if(IsNullOrEmptyString($product_number)){
+			            $large_image = "http://placehold.it/1200x496";
+			          }else{
+			            $large_image = getProductImage($product_number, false);
+			          }
+
+			          if($img_oid > 0){
+
+			            $img_url = wp_get_attachment_url( $img_oid ); //get img URL
+
+			            $image = aq_resize( $img_url, 640, 280, true, true, true ); //resize & crop img
+
+			          }
+
+			?>
+				<div class="row marTop20 marBot20">
+					<div class="col-md-3">
+						<img class="img-responsive" src="<?php echo $image; ?>" alt="thumbnail"/>
+					</div>
+					<div class="col-md-9">
+						<h4 class="title-product"><a href="<?php echo get_permalink($key); ?>"><?php echo get_the_title($key); ?></a></h4>
+						<?php echo get_the_content($key); ?>
+					</div>
+				</div>
+			<?php
+				}
+			?>
+			</div>
+			<?php } ?>
 			<div class="quote-price"><!--[start:quote-price]-->
                 <h5 class="padTop20 padBot20 font700">Get a Quote</h5>
                 <form class="" action="" method="POST">

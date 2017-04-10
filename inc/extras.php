@@ -70,3 +70,93 @@ function main_product_category( $atts, $content = ""){
 
 }
 add_shortcode('main_product','main_product_category');
+
+function product_packages( $atts, $content = ""){
+
+	extract(shortcode_atts(array(
+		'id' => ''
+	),$atts));
+
+	$result .= '';
+
+	$params = array(
+
+          'posts_per_page' => -1,
+
+          'post_type' => 'product',
+          
+          'meta_query' => array(
+                array(
+                  'key'     => 'wcpb_bundle_products'
+                ),
+              )
+
+    );
+
+
+    $wc_query = new WP_Query($params);
+
+    if ($wc_query->have_posts()) :
+
+    	$result .= '<div class="woocommerce"><ul class="products">';
+
+      while ($wc_query->have_posts()) :$wc_query->the_post();
+
+      $id = get_the_ID();
+
+      $product = new WC_Product($id);
+
+      $img_oid = $product->get_image_id(); 
+
+      $image = "";
+
+      $product_number = get_post_meta( $id, 'product_number', true );
+      $bundles =  json_decode( get_post_meta( $id, "wcpb_bundle_products", true ), true );
+
+      $total_bundle = (is_array( $bundles )) ? count($bundles) : 1;
+
+      $large_image = "";
+
+      if(IsNullOrEmptyString($product_number)){
+        $large_image = "http://placehold.it/1200x496";
+      }else{
+        $large_image = getProductImage($product_number, false);
+      }
+
+      if($img_oid > 0){
+
+        $img_url = wp_get_attachment_url( $img_oid ); //get img URL
+
+        $image = aq_resize( $img_url, 640, 280, true, true, true ); //resize & crop img
+
+      }
+
+      $result .= '<li class="col-md-4 col-sm-6 text-center">   
+
+         <div class="thumb-post">
+
+            <img class="img-responsive" src="'.$image.'" alt="thumbnail"/>
+
+            <h5 class="title-product pad20"><a href="'.esc_url( get_permalink($id) ).'">'.get_the_title($id).' ('.$total_bundle.')</a></h5>
+
+          </div>
+
+        </li>';
+
+
+      endwhile;
+
+      $result .= '</ul></div>';
+
+      wp_reset_postdata();
+
+      else:
+
+        $result .= 'No Product';
+
+      endif;
+
+	return $result;
+
+}
+add_shortcode('packages','product_packages');

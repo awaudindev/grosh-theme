@@ -16,7 +16,7 @@ global $post;
 
 get_header(); 
 
-$col = (is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'main_product')) ? 12 : 9;
+$col = (is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'main_product') || has_shortcode( $post->post_content, 'packages')) ? 12 : 9;
 ?>
 <div class="page-header">
 	<div class="container">

@@ -232,7 +232,7 @@ function grosh_scripts() {
 		wp_enqueue_script( 'comment-reply' );
 	}
 
-	if( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'main_product') ) {
+	if( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'main_product') || has_shortcode( $post->post_content, 'packages')) {
 		wp_enqueue_script( 'masonryjs', 'https://cdnjs.cloudflare.com/ajax/libs/masonry/4.1.1/masonry.pkgd.min.js', array(),'',true);
 
 		add_action('wp_footer', 
