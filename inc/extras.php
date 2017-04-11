@@ -120,7 +120,7 @@ function product_packages( $atts, $content = ""){
       if(IsNullOrEmptyString($product_number)){
         $large_image = "http://placehold.it/1200x496";
       }else{
-        $large_image = getProductImage($product_number, false);
+        $large_image = getProductImage($product_number, false, false);
       }
 
       if($img_oid > 0){
@@ -135,7 +135,7 @@ function product_packages( $atts, $content = ""){
 
          <div class="thumb-post">
 
-            <img class="img-responsive" src="'.$image.'" alt="thumbnail"/>
+            <img class="img-responsive" src="'.$large_image.'" alt="thumbnail"/>
 
             <h5 class="title-product pad20"><a href="'.esc_url( get_permalink($id) ).'">'.get_the_title($id).' ('.$total_bundle.')</a></h5>
 

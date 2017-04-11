@@ -55,12 +55,15 @@ $bundles =  json_decode( $post_meta["wcpb_bundle_products"][0], true );
 		$datetime2 = new DateTime($_POST['end_date']);
 		$interval = date_diff($datetime1, $datetime2);
 
+		$newDate1 = $datetime1->format('m/d/Y');
+		$newDate2 = $datetime2->format('m/d/Y');
+
 		if($datetime2 > $datetime1){
 
 			$base_price = ($post_meta['file_type'][0] == 'animation') ? $base_price_motion : $base_price_image;
 			$recurring_price = ($post_meta['file_type'][0] == 'animation') ? $recurring_price_motion : $recurring_price_image;
 
-			$firstweek = 7 * $base_price;
+			$firstweek = $interval->days * $base_price;
 
 			if($interval->days > 7){
 
@@ -123,15 +126,15 @@ $bundles =  json_decode( $post_meta["wcpb_bundle_products"][0], true );
 
 			          $image = "";
 
-			          $product_number = get_post_meta( $id, 'product_number', true );
-			          $product_type = get_post_meta( $id, 'file_type', true );
+			          $product_number = get_post_meta( $key, 'product_number', true );
+			          $product_type = get_post_meta( $key, 'file_type', true );
 
 			          $large_image = "";
 
 			          if(IsNullOrEmptyString($product_number)){
 			            $large_image = "http://placehold.it/1200x496";
 			          }else{
-			            $large_image = getProductImage($product_number, false);
+			            $large_image = getProductImage($product_number, false, false);
 			          }
 
 			          if($img_oid > 0){
@@ -145,7 +148,7 @@ $bundles =  json_decode( $post_meta["wcpb_bundle_products"][0], true );
 			?>
 				<div class="row marTop20 marBot20">
 					<div class="col-md-3">
-						<img class="img-responsive" src="<?php echo $image; ?>" alt="thumbnail"/>
+						<img class="img-responsive" src="<?php echo $large_image; ?>" alt="thumbnail"/>
 					</div>
 					<div class="col-md-9">
 						<h4 class="title-product"><a href="<?php echo get_permalink($key); ?>"><?php echo get_the_title($key); ?></a></h4>
@@ -177,37 +180,41 @@ $bundles =  json_decode( $post_meta["wcpb_bundle_products"][0], true );
 
                 <?php if($totalrate){ ?>
                 <div class="clearfix">
-                	<table class="table">
-	                <thead>
-	                  <tr>
-	                    <th>Price</th>
-	                    <th>Periode</th>
-	                    <th>Total</th>
-	                  </tr>
-	                </thead>
-	                <tbody>
-	                  <tr>
-	                    <td>$<?php echo $base_price; ?></td>
-	                    <td> 7 Days</td>
-	                    <td>$<?php echo $firstweek; ?></td>
-	                  </tr>
-	                  <?php if($interval->days > 7){ ?>
-	                   <tr>
-	                    <td>$<?php echo $recurring_price; ?></td>
-	                    <td> Extra <?php echo $extra.' '.$day; ?></td>
-	                    <td>$<?php echo $extra_total; ?></td>
-	                  </tr>
+                  <div class="result-rate-checked marBot10">
+                    <div class="entry-result marTop20">
+                      <hr>
+                      <div class="clearfix padLeft20 padRight20 padBot10 padTop10 font700">
+                      	<?php if($interval->days > 7){ ?>
+                        <div class="pull-left">Rental rate for 7 days :</div>
+                        <?php }else{ ?>
+                        <div class="pull-left">Rental rate for <?php echo $interval->days;?> days :</div>
+                        <?php } ?>
+                        <div class="pull-right text-right">$<?php echo $firstweek; ?></div>
+                      </div>
+                      <div class="clearfix padLeft20 result-info">
+                        <div class="text-left padTop10 padBot20 font700">
+                          <span class="glyphicon icon-dateenable"></span>
+                          Active on : <span class="clrBlue"><?php echo $newDate1;?></span>
+                        </div>
+                        <div class="text-left padBot10 font700">
+                          <span class="glyphicon icon-datedisable"></span>
+                           Disable on : <span class="clrBlue"><?php echo $newDate2;?></span>
+                        </div>
+                      </div>
+                      <hr>
+                      <?php if($interval->days > 7){ ?>
+	                  <div class="clearfix padLeft20 padRight20 padBot10 padTop10 font700">
+                        <div class="pull-left">Rental rate for extra <?php echo $extra.' '.$day; ?> :</div>
+                        <div class="pull-right text-right">$<?php echo $extra_total; ?></div>
+                      </div>
+                      <hr>
 	                  <?php } ?>
-	                  <tr>
-	                  	<td colspan="2">
-	                  		<strong>Total Rent</strong>
-	                  	</td>
-	                  	<td>
-	                  		$<?php echo $totalrate; ?>
-	                  	</td>
-	                  </tr>
-	                </tbody>
-	              </table>
+                    </div>
+                    <div class="clearfix padLeft20 padRight20">
+                      <div class="pull-left"><h4 class="font700">Total Cost :</h4></div>
+                      <div class="pull-right text-right"><h4 class="font700">$<?php echo $totalrate; ?></h4></div>
+                    </div>  
+                  </div>    
                 </div>
                 <?php } ?>
 
