@@ -26,13 +26,21 @@ global $post, $product;
 	<div class="productThumb-grosh marBot60">
 		<?php
 		$product_number = get_post_meta( $product->id, 'product_number', true );
+		$product_type = get_post_meta( $product->id, 'file_type', true );
 		$large_image = "";
-		if(IsNullOrEmptyString($product_number)){
-			$large_image = "http://placehold.it/1200x496";
+		$style = "";
+		if($product_type == "animation"){
+			$large_image = getProductImage($product_number, false, true);
+			$style = "width:100%";
 		}else{
-			$large_image = getProductImage($product_number, false);
+			if(IsNullOrEmptyString($product_number)){
+				$large_image = "http://placehold.it/1200x496";
+			}else{
+				$large_image = getProductImage($product_number, false, false);
+			}
 		}
-		echo '<img src="'.$large_image.'">';
+		
+		echo '<img src="'.$large_image.'" style="'.$style.'">';
 		echo '<div class="code-product">Item number : #'.$product_number.'</div>';
 
 		//do_action( 'woocommerce_product_thumbnails' );

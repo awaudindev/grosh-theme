@@ -102,18 +102,18 @@ function IsNullOrEmptyString($question){
 
 
 
-function getProductImage($number, $is_thumbnail){
+function getProductImage($number, $is_thumbnail, $is_animation){
 
 	$result = "";
 
-	if($is_thumbnail){
-
-		$result = "http://s3.amazonaws.com/tndr/grosh/assets/thumbnails/".$number."-min.png";
-
+	if($is_animation){
+		$result = "http://s3.amazonaws.com/tndr/grosh/assets/".$number.".gif";
 	}else{
-
-		$result = "http://s3.amazonaws.com/tndr/grosh/assets/".$number."-min.png";
-
+		if($is_thumbnail){
+			$result = "http://s3.amazonaws.com/tndr/grosh/assets/thumbnails/".$number."-min.png";
+		}else{
+			$result = "http://s3.amazonaws.com/tndr/grosh/assets/".$number."-min.png";
+		}
 	}
 	return $result;
 }
@@ -138,7 +138,7 @@ if ( ! function_exists( 'woocommerce_get_product_thumbnail' ) ) {
 		if(IsNullOrEmptyString($product_number)){
 			$large_image = "http://placehold.it/225x127";
 		}else{
-			$large_image = getProductImage($product_number, false);
+			$large_image = getProductImage($product_number, false, false);
 		}
 
 		$class = "";

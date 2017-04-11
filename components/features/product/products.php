@@ -60,7 +60,7 @@
             if(IsNullOrEmptyString($product_number)){
               $large_image = "http://placehold.it/300x169";
             }else{
-              $large_image = getProductImage($product_number, true);
+              $large_image = getProductImage($product_number, true, false);
             }
             echo loopFeature($large_image,$v,$product_type,$product_number);
             
@@ -99,7 +99,7 @@
           if(IsNullOrEmptyString($product_number)){
             $large_image = "http://placehold.it/1200x496";
           }else{
-            $large_image = getProductImage($product_number, false);
+            $large_image = getProductImage($product_number, false, false);
           }
 
           if($img_oid > 0){

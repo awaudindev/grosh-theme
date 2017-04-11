@@ -821,6 +821,9 @@ a:hover, a:active {
 .padBot60{
   padding-bottom: 60px;
 }
+.marTop5{
+  margin-top: 5px;
+}
 .marTop20{
   margin-top: 20px;
 }
@@ -921,7 +924,7 @@ body {
   background-color: transparent !important;
 }
 
-.navbar-left > li{
+.navbar-right > li{
   text-transform: uppercase;
   font-size: 12px;
 }
@@ -941,7 +944,8 @@ body {
 .dropdown-bag{
   margin-right: 25px;
 }
-.count-bag{
+.count-bag,
+.cartcontents{
   font-weight: normal;
   font-size: 11px;
   line-height: 25px;
@@ -953,7 +957,8 @@ body {
   padding-left: 2px;
   text-align: center;
   color: #fff;
-  left: 5px;
+  /*left: 5px;*/
+  left: 15px;
   bottom: 10px;
   z-index: 10;
   position: absolute;
@@ -1457,12 +1462,23 @@ object {
 /*----------------------------------
 WOOCOMMERCE
 ------------------------------------*/
-
+.wpmenucart-icon-shopping-cart-0:before{
+  background:url(assets/images/bag.png) no-repeat ;
+  width: 24px;
+  height: 30px;
+  position: relative;
+  margin-top: -10px;
+  display: inline-block;
+  outline: none;
+  text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+}
 /*----------------------------------
 MEDIA QUERY
 ------------------------------------*/
 @media (min-width: 768px){
-  .navbar-left li > a{
+  .navbar-right li > a{
     padding-left: 30px;
     padding-right: 30px;
   }

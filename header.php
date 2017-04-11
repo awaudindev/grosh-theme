@@ -31,16 +31,16 @@
         			<div class="navbar-header">
 		            	<?php grosh_the_custom_logo(); ?>
 		          	</div>
-		          	<ul class="nav navbar-nav navbar-right marTop20">
-              			<li class="dropdown dropdown-bag">
+		          	<ul class="nav navbar-nav navbar-right marTop5">
+              			<!--<li class="dropdown dropdown-bag">
 			                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> 
 			                  <span class="count-bag">17</span> <span class="glyphicon icon-bag"></span>
 			                </a>
-              			</li>
+              			</li>-->
               			<li class="dropdown-search"><a class="cd-search-trigger" href="#cd-search">Search<span></span></a></li>
 		          	</ul>
 		          
-		          	<?php wp_nav_menu( array( 'theme_location' => 'menu-1', 'menu_id' => 'bs-example-navbar-collapse-1', 'menu_class'=> 'nav navbar-nav navbar-left',  'fallback_cb' => 'wp_bootstrap_navwalker::fallback', 'walker' => new wp_bootstrap_navwalker() ) );  ?>
+		          	<?php wp_nav_menu( array( 'theme_location' => 'menu-1', 'menu_id' => 'bs-example-navbar-collapse-1', 'menu_class'=> 'nav navbar-nav navbar-right',  'fallback_cb' => 'wp_bootstrap_navwalker::fallback', 'walker' => new wp_bootstrap_navwalker() ) );  ?>
 		          	
         		</div>
         	</div>	
