@@ -63,7 +63,11 @@ $bundles =  json_decode( $post_meta["wcpb_bundle_products"][0], true );
 			$base_price = ($post_meta['file_type'][0] == 'animation') ? $base_price_motion : $base_price_image;
 			$recurring_price = ($post_meta['file_type'][0] == 'animation') ? $recurring_price_motion : $recurring_price_image;
 
-			$firstweek = $interval->days * $base_price;
+			if($bundles){
+				$base_price = $recurring_price = $post_meta['_wcpb_product_sale_price'][0];
+			}
+
+			$firstweek = (($interval->days > 7) ? 7 : $interval->days )* $base_price;
 
 			if($interval->days > 7){
 
