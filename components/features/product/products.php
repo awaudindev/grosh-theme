@@ -15,11 +15,10 @@
         $result = '<li class="col-md-4 col-sm-6">   
 
          <div class="thumb-post">
-
            <div class="category-post" id="icon-video" data-id="'.$product_number.'" style="display:'.$class.'"><i class="fa fa-video-camera" aria-hidden="true"></i></div>
-
-            <img class="img-responsive" src="'.$image.'" alt="thumbnail"/>
-
+          <div class="caption" data-id="'.$product_number.'" style="display:'.$class.'"><span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span></div>
+          <img class="img-responsive" src="'.$image.'" alt="thumbnail"/>
+            
             <h5 class="title-product pad20"><a href="'.esc_url( get_permalink($id) ).'">'.get_the_title($id).'</a></h5>
 
           </div>
@@ -46,7 +45,7 @@
 
       <ul class="clearfix">
 
-      	<?php
+        <?php
 
         if(count($grosh_meta['feature-product-home'])){
 
@@ -58,9 +57,9 @@
             $large_image = "";
 
             if(IsNullOrEmptyString($product_number)){
-              $large_image = "http://placehold.it/300x169";
+              $large_image = "http://placehold.it/360x199";
             }else{
-              $large_image = getProductImage($product_number, true, false);
+              $large_image = getProductImage($product_number, false, false);
             }
             echo loopFeature($large_image,$v,$product_type,$product_number);
             
@@ -106,7 +105,7 @@
 
             $img_url = wp_get_attachment_url( $img_oid ); //get img URL
 
-            $image = aq_resize( $img_url, 640, 280, true, true, true ); //resize & crop img
+            $image = aq_resize( $img_url, 768, 540, true, true, true ); //resize & crop img
 
           }
 

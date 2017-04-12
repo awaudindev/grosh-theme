@@ -47,6 +47,7 @@ $bundles =  json_decode( $post_meta["wcpb_bundle_products"][0], true );
 
 	 	$base_price_image = ($grosh_meta['base-image-price']) ? $grosh_meta['base-image-price'] : 65;
 	 	$base_price_motion = ($grosh_meta['base-motion-price']) ? $grosh_meta['base-motion-price'] : 115;
+	 	$bundle_price = ($grosh_meta['package-bundle-price']) ? $grosh_meta['package-bundle-price'] : 750;
 
 	 	$recurring_price_image = ($grosh_meta['recurring-image-price']) ? $grosh_meta['recurring-image-price'] : 3.25;
 	 	$recurring_price_motion = ($grosh_meta['recurring-motion-price']) ? $grosh_meta['recurring-motion-price'] : 5.75;
@@ -64,25 +65,25 @@ $bundles =  json_decode( $post_meta["wcpb_bundle_products"][0], true );
 			$recurring_price = ($post_meta['file_type'][0] == 'animation') ? $recurring_price_motion : $recurring_price_image;
 
 			if($bundles){
-				$base_price = $recurring_price = $post_meta['_wcpb_product_sale_price'][0];
-			}
-
-			$firstweek = (($interval->days > 7) ? 7 : $interval->days )* $base_price;
-
-			if($interval->days > 7){
-
-				$extra = $interval->days - 7;
-
-				$extra_total = $extra * $recurring_price;
-
-				$day = ($extra > 1) ? 'Days' : 'Day';
-
-				$totalrate = $firstweek + $extra_total; 
-
+				$totalrate = $firstweek = $interval->days * $bundle_price;
 			}else{
+				$firstweek = (($interval->days > 7) ? 7 : $interval->days )* $base_price;
 
-				$totalrate = $firstweek;
-			
+				if($interval->days > 7){
+
+					$extra = $interval->days - 7;
+
+					$extra_total = $extra * $recurring_price;
+
+					$day = ($extra > 1) ? 'Days' : 'Day';
+
+					$totalrate = $firstweek + $extra_total; 
+
+				}else{
+
+					$totalrate = $firstweek;
+				
+				}
 			}
 
 		}
@@ -165,7 +166,7 @@ $bundles =  json_decode( $post_meta["wcpb_bundle_products"][0], true );
 			</div>
 			<?php } ?>
 			<div class="quote-price"><!--[start:quote-price]-->
-                <h5 class="padTop20 padBot20 font700">Get a Quote</h5>
+                <h5 class="padTop20 padBot20 font500">Get a Quote</h5>
                 <form class="" action="" method="POST">
                 <div class="clearfix">
                   <div class="col-md-6 padLeft0">
@@ -186,8 +187,7 @@ $bundles =  json_decode( $post_meta["wcpb_bundle_products"][0], true );
                 <div class="clearfix">
                   <div class="result-rate-checked marBot10">
                     <div class="entry-result marTop20">
-                      <hr>
-                      <div class="clearfix padLeft20 padRight20 padBot10 padTop10 font700">
+                      <div class="clearfix padLeft20 padRight20 padBot10 padTop10 font500">
                       	<?php if($interval->days > 7){ ?>
                         <div class="pull-left">Rental rate for 7 days :</div>
                         <?php }else{ ?>
@@ -196,18 +196,18 @@ $bundles =  json_decode( $post_meta["wcpb_bundle_products"][0], true );
                         <div class="pull-right text-right">$<?php echo $firstweek; ?></div>
                       </div>
                       <div class="clearfix padLeft20 result-info">
-                        <div class="text-left padTop10 padBot20 font700">
+                        <div class="text-left padTop10 padBot20 font500">
                           <span class="glyphicon icon-dateenable"></span>
                           Active on : <span class="clrBlue"><?php echo $newDate1;?></span>
                         </div>
-                        <div class="text-left padBot10 font700">
+                        <div class="text-left padBot10 font500">
                           <span class="glyphicon icon-datedisable"></span>
                            Disable on : <span class="clrBlue"><?php echo $newDate2;?></span>
                         </div>
                       </div>
                       <hr>
                       <?php if($interval->days > 7){ ?>
-	                  <div class="clearfix padLeft20 padRight20 padBot10 padTop10 font700">
+	                  <div class="clearfix padLeft20 padRight20 padBot10 padTop10 font500">
                         <div class="pull-left">Rental rate for extra <?php echo $extra.' '.$day; ?> :</div>
                         <div class="pull-right text-right">$<?php echo $extra_total; ?></div>
                       </div>
@@ -215,8 +215,8 @@ $bundles =  json_decode( $post_meta["wcpb_bundle_products"][0], true );
 	                  <?php } ?>
                     </div>
                     <div class="clearfix padLeft20 padRight20">
-                      <div class="pull-left"><h4 class="font700">Total Cost :</h4></div>
-                      <div class="pull-right text-right"><h4 class="font700">$<?php echo $totalrate; ?></h4></div>
+                      <div class="pull-left"><h4 class="font500">Total Cost :</h4></div>
+                      <div class="pull-right text-right"><h4 class="font500">$<?php echo $totalrate; ?></h4></div>
                     </div>  
                   </div>    
                 </div>

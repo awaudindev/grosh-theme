@@ -308,6 +308,15 @@
                 'desc'     => __('', 'redux-framework-demo'),
                 'validate' => 'numeric',
                 'msg'      => 'Only accept number'
+            ),
+            array(
+                'id'       => 'package-bundle-price',
+                'type'     => 'text',
+                'title'    => __('Package Bundle Price', 'redux-framework-demo'),
+                'subtitle' => __('', 'redux-framework-demo'),
+                'desc'     => __('', 'redux-framework-demo'),
+                'validate' => 'numeric',
+                'msg'      => 'Only accept number'
             )
         )
     ) );

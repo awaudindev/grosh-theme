@@ -420,25 +420,44 @@ fieldset[disabled] .btn-default.active {
 /*--------------------------------------------------------------
 # Typography
 --------------------------------------------------------------*/
+@font-face {
+    font-family: 'montserratbold';
+    src: url('assets/fonts/montserrat-bold-webfont.woff2') format('woff2'),
+         url('assets/fonts/montserrat-bold-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+@font-face {
+    font-family: 'montserratregular';
+    src: url('fonts/montserrat-regular-webfont.woff2') format('woff2'),
+         url('fonts/montserrat-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
 body,
 button,
 input,
 select,
 textarea {
-  color: #222;
   font-family: 'Montserrat', sans-serif;
+  color: #222;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.5;
 }
 body{
-  font-size: 13px;
+  font-size: 14px;
 }
 h1, h2, h3, h4, h5, h6 {
   clear: both;
 }
 h5{
   font-size: 16px;
+}
+h6{
+  font-size: 14px;
 }
 p {
   margin-bottom: 1.5em;
@@ -606,10 +625,9 @@ input[type="submit"]:focus {
 # Formattings
 --------------------------------------------------------------*/
 hr {
-  background-color: #ccc;
+  background-color: #fff;
   border: 0;
   height: 1px;
-  margin-bottom: 1.5em;
 }
 
 /*--------------------------------------------------------------
@@ -857,8 +875,10 @@ a:hover, a:active {
 .font300{
   font-weight: 300;
 }
+.font500{
+  font-weight: 500;
+}
 .font700{
-   
    font-weight: 700;
 }
 .clrBlue{
@@ -1003,17 +1023,19 @@ PRODUCT
 }
 .thumb-post .caption{
   position: absolute;
-  background-color: rgba(0, 0, 0, 0.4);
-  background: rgba(0, 0, 0, 0.4);
+  /*background-color: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.4);*/
   opacity: 0;
   top:0;
   left:0;
   width: 100%;
-  height: 100%;
+  height: 72%;
+  /*height: 100%;*/
   border-radius: 4px;
-  line-height: 190px;
+  /*line-height: 190px;*/
   text-align: center;
   color: #fff;
+  z-index: 20;
 }
 .thumb-post .caption:hover{
   cursor: pointer;
@@ -1025,7 +1047,7 @@ PRODUCT
   transition:all 0.45s ease-in-out;
 }
 .thumb-post .glyphicon-play-circle{
-  font-size: 43px;
+  font-size: 33px;
   color: #086fb8;
   background: #fff;
   border-radius: 100%;
@@ -1033,6 +1055,7 @@ PRODUCT
   -moz-box-shadow: 0 0 35px #000; /* drop shadow */
   -webkit-box-shadow: 0 0 35px #000; /* drop shadow */
   box-shadow: 0 0 35px #000; /* drop shadow */
+  top: 40%;
 }
 .category-post{
   position: absolute;
@@ -1205,6 +1228,25 @@ CAROUSEL
   -moz-transition: all 0.35s;
   transition: all 0.35s;
 }
+.icon-dategrey{
+  background:url(assets/images/icon-dategrey.png) no-repeat;
+
+}
+.icon-dateenable{
+  background:url(assets/images/icon-dateenable.png) no-repeat;
+}
+.icon-datedisable{
+  background:url(assets/images/icon-datedisable.png) no-repeat;
+}
+.icon-dateenable,
+.icon-datedisable,
+.icon-dategrey{
+  width: 20px;
+  height: 18px;
+  float: left;
+  margin-right: 10px;
+  margin-top: -2px;
+}
 .tagged a{
   color: #7c7b77;
   background:#e7e7e5;
@@ -1223,7 +1265,7 @@ SITE FOOTER
 .site-footer{
   background-color: #fff;
   border-top:1px solid #ebebeb;
-  font-size: 12px;
+  font-size: 13px;
 }
 .navbar-brand-foot img{
   width: 80%;
@@ -1232,7 +1274,33 @@ SITE FOOTER
   text-align: center;
   padding: 0!important;
 }
-
+.modal-content{
+  border-radius: 0;
+}
+.modal-body{
+  padding: 5px;
+  position: relative;
+}
+.close-modal{
+  background: #086fb8;
+  border-radius: 100%;
+  float: right;
+  position: absolute;
+  right: -10px;
+  top: -10px;
+  width: 28px;
+  height: 28px;
+  text-align: center;
+  line-height: 23px;
+  font-size: 18px;
+  color: #fff;
+  cursor: pointer;
+  border: 4px solid #fff;
+  cursor: pointer;
+}
+.close-modal:hover{
+  color: #fff;
+}
 .modal:before {
   content: '';
   display: inline-block;
@@ -1293,7 +1361,9 @@ SITE FOOTER
 .hentry {
   margin: 0 0 1.5em;
 }
-
+.hidetitle .entry-title { 
+  display:none;
+}
 .byline,
 .updated:not(.published) {
   display: none;
@@ -1346,6 +1416,12 @@ SITE FOOTER
 }
 .widget li a{
   color: #222;
+}
+.site-footer .widget li{
+  margin-bottom: 10px;
+}
+.site-footer .widget li a:hover{
+   color: #086fb8;
 }
 /*--------------------------------------------------------------
 # Infinite scroll
@@ -1474,6 +1550,9 @@ WOOCOMMERCE
     white-space: nowrap;
     overflow: hidden;
 }
+.entry-result{
+  background-color: #f0f7fa;
+}
 /*----------------------------------
 MEDIA QUERY
 ------------------------------------*/
@@ -1498,6 +1577,12 @@ MEDIA QUERY
     float: right;
   }
 }
+
+@media (min-width: 768px) {
+  .phone-frame{
+    margin-bottom: -103px;
+  }
+}
 @media (min-width: 992px) {
   .container {
     width: 970px;
@@ -1505,7 +1590,7 @@ MEDIA QUERY
 }
 @media (min-width: 1200px) {
   .container {
-    width: 1050px;
+    width: 1140px;
   }
 }
 

@@ -50,7 +50,7 @@
         <div class="row">
           	<h3 class="title-section text-center font700 padTop60 padBot60">Create the show you've always wanted</h3>
          	<div class="col-md-4 col-sm-4">
-            	<div class="icon-feat text-center"><img src="<?php bloginfo('template_url'); ?>/assets/images/icon-byscene.png" alt="browse by scene" /></div>
+            	<div class="icon-feat text-center"><img src="<?php bloginfo('template_url'); ?>/assets/images/icon-bytheme.png" alt="browse by theme" /></div>
             	<h5 class="title-entry text-center padTop20 padBot10"><a href="#">Browse by theme</a></h5>
 	            <p class="text-center">
 	              Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
@@ -58,7 +58,7 @@
 	            </p>
           	</div>
           	<div class="col-md-4 col-sm-4">
-            	<div class="icon-feat text-center"><img src="<?php bloginfo('template_url'); ?>/assets/images/icon-bypackage.png" alt="browse by package" /></div>
+            	<div class="icon-feat text-center"><img src="<?php bloginfo('template_url'); ?>/assets/images/icon-byscene.png" alt="browse by pscene" /></div>
             	<h5 class="title-entry text-center padTop20 padBot10"><a href="#">Browse by show</a></h5>
 	            <p class="text-center">
 	              Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
@@ -66,7 +66,7 @@
 	            </p>
           	</div>
           	<div class="col-md-4 col-sm-4">
-            	<div class="icon-feat text-center"><img src="<?php bloginfo('template_url'); ?>/assets/images/icon-mobileapps.png" alt="Mobile Apps" /></div>
+            	<div class="icon-feat text-center"><img src="<?php bloginfo('template_url'); ?>/assets/images/icon-bypackage.png" alt="packages" /></div>
             	<h5 class="title-entry text-center padTop20 padBot10"><a href="<?php echo get_permalink( get_page_by_path( 'packages' ) ); ?>">View show packages</a></h5>
 	            <p class="text-center">
 	              Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
