@@ -1580,7 +1580,7 @@ MEDIA QUERY
 
 @media (min-width: 768px) {
   .phone-frame{
-    margin-bottom: -103px;
+    margin-bottom: -81px;
   }
 }
 @media (min-width: 992px) {

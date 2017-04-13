@@ -14,8 +14,14 @@ jQuery(document).ready(function($){
 	});
 	$('.caption').on('click', function(event){
 		var product_number = $(this).data('id');
+		var url = "http://s3.amazonaws.com/tndr/grosh/assets/" + product_number +".gif";
+		document.getElementById("img-animation").src = url;
 		$('#popupMsg').modal('show');
 	});
+
+	$('input[type=radio][name=filetype]').change(function() {
+        $("#product-type-form").submit();
+    });
 	function toggleSearch(type) {
 		if(type=="close") {
 			//close serach 

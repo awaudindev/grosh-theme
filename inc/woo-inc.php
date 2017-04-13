@@ -110,9 +110,9 @@ function getProductImage($number, $is_thumbnail, $is_animation){
 		$result = "http://s3.amazonaws.com/tndr/grosh/assets/".$number.".gif";
 	}else{
 		if($is_thumbnail){
-			$result = "http://s3.amazonaws.com/tndr/grosh/assets/thumbnails/".$number."-min.png";
+			$result = "http://s3.amazonaws.com/tndr/grosh/assets/thumbnails/".$number.".png";
 		}else{
-			$result = "http://s3.amazonaws.com/tndr/grosh/assets/".$number."-min.png";
+			$result = "http://s3.amazonaws.com/tndr/grosh/assets/".$number.".png";
 		}
 	}
 	return $result;
@@ -138,7 +138,7 @@ if ( ! function_exists( 'woocommerce_get_product_thumbnail' ) ) {
 		if(IsNullOrEmptyString($product_number)){
 			$large_image = "http://placehold.it/225x127";
 		}else{
-			$large_image = getProductImage($product_number, false, false);
+			$large_image = getProductImage($product_number, true, false);
 		}
 
 		$class = "";
@@ -154,9 +154,9 @@ if ( ! function_exists( 'woocommerce_get_product_thumbnail' ) ) {
 
         	$output .= '<div class="caption" data-id="'.$product_number.'" style="display:'.$class.'"><span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span></div>';
         	
-            $output .= '<img class="img-responsive" src="'.$large_image.'" alt="thumbnail"/>';
+            $output .= '<img class="img-responsive" src="'.$large_image.'" alt="thumbnail" style="width:100%;height:100%"/>';
 
-            $output .= '<h5 class="title-product pad20"><a href="'.esc_url( get_permalink($post->ID) ).'">'.get_the_title($post->ID).'</a></h5>';
+            $output .= '<h5 class="title-product"><a href="'.esc_url( get_permalink($post->ID) ).'">'.get_the_title($post->ID).'</a></h5>';
 
         $output .= '</div>';
         return $output;

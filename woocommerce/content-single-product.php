@@ -23,9 +23,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 global $grosh_meta;
 
 $post_meta = get_post_meta( $post->ID );
+$is_animation = get_post_meta( $post->ID, 'file_type', true );
 
 $bundles =  json_decode( $post_meta["wcpb_bundle_products"][0], true );
-
+$file_type = $_POST['filetype'];
 ?>
 
 <?php
@@ -61,9 +62,16 @@ $bundles =  json_decode( $post_meta["wcpb_bundle_products"][0], true );
 
 		if($datetime2 > $datetime1){
 
-			$base_price = ($post_meta['file_type'][0] == 'animation') ? $base_price_motion : $base_price_image;
-			$recurring_price = ($post_meta['file_type'][0] == 'animation') ? $recurring_price_motion : $recurring_price_image;
-
+			$default_type = $post_meta['file_type'][0];
+			
+			if($default_type == 'animation'){
+				$base_price = ($file_type == 'animation') ? $base_price_motion : $base_price_image;
+				$recurring_price = ($file_type == 'animation') ? $recurring_price_motion : $recurring_price_image;
+			}else{
+				$base_price = ($post_meta['file_type'][0] == 'animation') ? $base_price_motion : $base_price_image;
+				$recurring_price = ($post_meta['file_type'][0] == 'animation') ? $recurring_price_motion : $recurring_price_image;
+			}
+			
 			if($bundles){
 				$totalrate = $firstweek = $interval->days * $bundle_price;
 			}else{
@@ -166,18 +174,33 @@ $bundles =  json_decode( $post_meta["wcpb_bundle_products"][0], true );
 			</div>
 			<?php } ?>
 			<div class="quote-price"><!--[start:quote-price]-->
+				<?php
+					$type = "";
+					if(!empty($_POST['filetype'])){
+						$type = $_POST['filetype'];
+					}
+
+					if($is_animation == "animation"){?>
+						<h5 class="padTop20 padBot20 font500">Product Type</h5>
+						<form id="product-type-form" class="" action="" method="POST">
+							<input type="radio" name="filetype" value="image" <?php if($type == 'image') { echo 'checked';}else{ echo ''; }?> > Image<br>
+							<input type="radio" name="filetype" value="animation" <?php if($type == 'animation') { echo 'checked'; }else{ echo ''; } ?>> Animation<br>
+						</form>
+						<?php
+					}
+				?>
                 <h5 class="padTop20 padBot20 font500">Get a Quote</h5>
                 <form class="" action="" method="POST">
                 <div class="clearfix">
                   <div class="col-md-6 padLeft0">
                     <div class="form-group">
-                      <label class="padBot10">I need it by :</label>
+                      <label class="padBot10">Start Date :</label>
                       <input type="text" class="form-control calendarpicker" value="<?php echo $_POST['start_date']; ?>" placeholder="mm-dd-yyyy" name="start_date" id="datepicker1" data-format="m/d/yy">
                     </div>
                   </div>  
                   <div class="col-md-6 padRight0">
                     <div class="form-group">
-                      <label class="padBot10">I'll ship it back on :</label>
+                      <label class="padBot10">Expiration Date :</label>
                       <input type="text" class="form-control calendarpicker" value="<?php echo $_POST['end_date']; ?>" placeholder="mm-dd-yyyy" name="end_date" id="datepicker2" data-format="m/d/yy">
                     </div>
                   </div>  

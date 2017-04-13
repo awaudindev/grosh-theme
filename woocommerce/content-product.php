@@ -27,7 +27,7 @@ if ( empty( $product ) || ! $product->is_visible() ) {
 	return;
 }
 ?>
-<li <?php post_class('text-center'); ?>>
+<li <?php post_class('text-center col-md-4 col-sm-6'); ?>>
 	<?php
 	/**
 	 * woocommerce_before_shop_loop_item hook.

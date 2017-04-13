@@ -21,6 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 global $post, $product;
+$type = $_POST['filetype'];
 ?>
 <div class="col-md-12">
 	<div class="productThumb-grosh marBot60">
@@ -29,7 +30,7 @@ global $post, $product;
 		$product_type = get_post_meta( $product->id, 'file_type', true );
 		$large_image = "";
 		$style = "";
-		if($product_type == "animation"){
+		if($type == "animation"){
 			$large_image = getProductImage($product_number, false, true);
 			$style = "width:100%";
 		}else{
