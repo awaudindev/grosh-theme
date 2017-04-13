@@ -67,7 +67,7 @@ $bundles =  json_decode( $post_meta["wcpb_bundle_products"][0], true );
 			if($bundles){
 				$totalrate = $firstweek = $interval->days * $bundle_price;
 			}else{
-				$firstweek = (($interval->days > 7) ? 7 : $interval->days )* $base_price;
+				$firstweek = $base_price;//(($interval->days > 7) ? 7 : $interval->days )* $base_price;
 
 				if($interval->days > 7){
 
