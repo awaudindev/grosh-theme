@@ -178,6 +178,12 @@ function check_total() {
 	$datetime2 = new DateTime($_POST['todate']);
 	$interval = date_diff($datetime1, $datetime2);
 
+	WC()->session->set(
+	     'rental_date',
+	     array(
+	        'start'   => $datetime1->format('m/d/Y'),
+	        'expiry'  => $datetime2->format('m/d/Y')));
+
 	function count_total($interval){
 
 		$base_price_image = ($grosh_meta['base-image-price']) ? $grosh_meta['base-image-price'] : 65;
@@ -212,16 +218,6 @@ function check_total() {
 	    }
 	    
 	    return $new_total;
-	}
-
-	add_filter('woocommerce_cart_contents_total', 'update_total');
-
-	function update_total( $cart_contents_total, $cart_contents_count,$interval) {
-	
-		$cart_content_total = count_total($interval);
-
-		return $cart_content_total;
-	
 	}
 
 	echo json_encode(array('total'=>wc_price(count_total($interval))));

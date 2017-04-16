@@ -261,7 +261,14 @@ function grosh_scripts() {
 		wp_enqueue_style( 'jquery-ui-datepicker-style' , '//ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css');
 		
 		add_action('wp_footer', 
-	    function(){ ?>
+	    function(){ 
+
+	    	$rentalDate = WC()->session->get('rental_date');
+
+	    	$start = ($rentalDate) ? "$.datepicker.parseDate('mm/dd/yy','".$rentalDate['start']."')" : "'today'";
+	    	$end = ($rentalDate) ? "$.datepicker.parseDate('mm/dd/yy','".$rentalDate['expiry']."')" : "'today'" ;
+
+	    ?>
 	    <script type="text/javascript">
 	      jQuery(function($){
 
@@ -290,6 +297,7 @@ function grosh_scripts() {
 	        	var dates = $( "#from, #to" ).datepicker({
 				    dateFormat: 'mm/dd/yy',
 				    minDate : 'today',
+				    defaultDate : <?php echo $start; ?>,
 				    onSelect: function(dateText, inst) {
 				        //set value
 				        $("#" + this.id + "_value").val(dateText);
@@ -299,7 +307,6 @@ function grosh_scripts() {
 						var datepickerEnd = $("#to_value").val(); // lets, returning in mm/dd/yy format
 				        //set the min or max date
 				        var option = this.id == "from" ? "minDate" : "maxDate",
-				        origin = this.id == "from" ? "from" : "to",
 				        instance = $( this ).data( "datepicker" ),
 				        date = $.datepicker.parseDate(
 				            instance.settings.dateFormat ||

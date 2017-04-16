@@ -27,6 +27,16 @@ $newDate2 = $newDate1;
 
 wc_print_notices();
 
+if(!WC()->session->get('rental_date')){
+	WC()->session->set(
+	     'rental_date',
+	     array(
+	        'start'   => $newDate1,
+	        'expiry'  => $newDate2));
+}
+
+$rentalDate = WC()->session->get('rental_date');
+
 do_action( 'woocommerce_before_cart' ); ?>
 
 <form action="<?php echo esc_url( wc_get_cart_url() ); ?>" method="post">
@@ -128,8 +138,8 @@ do_action( 'woocommerce_before_cart' ); ?>
 					</div>
 				<?php } ?>
 
-				<input type="text" name="fromdate" id="from_value" class="hide" value="<?php echo $newDate1; ?>" readonly="readonly" />
-				<input type="text" name="enddate" id="to_value" class="hide" value="<?php echo $newDate2; ?>" readonly="readonly" />
+				<input type="text" name="fromdate" id="from_value" class="hide" value="<?php echo ($rentalDate) ? $rentalDate['start'] : $newDate1; ?>" readonly="readonly" />
+				<input type="text" name="enddate" id="to_value" class="hide" value="<?php echo ($rentalDate) ? $rentalDate['expiry'] : $newDate2; ?>" readonly="readonly" />
 				<input type="submit" class="button" name="update_cart" value="<?php esc_attr_e( 'Update Cart', 'woocommerce' ); ?>" />
 
 				<?php do_action( 'woocommerce_cart_actions' ); ?>
