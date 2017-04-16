@@ -160,3 +160,70 @@ function product_packages( $atts, $content = ""){
 
 }
 add_shortcode('packages','product_packages');
+
+add_action( 'woocommerce_before_calculate_totals', 'add_custom_price' );
+
+function add_custom_price( $cart_object ) {
+
+    foreach ( WC()->cart->get_cart() as $key => $value ) {
+        $value['data']->set_price($value['price']);
+    }
+}
+
+add_action( 'wp_ajax_check_total', 'check_total' );
+add_action( 'wp_ajax_nopriv_check_total', 'check_total' );
+function check_total() {
+
+	$datetime1 = new DateTime($_POST['fromdate']);
+	$datetime2 = new DateTime($_POST['todate']);
+	$interval = date_diff($datetime1, $datetime2);
+
+	function count_total($interval){
+
+		$base_price_image = ($grosh_meta['base-image-price']) ? $grosh_meta['base-image-price'] : 65;
+	 	$base_price_motion = ($grosh_meta['base-motion-price']) ? $grosh_meta['base-motion-price'] : 115;
+	 	$bundle_price = ($grosh_meta['package-bundle-price']) ? $grosh_meta['package-bundle-price'] : 750;
+
+	 	$recurring_price_image = ($grosh_meta['recurring-image-price']) ? $grosh_meta['recurring-image-price'] : 3.25;
+	 	$recurring_price_motion = ($grosh_meta['recurring-motion-price']) ? $grosh_meta['recurring-motion-price'] : 5.75;
+
+	    $new_total = 0;
+	    foreach ( WC()->cart->cart_contents as $key => $value ) {
+	        //calculations here
+
+			$base_price = ($value['file_type'] == 'animation') ? $base_price_motion : $base_price_image;
+			$recurring_price = ($value['file_type'] == 'animation' && empty($file_type) || $file_type == 'animation') ? $recurring_price_motion : $recurring_price_image;
+
+			$firstweek = $base_price;
+
+			if($interval->days > 7){
+
+				$extra = $interval->days - 7;
+
+				$extra_total = $extra * $recurring_price;
+
+				$new_total += $firstweek + $extra_total; 
+
+			}else{
+
+				$new_total += $firstweek;
+			
+			}
+	    }
+	    
+	    return $new_total;
+	}
+
+	add_filter('woocommerce_cart_contents_total', 'update_total');
+
+	function update_total( $cart_contents_total, $cart_contents_count,$interval) {
+	
+		$cart_content_total = count_total($interval);
+
+		return $cart_content_total;
+	
+	}
+
+	echo json_encode(array('total'=>wc_price(count_total($interval))));
+	wp_die();
+}

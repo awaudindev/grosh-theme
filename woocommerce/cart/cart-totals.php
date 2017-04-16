@@ -20,10 +20,29 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+$datetime1 = new DateTime();
+
+$newDate1 = $datetime1->format('m/d/Y');
+$newDate2 = $newDate1;
+
 ?>
 <div class="cart_totals <?php if ( WC()->customer->has_calculated_shipping() ) echo 'calculated_shipping'; ?>">
 
 	<?php do_action( 'woocommerce_before_cart_totals' ); ?>
+
+	<div class="clearfix">
+	<h2><?php _e( 'Rental Period', 'woocommerce' ); ?></h2>
+	<div class="row">
+		<div class="col-md-6">
+			<h3><?php _e( 'From', 'woocommerce' ); ?> : <small class="from_text"><?php echo $newDate1; ?></small></h3>
+			<div id="from"></div>
+		</div>
+		<div class="col-md-6">
+			<h3><?php _e( 'To', 'woocommerce' ); ?> : <small class="to_text"><?php echo $newDate2; ?></small></h3>
+			<div id="to"></div>
+		</div>
+	</div>
+	</div>
 
 	<h2><?php _e( 'Cart Totals', 'woocommerce' ); ?></h2>
 

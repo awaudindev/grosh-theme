@@ -20,13 +20,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-global $grosh_meta;
+global $grosh_meta,$woocommerce;
 
 $post_meta = get_post_meta( $post->ID );
 $is_animation = get_post_meta( $post->ID, 'file_type', true );
 
 $bundles =  json_decode( $post_meta["wcpb_bundle_products"][0], true );
-$file_type = $_POST['filetype'];
+$file_type = $_REQUEST['filetype'];
+
 ?>
 
 <?php
@@ -44,14 +45,49 @@ $file_type = $_POST['filetype'];
 
 	 $totalrate = '';
 
+ 	$base_price_image = ($grosh_meta['base-image-price']) ? $grosh_meta['base-image-price'] : 65;
+ 	$base_price_motion = ($grosh_meta['base-motion-price']) ? $grosh_meta['base-motion-price'] : 115;
+ 	$bundle_price = ($grosh_meta['package-bundle-price']) ? $grosh_meta['package-bundle-price'] : 750;
+
+ 	$recurring_price_image = ($grosh_meta['recurring-image-price']) ? $grosh_meta['recurring-image-price'] : 3.25;
+ 	$recurring_price_motion = ($grosh_meta['recurring-motion-price']) ? $grosh_meta['recurring-motion-price'] : 5.75;
+
+	$base_price = ($post_meta['file_type'][0] == 'animation' && empty($file_type) || $file_type == 'animation') ? $base_price_motion : $base_price_image;
+	$recurring_price = ($post_meta['file_type'][0] == 'animation' && empty($file_type) || $file_type == 'animation') ? $recurring_price_motion : $recurring_price_image;
+
+	if(!empty($_GET['rent'])){
+
+		$found = false;
+
+		//check if product already in cart
+		if ( sizeof( WC()->cart->get_cart() ) > 0 ) {
+			foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
+				$_product = $values['data'];
+				if ( $_product->id == $post->ID ){
+					$found = true;
+					echo '<div class="col-md-12"><div class="alert alert-success" role="alert">You already add this file to cart.</div></div>';
+				}
+			}
+			// if product not found, add it
+			if ( ! $found ){
+				$cart_item_data = array('price' => $base_price,'file_type' => ($post_meta['file_type'][0] == 'animation' && empty($file_type) || $file_type == 'animation') ? 'animation' : 'image');
+    			WC()->cart->add_to_cart( $post->ID, 1, '', array(), $cart_item_data);
+    			echo '<div class="col-md-12"><div class="alert alert-success" role="alert">File added to cart.</div></div>';
+			}
+		} else {
+			// if no products in cart, add it
+			$cart_item_data = array('price' => $base_price,'file_type' => ($post_meta['file_type'][0] == 'animation' && empty($file_type) || $file_type == 'animation') ? 'animation' : 'image');
+			WC()->cart->add_to_cart( $post->ID, 1, '', array(), $cart_item_data);
+			echo '<div class="col-md-12"><div class="alert alert-success" role="alert">File added to cart.</div></div>';
+		}
+
+    }
+  //   else{
+  //   	$replace_order = new WC_Cart();
+		// $replace_order->empty_cart( true );
+  //   }
+
 	 if(!empty($_POST['start_date']) && !empty($_POST['end_date'])){
-
-	 	$base_price_image = ($grosh_meta['base-image-price']) ? $grosh_meta['base-image-price'] : 65;
-	 	$base_price_motion = ($grosh_meta['base-motion-price']) ? $grosh_meta['base-motion-price'] : 115;
-	 	$bundle_price = ($grosh_meta['package-bundle-price']) ? $grosh_meta['package-bundle-price'] : 750;
-
-	 	$recurring_price_image = ($grosh_meta['recurring-image-price']) ? $grosh_meta['recurring-image-price'] : 3.25;
-	 	$recurring_price_motion = ($grosh_meta['recurring-motion-price']) ? $grosh_meta['recurring-motion-price'] : 5.75;
 
 	 	$datetime1 = new DateTime($_POST['start_date']);
 		$datetime2 = new DateTime($_POST['end_date']);
@@ -61,16 +97,6 @@ $file_type = $_POST['filetype'];
 		$newDate2 = $datetime2->format('m/d/Y');
 
 		if($datetime2 > $datetime1){
-
-			$default_type = $post_meta['file_type'][0];
-			
-			if($default_type == 'animation'){
-				$base_price = ($file_type == 'animation') ? $base_price_motion : $base_price_image;
-				$recurring_price = ($file_type == 'animation') ? $recurring_price_motion : $recurring_price_image;
-			}else{
-				$base_price = ($post_meta['file_type'][0] == 'animation') ? $base_price_motion : $base_price_image;
-				$recurring_price = ($post_meta['file_type'][0] == 'animation') ? $recurring_price_motion : $recurring_price_image;
-			}
 			
 			if($bundles){
 				$totalrate = $firstweek = $interval->days * $bundle_price;
@@ -174,23 +200,38 @@ $file_type = $_POST['filetype'];
 			</div>
 			<?php } ?>
 			<div class="quote-price"><!--[start:quote-price]-->
+
+                <form class="" action="" method="POST">
 				<?php
 					$type = "";
-					if(!empty($_POST['filetype'])){
-						$type = $_POST['filetype'];
+					if(!empty($_REQUEST['filetype'])){
+						$type = $_REQUEST['filetype'];
 					}
 
 					if($is_animation == "animation"){?>
 						<h5 class="padTop20 padBot20 font500">Product Type</h5>
-						<form id="product-type-form" class="" action="" method="POST">
-							<input type="radio" name="filetype" value="image" <?php if($type == 'image') { echo 'checked';}else{ echo ''; }?> > Image<br>
-							<input type="radio" name="filetype" value="animation" <?php if($type == 'animation') { echo 'checked'; }else{ echo ''; } ?>> Animation<br>
-						</form>
+						<div id="product-type-form" class="">
+						<ul class="list-group">
+		                    <li class="list-group-item">
+		                        Image
+		                        <div class="material-switch pull-right">
+		                            <input name="filetype" value="image" type="radio" <?php if($type == 'image') { echo 'checked';}else{ echo ''; }?> />
+		                            <label for="someSwitchOptionPrimary" class="label-primary"></label>
+		                        </div>
+		                    </li>
+		                    <li class="list-group-item">
+		                        Animation
+		                        <div class="material-switch pull-right">
+		                            <input name="filetype" value="animation" type="radio" <?php if($type == 'animation' || $is_animation == 'animation' && empty($type)) { echo 'checked';}else{ echo ''; }?> />
+		                            <label for="someSwitchOptionPrimary" class="label-primary"></label>
+		                        </div>
+		                    </li>
+		                </ul>
+						</div>
 						<?php
 					}
 				?>
                 <h5 class="padTop20 padBot20 font500">Get a Quote</h5>
-                <form class="" action="" method="POST">
                 <div class="clearfix">
                   <div class="col-md-6 padLeft0">
                     <div class="form-group">
@@ -248,6 +289,9 @@ $file_type = $_POST['filetype'];
                 <div class="clearfix">
                   <div class="col-md-push-6 col-md-6 padRight0">
                     <button type="submit" class="btn btn-default btn-lg text-uppercase">check rental rate</button>
+                  </div>
+                  <div class="col-md-pull-6 col-md-6 padLeft0">
+                  	<a href="<?php echo get_permalink($post->ID).'?rent='.$post->ID.'&filetype='.$type; ?>" class="btn btn-default btn-lg text-uppercase">Add to Cart</a>
                   </div>  
                 </div>
                 </form>
@@ -270,4 +314,6 @@ $file_type = $_POST['filetype'];
 
 </div><!-- #product-<?php the_ID(); ?> -->
 
-<?php do_action( 'woocommerce_after_single_product' ); ?>
+<?php do_action( 'woocommerce_after_single_product' ); 
+wp_enqueue_style( 'checkbox', get_template_directory_uri() . '/assets/stylesheets/checkbox.css' );	
+?>

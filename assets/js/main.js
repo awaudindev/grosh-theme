@@ -1,7 +1,10 @@
 jQuery(document).ready(function($){
 
-	 $('#datepicker1').datepicker();
-     $('#datepicker2').datepicker();
+
+	if($('#datepicker1').length || $('#datepicker2').length){
+		 $('#datepicker1').datepicker();
+	     $('#datepicker2').datepicker();
+	 }
      
 	 $('.selectpicker').selectpicker({
   
@@ -22,6 +25,7 @@ jQuery(document).ready(function($){
 	$('input[type=radio][name=filetype]').change(function() {
         $("#product-type-form").submit();
     });
+    
 	function toggleSearch(type) {
 		if(type=="close") {
 			//close serach 

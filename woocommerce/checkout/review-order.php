@@ -19,6 +19,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+echo '<pre>';print_r($_POST);echo '</pre>';
 ?>
 <table class="shop_table woocommerce-checkout-review-order-table">
 	<thead>

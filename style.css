@@ -329,6 +329,9 @@ fieldset[disabled] .btn-default.active {
   background-color: #e0e0e0;
   background-image: none;
 }
+.btn-default:visited{
+  color: #fff;
+}
 /*--------------------------------------------------------------
 # Accessibility
 --------------------------------------------------------------*/
@@ -1725,4 +1728,11 @@ MEDIA QUERY
   border-radius: 3px;
   font-size: 16px;
   color: #222;
+}
+
+.woocommerce-cart .cart-collaterals .cart_totals table.ui-datepicker-calendar th{
+  width: auto;
+}
+.woocommerce .cart-collaterals .cart_totals{
+  position: relative;
 }
