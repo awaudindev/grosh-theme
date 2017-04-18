@@ -245,7 +245,7 @@
     ) );
 
     Redux::setSection( $opt_name, array(
-        'title'      => __( 'Feature Home Product', 'redux-framework-demo' ),
+        'title'      => __( 'Homepage', 'redux-framework-demo' ),
         'desc'       => '',
         'id'         => 'homepage-subsection',
         'subsection' => true,
@@ -263,6 +263,31 @@
                     'orderby'        => 'title',
                     'order'          => 'ASC',
                 )
+            ),
+            array(
+                'id'       => 'slider-homepage-select',
+                'type'     => 'select',
+                'multi'    => true,
+                'title'    => __('Slider', 'redux-framework-demo'), 
+                'desc'     => __('You can change your homepage slider.', 'redux-framework-demo'),
+                'data'  => 'posts',
+                'args'  => array(
+                    'post_type'      => 'product',
+                    'posts_per_page' => -1,
+                    'orderby'        => 'title',
+                    'order'          => 'ASC',
+                )
+            ),
+            array(
+                'id'          => 'show-slides',
+                'type'        => 'slides',
+                'title'       => __('Show Options', 'redux-framework-demo'),
+                'subtitle'    => __('You can change and updated Show Option on Homepage', 'redux-framework-demo'),
+                'placeholder' => array(
+                    'title'           => __('Title', 'redux-framework-demo'),
+                    'description'     => __('Description', 'redux-framework-demo'),
+                    'url'             => __('URL', 'redux-framework-demo'),
+                ),
             )
         )
     ) );
@@ -313,6 +338,15 @@
                 'id'       => 'package-bundle-price',
                 'type'     => 'text',
                 'title'    => __('Package Bundle Price', 'redux-framework-demo'),
+                'subtitle' => __('', 'redux-framework-demo'),
+                'desc'     => __('', 'redux-framework-demo'),
+                'validate' => 'numeric',
+                'msg'      => 'Only accept number'
+            ),
+            array(
+                'id'       => 'recurring-bundle-package-price',
+                'type'     => 'text',
+                'title'    => __('Recurring Package Bundle Price', 'redux-framework-demo'),
                 'subtitle' => __('', 'redux-framework-demo'),
                 'desc'     => __('', 'redux-framework-demo'),
                 'validate' => 'numeric',
