@@ -165,9 +165,51 @@ add_action( 'woocommerce_before_calculate_totals', 'add_custom_price' );
 
 function add_custom_price( $cart_object ) {
 
-    foreach ( WC()->cart->get_cart() as $key => $value ) {
-        $value['data']->set_price($value['price']);
-    }
+	$rentalDate = WC()->session->get('rental_date');
+
+	if(isset($rentalDate)){
+
+		$datetime1 = new DateTime($rentalDate['start']);
+		$datetime2 = new DateTime($rentalDate['expiry']);
+		$interval = date_diff($datetime1, $datetime2);
+
+		$base_price_image = ($grosh_meta['base-image-price']) ? $grosh_meta['base-image-price'] : 65;
+	 	$base_price_motion = ($grosh_meta['base-motion-price']) ? $grosh_meta['base-motion-price'] : 115;
+	 	$bundle_price = ($grosh_meta['package-bundle-price']) ? $grosh_meta['package-bundle-price'] : 750;
+
+	 	$recurring_price_image = ($grosh_meta['recurring-image-price']) ? $grosh_meta['recurring-image-price'] : 3.25;
+	 	$recurring_price_motion = ($grosh_meta['recurring-motion-price']) ? $grosh_meta['recurring-motion-price'] : 5.75;
+
+		foreach ( WC()->cart->get_cart() as $key => $value ) {
+
+			$base_price = ($value['file_type'] == 'animation') ? $base_price_motion : $base_price_image;
+			$recurring_price = ($value['file_type'] == 'animation' && empty($file_type) || $file_type == 'animation') ? $recurring_price_motion : $recurring_price_image;
+
+			$firstweek = $base_price;
+
+			if($interval->days > 7){
+
+				$extra = $interval->days - 7;
+
+				$extra_total = $extra * $recurring_price;
+
+				$value['data']->set_price($firstweek + $extra_total); 
+
+			}else{
+
+				$value['data']->set_price($firstweek);
+			
+			}
+			
+	    }
+
+	}else{
+
+	    foreach ( WC()->cart->get_cart() as $key => $value ) {
+	        $value['data']->set_price($value['price']);
+	    }
+
+	}
 }
 
 add_action( 'wp_ajax_check_total', 'check_total' );
