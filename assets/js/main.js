@@ -22,8 +22,8 @@ jQuery(document).ready(function($){
 		$('#popupMsg').modal('show');
 	});
 
-	$('input[type=radio][name=filetype]').change(function() {
-        $("#product-type-form").submit();
+	$('.quote-price input[type=radio][name=filetype]').change(function() {
+        $(".quote-price form").submit();
     });
     
 	function toggleSearch(type) {
