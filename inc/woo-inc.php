@@ -176,4 +176,22 @@ if ( ! function_exists( 'woocommerce_get_product_title' ) ) {
 		return $output;
 	}
 }
+remove_action( 'woocommerce_product_query', 'action_woocommerce_product_query', 10, 2 );
+add_action( 'woocommerce_product_query', 'custom_post_product_query', 10, 2 ); 
+if ( ! function_exists( 'custom_post_product_query' ) ) {
+	function custom_post_product_query( $q, $instance ) {
+		$type = $_GET['type'] != '' ? $_GET['type'] : '';
+		$meta_query = $q->get( 'meta_query' );
+
+		 if ( $type != '' ) {
+	        $meta_query[] = array(
+	                    'key'       => 'file_type',
+	                    'value' 	=> $type,
+	                    'compare'   => '='
+	                );
+	    }
+	 
+	    $q->set( 'meta_query', $meta_query );
+	}
+}
 ?>
