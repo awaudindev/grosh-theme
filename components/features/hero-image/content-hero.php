@@ -7,6 +7,25 @@
 global $grosh_meta;
 $slider = $grosh_meta['slider-homepage-select'];
 $package = $grosh_meta['show-slides'];
+$totp = count($package);
+$parent_class = "12";
+switch ($totp) {
+  case 1:
+    $parent_class = "12";
+    break;
+  case 2:
+    $parent_class = "6";
+    break;
+  case 3:
+    $parent_class = "4";
+    break;
+  case 4:
+    $parent_class = "3";
+    break;
+  default:
+    $parent_class = "12";
+    break;
+}
 ?>
 
 <?php //if ( has_post_thumbnail() ) : ?>
@@ -64,6 +83,7 @@ $package = $grosh_meta['show-slides'];
       	</a>
     </div>
 </div><!--[end:page-header]-->
+<?php if(count($package) > 0){?>
 <div class="featured">
 	<div class="container">
         <div class="row">
@@ -72,7 +92,7 @@ $package = $grosh_meta['show-slides'];
               for($i = 0; $i < count($package); $i++){
                 $pack = $package[$i];
                 ?>
-                <div class="col-md-4 col-sm-4">
+                <div class="col-md-<?php echo $parent_class;?> col-sm-<?php echo $parent_class;?>">
                   <div class="icon-feat text-center"><img src="<?php echo $pack['image']; ?>"/></div>
                   <h5 class="title-entry text-center padTop20 padBot10"><a href="<?php echo $pack['url']; ?>"><?php echo $pack['title']; ?></a></h5>
                   <p class="text-center">
@@ -83,5 +103,6 @@ $package = $grosh_meta['show-slides'];
               }
             ?>
         </div>
-    </div>
+  </div>
 </div>
+<?php } ?>

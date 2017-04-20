@@ -47,18 +47,19 @@
 		</nav>
 		<div style="position: relative;">
 	      <div id="cd-search" class="cd-search arrow_box">
-	        <form>
+	        <form role="search" method="get" id="searchform" action="<?php echo home_url( '/' ); ?>">
 	          <div class="container">
 	            <div class="row">
 	              <div class="col-md-11 col-sm-10">
 	                <label>I'm looking for</label>
 	                <div class="cd-search-box">
 	                  <div class="form-group clearfix">
-	                    <input type="text" class="form-control" placeholder="Find the perfect digital drop ...">
-	                    <select class="selectpicker">
-	                      <option>Animated images</option>
-	                      <option>Still images</option>
+	                    <input type="text" value="" name="s" id="s" class="form-control" placeholder="Find the perfect digital drop ...">
+	                    <select class="selectpicker" name="type" id="type">
+	                      <option value="animated">Animated images</option>
+	                      <option value="images">Still images</option>
 	                    </select>
+	                    <input type="hidden" name="post_type" value="product">
 	                  </div>
 	                </div>
 	               
