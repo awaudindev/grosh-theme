@@ -265,3 +265,63 @@ function check_total() {
 	echo json_encode(array('total'=>wc_price(count_total($interval))));
 	wp_die();
 }
+
+add_action( 'woocommerce_new_order', 'save_rental_date',  1, 1  );
+function save_rental_date($order_id){
+	$rentalDate = WC()->session->get('rental_date');
+
+	if(isset($rentalDate)){
+
+		$datetime1 = new DateTime($rentalDate['start']);
+		$datetime2 = new DateTime($rentalDate['expiry']);
+
+		$rangedate['start'] = $datetime1->format('m/d/Y');
+		$rangedate['expiry'] = $datetime2->format('m/d/Y'); 
+
+	    if(add_post_meta( $order_id, 'rental_date', $rangedate )){
+	    	WC()->session->__unset('rental_date');
+	    }
+	}
+}
+
+function rental_pending($order_id) {
+
+}
+function rental_failed($order_id) {
+    
+}
+function rental_hold($order_id) {
+    
+}
+function rental_processing($order_id) {
+   
+}
+function rental_completed($order_id) {
+    
+}
+function rental_refunded($order_id) {
+    
+}
+function rental_cancelled($order_id) {
+    
+}
+
+// add_action( 'woocommerce_order_status_pending', 'rental_pending', 10, 1);
+// add_action( 'woocommerce_order_status_failed', 'rental_failed', 10, 1);
+// add_action( 'woocommerce_order_status_on-hold', 'rental_hold', 10, 1);
+
+// Note that it's woocommerce_order_status_on-hold, and NOT on_hold.
+// add_action( 'woocommerce_order_status_processing', 'rental_processing', 10, 1);
+// add_action( 'woocommerce_order_status_completed', 'rental_completed', 10, 1);
+// add_action( 'woocommerce_order_status_refunded', 'rental_refunded', 10, 1);
+// add_action( 'woocommerce_order_status_cancelled', 'rental_cancelled', 10, 1);
+
+function rental_payment_complete( $order_id ) {
+    
+}
+add_action( 'woocommerce_payment_complete', 'rental_payment_complete', 10, 1 );
+
+function rental_order_status_completed( $order_id ) {
+    
+}
+add_action( 'woocommerce_order_status_completed', 'rental_order_status_completed', 10, 1 );
