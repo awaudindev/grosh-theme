@@ -57,7 +57,7 @@
 	                    <input type="text" value="" name="s" id="s" class="form-control" placeholder="Find the perfect digital drop ...">
 	                    <select class="selectpicker" name="type" id="type">
 	                      <option value="animation">Animated images</option>
-	                      <option value="images">Still images</option>
+	                      <option value="image">Still images</option>
 	                    </select>
 	                    <input type="hidden" name="post_type" value="product">
 	                  </div>
