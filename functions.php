@@ -224,7 +224,9 @@ function grosh_scripts() {
 	wp_enqueue_script( 'grosh-bootstrapjs', get_template_directory_uri() . '/assets/js/bootstrap.min.js', array());
 	wp_enqueue_script( 'grosh-selectjs', get_template_directory_uri() . '/assets/js/bootstrap-select.min.js', array());
 	wp_enqueue_script( 'grosh-datepickerjs', get_template_directory_uri() . '/assets/js/bootstrap-datepicker.js', array());
-	wp_enqueue_script( 'grosh-datepickerjs', get_template_directory_uri() . '/assets/js/modernizr.js', array());
+	wp_enqueue_script( 'grosh-masonry', get_template_directory_uri() . '/assets/js/masonry.pkgd.min.js', array());
+	wp_enqueue_script( 'grosh-images-loaded', get_template_directory_uri() . '/assets/js/imagesloaded.pkgd.min.js', array());
+	wp_enqueue_script( 'grosh-modernizr', get_template_directory_uri() . '/assets/js/modernizr.js', array());
 	wp_enqueue_script( 'grosh-mainjs', get_template_directory_uri() . '/assets/js/main.js', array());
 	wp_enqueue_script( 'grosh-skip-link-focus-fix', get_template_directory_uri() . '/assets/js/skip-link-focus-fix.js', array(), '20151215', true );
 
@@ -233,8 +235,7 @@ function grosh_scripts() {
 	}
 
 	if( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'main_product') || has_shortcode( $post->post_content, 'packages')) {
-		wp_enqueue_script( 'masonryjs', 'https://cdnjs.cloudflare.com/ajax/libs/masonry/4.1.1/masonry.pkgd.min.js', array(),'',true);
-
+		
 		add_action('wp_footer', 
 	    function(){ ?>
 	    <script type="text/javascript">

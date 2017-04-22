@@ -194,4 +194,12 @@ if ( ! function_exists( 'custom_post_product_query' ) ) {
 	    $q->set( 'meta_query', $meta_query );
 	}
 }
+add_filter( 'woocommerce_variable_sale_price_html', 'businessbloomer_remove_prices', 10, 2 );
+add_filter( 'woocommerce_variable_price_html', 'businessbloomer_remove_prices', 10, 2 );
+add_filter( 'woocommerce_get_price_html', 'businessbloomer_remove_prices', 10, 2 );
+ 
+function businessbloomer_remove_prices( $price, $product ) {
+	$price = '';
+	return $price;
+}
 ?>

@@ -41,5 +41,19 @@ jQuery(document).ready(function($){
 		}
 	}
 
+	// Takes the gutter width from the bottom margin of .post
+
+	var gutter = parseInt($('.post-box').css('marginBottom'));
+	var container = $('#wrap');
+
+
+
+	// Creates an instance of Masonry on #posts
+
+	container.masonry({
+		gutter: gutter,
+		itemSelector: '.post-box',
+		columnWidth: '.post-box'
+	});
 	
 });
