@@ -381,6 +381,16 @@ require get_template_directory() . '/inc/theme-options.php';
 require get_template_directory() . '/inc/vt_resize.php';
 
 /**
+ * Load customer info file.
+ */
+require get_template_directory() . '/inc/customer-info.php';
+
+/**
+ * Load register extra field file.
+ */
+require get_template_directory() . '/inc/register-field.php';
+
+/**
  *
  * Breadcrumb
  */
