@@ -33,6 +33,41 @@
     </div>
 </div>
 <?php wp_footer(); ?>
+<?php if(!is_user_logged_in()){ ?>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body clearfix">
+                <div class="col-md-12 woocommerce">
+                    <?php wc_get_template_part( 'myaccount/form', 'login' ); ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    jQuery(function($){
+        $(document).ready(function() {
+            $('.navbar-nav.navbar-right.main-menu').append('<li class="menu-item"><a title="Login" href="#" class="modal-login" data-toggle="modal" data-target="#myModal">Login</a></li>');
+         });
+        <?php if($_POST['register'] || $_POST['login']){ ?>
+        $(window).on('load',function(){
+            $('#myModal').modal('show');
+        });
+        <?php } ?>
+    });
+</script>
+<?php }else{ ?>
 
+<script type="text/javascript">
+    jQuery(function($){
+        $('.navbar-nav.navbar-right.main-menu').append('<li class="menu-item"><a title="Logout" href="<?php  echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>customer-logout">Logout</a></li>');
+    });
+</script>
+<?php } ?>
 </body>
 </html>
