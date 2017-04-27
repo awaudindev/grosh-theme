@@ -40,6 +40,7 @@ switch ($totp) {
           <?php
             $class = "";
             $i = 0;
+            if(!empty($slider)){
             foreach ($slider as $item) {
               if($i == 0)
                 $class = "active";
@@ -72,6 +73,7 @@ switch ($totp) {
               <?php
               $i++;
             }
+          }
           ?>
 	    </div>
       	<?php get_product_search_form(); ?>  

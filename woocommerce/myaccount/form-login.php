@@ -26,16 +26,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <?php do_action( 'woocommerce_before_customer_login_form' ); ?>
 
-<?php if ( get_option( 'woocommerce_enable_myaccount_registration' ) === 'yes' ) : ?>
-
-<div class="u-columns col2-set" id="customer_login">
-
-	<div class="u-column1 col-1">
-
-<?php endif; ?>
-
-		<h2><?php _e( 'Login', 'woocommerce' ); ?></h2>
-
+<!-- Nav tabs -->
+<ul class="nav nav-tabs loginForm">
+    <li <?php if($_POST['register'] != 'Register'){ ?>class="active"<?php } ?>><a href="#Login" data-toggle="tab">Login</a></li>
+   <?php if ( get_option( 'woocommerce_enable_myaccount_registration' ) === 'yes' ) : ?> <li <?php if($_POST['register'] == 'Register'){ ?>class="active"<?php } ?>><a href="#Registration" data-toggle="tab">Registration</a></li><?php endif; ?>
+</ul>
+<!-- Tab panes -->
+<div class="tab-content">
+    <div class="tab-pane <?php if($_POST['register'] != 'Register'){ ?>active<?php } ?>" id="Login">
 		<form method="post" class="login">
 
 			<?php do_action( 'woocommerce_login_form_start' ); ?>
@@ -69,10 +67,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <?php if ( get_option( 'woocommerce_enable_myaccount_registration' ) === 'yes' ) : ?>
 
 	</div>
-
-	<div class="u-column2 col-2">
-
-		<h2><?php _e( 'Register', 'woocommerce' ); ?></h2>
+    <div class="tab-pane <?php if($_POST['register'] == 'Register'){ ?>active<?php } ?>" id="Registration">
 
 		<form method="post" class="register">
 
@@ -116,9 +111,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		</form>
 
-	</div>
+	
+<?php endif; ?>
+</div>
 
 </div>
-<?php endif; ?>
 
 <?php do_action( 'woocommerce_after_customer_login_form' ); ?>

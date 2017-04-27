@@ -66,3 +66,16 @@ function wooc_save_extra_register_fields( $customer_id ) {
 
 }
 add_action( 'woocommerce_created_customer', 'wooc_save_extra_register_fields' );
+
+add_filter('woocommerce_login_redirect', 'wc_login_redirect');
+function wc_login_redirect( $redirect_to ) {
+     return home_url('/');
+}
+
+add_action('wp_logout','logout_redirect');
+function logout_redirect(){
+
+    wp_redirect( home_url() );
+    exit;
+
+}

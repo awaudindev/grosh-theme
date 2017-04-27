@@ -1011,7 +1011,8 @@ body {
 /*----------------------
 PRODUCT
 ------------------------*/
-.popular-post ul{
+.popular-post ul,
+ul.loginForm{
   list-style-type: none;
   padding-left: 0;
   margin-left: 0;
