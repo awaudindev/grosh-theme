@@ -1837,4 +1837,16 @@ MEDIA QUERY
     list-style: none;
     clear: both;
 }
-    
+
+.woocommerce form .form-row.woocommerce-validated .select2-container, 
+.woocommerce form .form-row.woocommerce-validated input.input-text, 
+.woocommerce form .form-row.woocommerce-validated select {
+  border-color: #ebebeb;
+}    
+
+.woocommerce form .form-row input.input-text, 
+.woocommerce form .form-row textarea{
+  border-radius: 3px;
+  border: 1px solid #ebebeb;
+  padding: 10px;
+}
