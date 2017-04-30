@@ -281,9 +281,9 @@ function save_rental_date($order_id){
 		$interval = date_diff($datetime1, $datetime2);
 		$length = $interval->days;
 
-		wc_add_order_item_meta($order_id, 'rental_period', $length);
-		wc_add_order_item_meta($order_id, 'status', 'new');
-		wc_add_order_item_meta($order_id, 'activated_date_time', '');
+		add_post_meta( $order_id, 'rental_period', $length );
+		add_post_meta( $order_id, 'status', 'new' );
+		add_post_meta( $order_id, 'activated_date_time', '' );
 
 	    WC()->session->__unset('rental_date');
 	}
