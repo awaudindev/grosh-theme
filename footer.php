@@ -33,7 +33,7 @@
     </div>
 </div>
 <?php wp_footer(); ?>
-<?php if(!is_user_logged_in()){ ?>
+<?php if(!is_user_logged_in() && $post->ID != get_option('woocommerce_myaccount_page_id')){ ?>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -61,7 +61,7 @@
         <?php } ?>
     });
 </script>
-<?php }else{ ?>
+<?php }else if(is_user_logged_in()){ ?>
 
 <script type="text/javascript">
     jQuery(function($){

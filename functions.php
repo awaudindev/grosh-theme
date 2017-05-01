@@ -329,7 +329,7 @@ EOD;
 
 	        	var dates = $( "#from, #to" ).datepicker({
 				    dateFormat: 'mm/dd/yy',
-				    minDate : 'today',
+				    minDate : 'today' ,
 				    defaultDate : <?php echo $start; ?>,
 				    onSelect: function(dateText, inst) {
 				        //set value
@@ -350,6 +350,7 @@ EOD;
 						if ( ($.datepicker.parseDate('mm/dd/yy', datepickerBegin) >  $.datepicker.parseDate('mm/dd/yy', datepickerEnd))) {
 							$("#to_value").val(dates.not( this ).datepicker( "option", option, date ).val());
 					        $(".to_text").html(dates.not( this ).datepicker( "option", option, date ).val());
+					        $("#to").datepicker({'minDate': $.datepicker.parseDate('mm/dd/yy', datepickerBegin)});
 						}
 
 				        sendFeedback('action=check_total&fromdate='+$("#from").val()+'&todate='+$("#to_value").val());

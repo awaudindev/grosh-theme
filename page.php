@@ -16,7 +16,7 @@ global $post;
 
 get_header(); 
 
-$col = (is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'main_product') || has_shortcode( $post->post_content, 'packages') || has_shortcode( $post->post_content, 'woocommerce_cart') || has_shortcode( $post->post_content, 'woocommerce_checkout')) ? 12 : 9;
+$col = (is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'main_product') || has_shortcode( $post->post_content, 'packages') || has_shortcode( $post->post_content, 'woocommerce_cart') || has_shortcode( $post->post_content, 'woocommerce_checkout') || has_shortcode( $post->post_content, 'woocommerce_my_account')) ? 12 : 9;
 ?>
 <div class="page-header">
 	<div class="container">
