@@ -19,6 +19,14 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+$datetime1 = new DateTime();
+
+$newDate1 = $datetime1->format('m/d/Y');
+$newDate2 = $newDate1;
+
+$rentalDate = WC()->session->get('rental_date');
+$from = ($rentalDate) ? $rentalDate['start'] : $newDate1;
+$end = ($rentalDate) ? $rentalDate['expiry'] : $newDate2;
 ?>
 <table class="shop_table woocommerce-checkout-review-order-table">
 	<thead>
@@ -40,8 +48,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<tr class="<?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key ) ); ?>">
 						<td class="product-name">
 							<?php echo apply_filters( 'woocommerce_cart_item_name', $_product->get_title(), $cart_item, $cart_item_key ) . '&nbsp;'; ?>
-							<?php echo apply_filters( 'woocommerce_checkout_cart_item_quantity', ' <strong class="product-quantity">' . sprintf( '&times; %s', $cart_item['quantity'] ) . '</strong>', $cart_item, $cart_item_key ); ?>
-							<?php echo WC()->cart->get_item_data( $cart_item ); ?>
 						</td>
 						<td class="product-total">
 							<?php echo apply_filters( 'woocommerce_cart_item_subtotal', WC()->cart->get_product_subtotal( $_product, $cart_item['quantity'] ), $cart_item, $cart_item_key ); ?>
@@ -104,9 +110,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php do_action( 'woocommerce_review_order_before_order_total' ); ?>
 
 		<tr class="order-total">
-			<th><?php _e( 'Total', 'woocommerce' ); ?></th>
+			<th><?php _e( 'Total', 'woocommerce' ); ?><br><small>from <?php echo $from; ?> - Until <?php echo $end; ?></small></th>
 			<td><?php wc_cart_totals_order_total_html(); ?></td>
-		</tr>
+		</tr> 
 
 		<?php do_action( 'woocommerce_review_order_after_order_total' ); ?>
 

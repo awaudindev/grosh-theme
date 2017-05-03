@@ -24,6 +24,8 @@ $order = wc_get_order( $order_id );
 
 $show_purchase_note    = $order->has_status( apply_filters( 'woocommerce_purchase_note_order_statuses', array( 'completed', 'processing' ) ) );
 $show_customer_details = is_user_logged_in() && $order->get_user_id() === get_current_user_id();
+$periodRent = get_post_meta( $order_id, 'rental_period');
+$day = ($periodRent > 1) ? 'days' : 'day';
 ?>
 <h2><?php _e( 'Order Details', 'woocommerce' ); ?></h2>
 <table class="shop_table order_details">
@@ -55,7 +57,13 @@ $show_customer_details = is_user_logged_in() && $order->get_user_id() === get_cu
 			foreach ( $order->get_order_item_totals() as $key => $total ) {
 				?>
 				<tr>
-					<th scope="row"><?php echo $total['label']; ?></th>
+					<th scope="row"><?php  
+					if($total['label'] == 'Total:'){
+						echo str_replace(':',' rent for '.$periodRent[0].' '.$day.':',$total['label']);
+					}else{
+						echo $total['label'];
+					}
+					?></th>
 					<td><?php echo $total['value']; ?></td>
 				</tr>
 				<?php

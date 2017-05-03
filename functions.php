@@ -327,35 +327,70 @@ EOD;
 			        });
 			    }
 
-	        	var dates = $( "#from, #to" ).datepicker({
-				    dateFormat: 'mm/dd/yy',
+	   //      	var dates = $( "#from, #to" ).datepicker({
+				//     dateFormat: 'mm/dd/yy',
+				//     minDate : 'today' ,
+				//     defaultDate : <?php echo $start; ?>,
+				//     beforeShow : function(el,inst){
+				//     	console.log(el);
+				//     },
+				//     onSelect: function(dateText, inst) {
+				//         //set value
+				//         $("#" + this.id + "_value").val(dateText);
+				//         $("." + this.id + "_text").html(dateText);
+
+				//         var datepickerBegin = $("#from_value").val(); // lets, returning in mm/dd/yy format
+				// 		var datepickerEnd = $("#to_value").val(); // lets, returning in mm/dd/yy format
+				//         //set the min or max date
+				//         var option = this.id == "from" ? "minDate" : "maxDate",
+				//         instance = $( this ).data( "datepicker" ),
+				//         date = $.datepicker.parseDate(
+				//             instance.settings.dateFormat ||
+				//             $.datepicker._defaults.dateFormat,
+				//             dateText, instance.settings );
+				//         dates.not( this ).datepicker( "option", option, date );
+
+				// 		if ( ($.datepicker.parseDate('mm/dd/yy', datepickerBegin) >  $.datepicker.parseDate('mm/dd/yy', datepickerEnd))) {
+				// 			$("#to_value").val(dates.not( this ).datepicker( "option", option, date ).val());
+				// 	        $(".to_text").html(dates.not( this ).datepicker( "option", option, date ).val());
+				// 	        $("#to").datepicker({'minDate': $.datepicker.parseDate('mm/dd/yy', datepickerBegin)});
+				// 		}
+
+				       
+				//     }
+				// });
+
+			    $("#from").datepicker({
+			        dateFormat: 'mm/dd/yy',
 				    minDate : 'today' ,
 				    defaultDate : <?php echo $start; ?>,
-				    onSelect: function(dateText, inst) {
-				        //set value
-				        $("#" + this.id + "_value").val(dateText);
+			        onSelect: function (dateText,inst) {
+			        	$("#" + this.id + "_value").val(dateText);
 				        $("." + this.id + "_text").html(dateText);
 
-				        var datepickerBegin = $("#from_value").val(); // lets, returning in mm/dd/yy format
-						var datepickerEnd = $("#to_value").val(); // lets, returning in mm/dd/yy format
-				        //set the min or max date
-				        var option = this.id == "from" ? "minDate" : "maxDate",
-				        instance = $( this ).data( "datepicker" ),
-				        date = $.datepicker.parseDate(
-				            instance.settings.dateFormat ||
-				            $.datepicker._defaults.dateFormat,
-				            dateText, instance.settings );
-				        dates.not( this ).datepicker( "option", option, date );
+			            var setdate2 = $(this).datepicker('getDate'),
+			            	date2 = $('#to').datepicker('getDate');
+			            setdate2.setDate(setdate2.getDate());
 
-						if ( ($.datepicker.parseDate('mm/dd/yy', datepickerBegin) >  $.datepicker.parseDate('mm/dd/yy', datepickerEnd))) {
-							$("#to_value").val(dates.not( this ).datepicker( "option", option, date ).val());
-					        $(".to_text").html(dates.not( this ).datepicker( "option", option, date ).val());
-					        $("#to").datepicker({'minDate': $.datepicker.parseDate('mm/dd/yy', datepickerBegin)});
-						}
+			            $('#to').datepicker('option', 'minDate', setdate2);
 
-				        sendFeedback('action=check_total&fromdate='+$("#from").val()+'&todate='+$("#to_value").val());
-				    }
-				});
+			            $("#to_value").val($('#to').datepicker().val());
+				        $(".to_text").html($('#to').datepicker().val());
+
+			            sendFeedback('action=check_total&fromdate='+$("#from").val()+'&todate='+$("#to_value").val());
+			        }
+			    });
+			    $('#to').datepicker({
+			        dateFormat: 'mm/dd/yy',
+				    minDate : <?php echo $start; ?> ,
+				    defaultDate : <?php echo $end; ?>,
+			        onSelect: function (dateText,inst) {
+			        	$("#" + this.id + "_value").val(dateText);
+				        $("." + this.id + "_text").html(dateText);
+
+			            sendFeedback('action=check_total&fromdate='+$("#from").val()+'&todate='+$("#to_value").val());
+			        }
+			    });
 	        });
 
 	      });

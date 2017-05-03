@@ -21,9 +21,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 do_action( 'woocommerce_before_account_navigation' );
-?>
+$current_user = wp_get_current_user();
 
+?>
 <nav class="woocommerce-MyAccount-navigation">
+<?php 
+if ( ($current_user instanceof WP_User) ) { ?>
+<div class="col-md-12 aligncenter">
+	<figure class="text-center"><?php echo get_avatar( $current_user->user_email, 128 ); ?></figure>
+	<h3 class="text-center marBot30"><?php echo $current_user->display_name; ?></h3>
+</div>
+<span class="clearfix"></span>
+<?php } ?>
 	<ul class="nav nav-pills nav-stacked">
 		<?php foreach ( wc_get_account_menu_items() as $endpoint => $label ) : ?>
 			<li class="<?php echo str_replace('is-active','active',wc_get_account_menu_item_classes( $endpoint )); ?>">
