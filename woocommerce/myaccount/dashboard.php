@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 global $grosh_meta;
 
-function chart($image,$animation){ ?>
+function chart($image,$animation,$new,$active){ ?>
 <script type="text/javascript">
 	jQuery(function() {
 
@@ -39,6 +39,18 @@ function chart($image,$animation){ ?>
 	        }],
 	        resize: true
 	    });
+
+        Morris.Donut({
+            element: 'chart-status',
+            data: [{
+                label: "New Order",
+                value: <?php echo $new; ?>
+            }, {
+                label: "Activated Order",
+                value: <?php echo $active; ?>
+            }],
+            resize: true
+        });
 
 	});
 </script>
@@ -66,9 +78,18 @@ $recurring_price_motion = ($grosh_meta['recurring-motion-price']) ? $grosh_meta[
 
 $image = 0;
 $animation = 0;
+$status_new = 0;
+$status_active = 0;
 
 foreach ( $customer_orders as $customer_order ) :
 	$periodRent = get_post_meta( $customer_order->ID, 'rental_period');
+    $status = get_post_meta( $customer_order->ID, 'status', true);
+    if($status == 'activated'){
+        $status_active += 1;
+    }else{
+        $status_new += 1;
+    }
+
 	$order      = wc_get_order( $customer_order );
 	$item_count += $order->get_item_count();
 
@@ -84,12 +105,21 @@ foreach ( $customer_orders as $customer_order ) :
 	$total_motion = $base_price_motion + $recurringMotion;
 
 	foreach( $order->get_items() as $item_id => $item ) {
-		$product = apply_filters( 'woocommerce_order_item_product', $order->get_product_from_item( $item ), $item );
+        
+        $product_id = $item['product_id'];
+        $file_type = get_post_meta( $product_id, 'file_type', true);
+        //echo 'FIle Type '.$file_type;
+        if($file_type == 'animation'){
+            $animation += 1;
+        }else{
+            $image += 1;
+        }
+		/*$product = apply_filters( 'woocommerce_order_item_product', $order->get_product_from_item( $item ), $item );
 		if($order->get_item_meta($item_id, '_line_total', true) == $total_image){
 			$image += 1;
 		}else if($order->get_item_meta($item_id, '_line_total', true) == $total_motion){
 			$animation += 1;
-		}
+		}*/
 	}
 endforeach;
 endif;
@@ -167,15 +197,26 @@ endif;
         </div>
     </div>
     <div class="col-md-6">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <i class="fa fa-bar-chart-o fa-fw"></i> File Type Downloaded
-        </div>
-        <div class="panel-body">
-			<div id="morris-donut-chart"></div>
-		 </div>
-	     <!-- /.panel-body -->
-	</div>		
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <i class="fa fa-bar-chart-o fa-fw"></i> File Type Downloaded
+            </div>
+            <div class="panel-body">
+    			<div id="morris-donut-chart"></div>
+    		 </div>
+    	     <!-- /.panel-body -->
+    	</div>		
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <i class="fa fa-bar-chart-o fa-fw"></i> Status Order
+            </div>
+            <div class="panel-body">
+                <div id="chart-status"></div>
+             </div>
+             <!-- /.panel-body -->
+        </div>      
     </div>
 </div>
 
@@ -184,4 +225,4 @@ endif;
 wp_enqueue_script( 'raphaeljs', get_template_directory_uri() . '/assets/js/raphael.min.js', array());
 wp_enqueue_script( 'morrisjs', get_template_directory_uri() . '/assets/js/morris.min.js', array());
 
-add_action('wp_footer', chart($image,$animation) ,30);
+add_action('wp_footer', chart($image,$animation,$status_new,$status_active) ,30);
