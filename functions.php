@@ -235,8 +235,8 @@ function grosh_scripts() {
 		get_theme_file_uri( '/assets/js/bootstrap.min.js' ),
 		get_theme_file_uri( '/assets/js/bootstrap-select.min.js' ),
 		get_theme_file_uri( '/assets/js/bootstrap-datepicker.js' ),
-		get_theme_file_uri( '/assets/js/masonry.pkgd.min.js' ),
 		get_theme_file_uri( '/assets/js/imagesloaded.pkgd.min.js' ),
+		get_theme_file_uri( '/assets/js/masonry.pkgd.min.js' ),
 		get_theme_file_uri( '/assets/js/modernizr.js' ),
 		get_theme_file_uri( '/assets/js/skip-link-focus-fix.js' ),
 		get_theme_file_uri( '/assets/js/navigation.js' ),
@@ -264,24 +264,6 @@ EOD;
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
-	}
-
-	if( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'main_product') || has_shortcode( $post->post_content, 'packages')) {
-		
-		add_action('wp_footer', 
-	    function(){ ?>
-	    <script type="text/javascript">
-	      jQuery(function($){
-
-	        $(document).ready( function() {
-	        	$('.woocommerce .products').masonry();
-	        });
-
-	      });
-	    </script>
-
-	    <?php } 
-	  ,30);
 	}
 
 	if( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'woocommerce_cart')){

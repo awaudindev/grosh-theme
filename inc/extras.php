@@ -48,8 +48,8 @@ function main_product_category( $atts, $content = ""){
 	$terms = get_terms( 'product_cat', $args );
 	 
 	if ( $terms ) {
-	         
-	    $result .= '<div class="woocommerce"><ul class="products">';
+	    $result .= '<div id="grid">';     
+   	 		$result .= '<div class="woocommerce" id="wrap">';
 	     
 	        foreach ( $terms as $term ) {
 
@@ -58,11 +58,11 @@ function main_product_category( $atts, $content = ""){
 
 				$thumbnail = ($image) ? $image : wc_placeholder_img_src();
 	                         
-	            $result .= '<li class="product text-center"><a href="' .  esc_url( get_term_link( $term ) ) . '" class="' . $term->slug . '"><img src="' . $thumbnail . '" alt="' . $term->name . '" /><h2 class="woocommerce-loop-product__title">'.$term->name.' (' .$term->count. ')</h2></a></li>';                                                    
+	            $result .= '<div class="post-box"><a href="' .  esc_url( get_term_link( $term ) ) . '" class="' . $term->slug . '"><img src="' . $thumbnail . '" alt="' . $term->name . '" /><h2 class="woocommerce-loop-product__title">'.$term->name.' (' .$term->count. ')</h2></a></div>';                                                    
 	 
-	    }
-	     
-	    $result .= '</ul></div>';
+	    	}
+	    	$result .= '</div>';	     
+	    $result .= '</div>';
 	 
 	}
 
@@ -97,8 +97,8 @@ function product_packages( $atts, $content = ""){
     $wc_query = new WP_Query($params);
 
     if ($wc_query->have_posts()) :
-
-    	$result .= '<div class="woocommerce"><ul class="products">';
+    	$result .= '<div id="grid">';
+    		$result .= '<div class="woocommerce" id="wrap">';
 
       while ($wc_query->have_posts()) :$wc_query->the_post();
 
@@ -123,15 +123,7 @@ function product_packages( $atts, $content = ""){
         $large_image = getProductImage($product_number, false, false);
       }
 
-      if($img_oid > 0){
-
-        $img_url = wp_get_attachment_url( $img_oid ); //get img URL
-
-        $image = aq_resize( $img_url, 640, 280, true, true, true ); //resize & crop img
-
-      }
-
-      $result .= '<li class="col-md-4 col-sm-6 text-center">   
+      $result .= '<div class="post-box">   
 
          <div class="thumb-post">
 
@@ -141,12 +133,12 @@ function product_packages( $atts, $content = ""){
 
           </div>
 
-        </li>';
+        </div>';
 
 
       endwhile;
 
-      $result .= '</ul></div>';
+      $result .= '</div></div>';
 
       wp_reset_postdata();
 

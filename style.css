@@ -1261,6 +1261,8 @@ CAROUSEL
   margin-right: 10px;
   border-radius: 3px;
   display: inline-block;
+  font-size: 11px;
+  margin-bottom: 10px;
 }
 .tagged a:hover{
   background:#086fb8;
@@ -1571,6 +1573,9 @@ WOOCOMMERCE
   font-family: 'montserratbold';
   font-size: 18px;
 }
+.woocommerce-loop-product__title{
+  font-size: 16px;
+}
 /*----------------------------------
 MEDIA QUERY
 ------------------------------------*/
@@ -1737,11 +1742,11 @@ MEDIA QUERY
   position: absolute;
   z-index: 100;
   background: #fff;
-  left: 20px;
-  bottom: 70px;
+  left: 30px;
+  bottom: 75px;
   padding: 5px 10px;
   border-radius: 3px;
-  font-size: 16px;
+  font-size: 14px;
   color: #222;
 }
 
@@ -1757,7 +1762,7 @@ MEDIA QUERY
 
 #wrap { margin: 30px auto 0; }
 .post-box {
-  margin: 0 0 50px;
+  margin: 0 0 20px;
   text-align: center;
   width: 100%;
   position: relative;
@@ -1907,3 +1912,21 @@ MEDIA QUERY
 .panel-yellow a:hover {
     color: #df8a13;
 }
+.contactform7 .wpcf7-text, .contactform7 .wpcf7-email{
+border: 1px solid #ccc;
+border-radius: 0;
+padding: 10px;
+width: 49%;
+}
+.contactform7 .wpcf7-text{
+float:left;}
+.contactform7 .wpcf7-email{
+float:right;}
+.contactform7 .wpcf7-textarea{
+margin-top: 30px;
+border: 1px solid #ccc;
+border-radius: 0;
+padding: 10px;
+height: 100px;}
+.contactform7 .btn{
+float:right; margin-top:30px;}

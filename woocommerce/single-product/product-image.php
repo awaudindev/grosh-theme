@@ -30,15 +30,18 @@ $type = $_POST['filetype'];
 		$product_type = get_post_meta( $product->id, 'file_type', true );
 		$large_image = "";
 		$style = "";
-		if($type == "animation"){
-			$large_image = getProductImage($product_number, false, true);
-			$style = "width:100%";
-		}else{
-			if(IsNullOrEmptyString($product_number)){
-				$large_image = "http://placehold.it/1200x496";
+		if($type == ''){
+			if($product_type == "animation"){
+				$large_image = getProductImage($product_number, false, true);
+				$style = "width:100%";
 			}else{
 				$large_image = getProductImage($product_number, false, false);
 			}
+		}elseif ($type == "animation"){
+			$large_image = getProductImage($product_number, false, true);
+			$style = "width:100%";
+		}else{
+			$large_image = getProductImage($product_number, false, false);
 		}
 		
 		echo '<img src="'.$large_image.'" style="'.$style.'">';

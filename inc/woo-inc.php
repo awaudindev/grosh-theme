@@ -107,12 +107,12 @@ function getProductImage($number, $is_thumbnail, $is_animation){
 	$result = "";
 
 	if($is_animation){
-		$result = "http://s3.amazonaws.com/tndr/grosh/assets/".$number.".gif";
+		$result = "http://s3.amazonaws.com/groshdigital/".$number.".gif";
 	}else{
 		if($is_thumbnail){
-			$result = "http://s3.amazonaws.com/tndr/grosh/assets/thumbnails/".$number.".png";
+			$result = "http://s3.amazonaws.com/groshdigital/thumbnails/".$number.".png";
 		}else{
-			$result = "http://s3.amazonaws.com/tndr/grosh/assets/".$number.".png";
+			$result = "http://s3.amazonaws.com/groshdigital/".$number.".png";
 		}
 	}
 	return $result;

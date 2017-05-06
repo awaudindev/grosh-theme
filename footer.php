@@ -25,7 +25,7 @@
                 <div class="modal-body">
                     <a data-dismiss="modal" class="close-modal"><span aria-hidden="true">&times;</span></a>
                     <div id="dvMsg">
-                    	<img id="img-animation" src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/dummy-animation.gif"/>
+                    	<img id="img-animation"/>
                     </div>
                 </div>
             </div>

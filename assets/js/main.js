@@ -17,7 +17,7 @@ jQuery(document).ready(function($){
 	});
 	$('.caption').on('click', function(event){
 		var product_number = $(this).data('id');
-		var url = "http://s3.amazonaws.com/tndr/grosh/assets/" + product_number +".gif";
+		var url = "http://s3.amazonaws.com/groshdigital/" + product_number +".gif";
 		document.getElementById("img-animation").src = url;
 		$('#popupMsg').modal('show');
 	});
@@ -42,18 +42,16 @@ jQuery(document).ready(function($){
 	}
 
 	// Takes the gutter width from the bottom margin of .post
-
 	var gutter = parseInt($('.post-box').css('marginBottom'));
 	var container = $('#wrap');
 
-
-
 	// Creates an instance of Masonry on #posts
-
-	container.masonry({
-		gutter: gutter,
-		itemSelector: '.post-box',
-		columnWidth: '.post-box'
+	container.imagesLoaded(function(){
+		container.masonry({
+			gutter: 50,
+			itemSelector: '.post-box',
+			columnWidth: '.post-box'
+		});
 	});
 	
 });
