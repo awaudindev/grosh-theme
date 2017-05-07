@@ -108,13 +108,15 @@ foreach ( $customer_orders as $customer_order ) :
         
         $product_id = $item['product_id'];
         $file_type = get_post_meta( $product_id, 'file_type', true);
-        //echo 'FIle Type '.$file_type;
+        //echo 'FIle Type '.$file_type;apakah ini solve jika user sewa yang tipe image bukan animation ??
         if($file_type == 'animation'){
             $animation += 1;
         }else{
             $image += 1;
         }
-		/*$product = apply_filters( 'woocommerce_order_item_product', $order->get_product_from_item( $item ), $item );
+		/*
+        // Code di bawah buat check kalo misalnya dia milih sewa yg image bukan yang animation, kalo pakai meta, cuma dapat data file yang di set bukan tipe file yang disewa
+        $product = apply_filters( 'woocommerce_order_item_product', $order->get_product_from_item( $item ), $item );
 		if($order->get_item_meta($item_id, '_line_total', true) == $total_image){
 			$image += 1;
 		}else if($order->get_item_meta($item_id, '_line_total', true) == $total_motion){

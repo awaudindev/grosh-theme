@@ -436,6 +436,11 @@ require get_template_directory() . '/inc/vt_resize.php';
 require get_template_directory() . '/inc/register-field.php';
 
 /**
+ * Load purchase order payment.
+ */
+require get_template_directory() . '/inc/purchase-order.php';
+
+/**
  *
  * Breadcrumb
  */

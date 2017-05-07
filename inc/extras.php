@@ -273,7 +273,7 @@ function save_rental_date($order_id){
 		$interval = date_diff($datetime1, $datetime2);
 		$length = $interval->days;
 
-		add_post_meta( $order_id, 'rental_period', $length );
+		add_post_meta( $order_id, 'rental_period', ($length < 7) ? 7 : $length );
 		add_post_meta( $order_id, 'status', 'new' );
 		add_post_meta( $order_id, 'activated_date_time', '' );
 
@@ -322,3 +322,36 @@ function rental_order_status_completed( $order_id ) {
     
 }
 add_action( 'woocommerce_order_status_completed', 'rental_order_status_completed', 10, 1 );
+
+/**
+ * Account menu items
+ *
+ * @param arr $items
+ * @return arr
+ */
+function wishlist_account_menu_items( $items ) {
+ 
+    $items['wishlist'] = __( 'Wishlist', 'iconic' );
+ 
+    return $items;
+ 
+}
+ 
+add_filter( 'woocommerce_account_menu_items', 'wishlist_account_menu_items', 10, 1 );
+
+/**
+ * Add endpoint
+ */
+function wishlist_add_my_account_endpoint() {
+ 
+    add_rewrite_endpoint( 'wishlist', EP_PAGES );
+ 
+}
+ 
+add_action( 'init', 'wishlist_add_my_account_endpoint' );
+
+function wishlist_endpoint_content() {
+    wc_get_template( 'myaccount/wishlist.php' );
+}
+ 
+add_action( 'woocommerce_account_wishlist_endpoint', 'wishlist_endpoint_content' );
