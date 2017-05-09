@@ -15,10 +15,13 @@ jQuery(document).ready(function($){
 		toggleSearch();
 		//closeNav();
 	});
+
+
 	$('.caption').on('click', function(event){
 		var product_number = $(this).data('id');
-		var url = "http://s3.amazonaws.com/groshdigital/" + product_number +".gif";
-		document.getElementById("img-animation").src = url;
+		var url = "http://s3.amazonaws.com/groshdigital/thumbnails/watermark/" + product_number +".mp4";
+		playerpopup.setSrc(url);
+		playerpopup.play();
 		$('#popupMsg').modal('show');
 	});
 
@@ -54,4 +57,5 @@ jQuery(document).ready(function($){
 		});
 	});
 	
+	$('video').mediaelementplayer();
 });

@@ -218,28 +218,23 @@ function grosh_scripts() {
 	wp_enqueue_style( 'search', get_template_directory_uri() . '/assets/stylesheets/search.css' );
 	wp_enqueue_style( 'datepicker', get_template_directory_uri() . '/assets/stylesheets/bootstrap-datepicker.css' );
 	wp_enqueue_style( 'fontawesome', get_template_directory_uri() . '/assets/stylesheets/font-awesome.min.css' );	
+	wp_enqueue_style( 'mediaelement-style', get_template_directory_uri() . '/assets/stylesheets/mediaelementplayer.css' );	
 	wp_enqueue_style( 'grosh-style', get_stylesheet_uri() );
 
-	/*wp_enqueue_script( 'grosh-navigation', get_template_directory_uri() . '/assets/js/navigation.js', array(), '20151215', true );
-	wp_enqueue_script( 'grosh-bootstrapjs', get_template_directory_uri() . '/assets/js/bootstrap.min.js', array());
-	wp_enqueue_script( 'grosh-selectjs', get_template_directory_uri() . '/assets/js/bootstrap-select.min.js', array());
-	wp_enqueue_script( 'grosh-datepickerjs', get_template_directory_uri() . '/assets/js/bootstrap-datepicker.js', array());
-	wp_enqueue_script( 'grosh-masonry', get_template_directory_uri() . '/assets/js/masonry.pkgd.min.js', array());
-	wp_enqueue_script( 'grosh-images-loaded', get_template_directory_uri() . '/assets/js/imagesloaded.pkgd.min.js', array());
-	wp_enqueue_script( 'grosh-modernizr', get_template_directory_uri() . '/assets/js/modernizr.js', array());
-	wp_enqueue_script( 'grosh-mainjs', get_template_directory_uri() . '/assets/js/main.js', array());
-	wp_enqueue_script( 'grosh-skip-link-focus-fix', get_template_directory_uri() . '/assets/js/skip-link-focus-fix.js', array(), '20151215', true );
-	*/
+
 	$jquery_script_path = '/grosh/wp-includes/js/jquery/jquery.js';
 	$jquery_dependent_script_paths = [
+		get_theme_file_uri( '/assets/js/bootstrap.min.js' ),
 		get_theme_file_uri( '/assets/js/bootstrap.min.js' ),
 		get_theme_file_uri( '/assets/js/bootstrap-select.min.js' ),
 		get_theme_file_uri( '/assets/js/bootstrap-datepicker.js' ),
 		get_theme_file_uri( '/assets/js/imagesloaded.pkgd.min.js' ),
 		get_theme_file_uri( '/assets/js/masonry.pkgd.min.js' ),
 		get_theme_file_uri( '/assets/js/modernizr.js' ),
+		get_theme_file_uri( '/assets/js/mediaelement-and-player.min.js' ),
 		get_theme_file_uri( '/assets/js/skip-link-focus-fix.js' ),
 		get_theme_file_uri( '/assets/js/navigation.js' ),
+		'/grosh/wp-includes/js/mediaelement/wp-mediaelement.min.js',
 		get_theme_file_uri( '/assets/js/main.js' )
 	];
 	$jquery_dependent_script_paths_json = json_encode($jquery_dependent_script_paths);

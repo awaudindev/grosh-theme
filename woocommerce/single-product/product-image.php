@@ -30,21 +30,35 @@ $type = $_POST['filetype'];
 		$product_type = get_post_meta( $product->id, 'file_type', true );
 		$large_image = "";
 		$style = "";
+		$check_animation = true;
 		if($type == ''){
 			if($product_type == "animation"){
 				$large_image = getProductImage($product_number, false, true);
 				$style = "width:100%";
+				$check_animation = true;
 			}else{
 				$large_image = getProductImage($product_number, false, false);
+				$check_animation = false;
 			}
 		}elseif ($type == "animation"){
 			$large_image = getProductImage($product_number, false, true);
 			$style = "width:100%";
+			$check_animation = true;
 		}else{
 			$large_image = getProductImage($product_number, false, false);
+			$check_animation = false;
 		}
 		
-		echo '<img src="'.$large_image.'" style="'.$style.'">';
+		if($check_animation == true){
+			?>
+			<video width="640" height="360" style="width: 100%; height: 100%; z-index: 4001;" id="player1">
+		        <!-- Pseudo HTML5 -->
+		        <source type="video/mp4" src="<?php echo $large_image; ?>" />
+		    </video>
+			<?php
+		}else{
+			echo '<img src="'.$large_image.'" style="'.$style.'">';
+		}
 		echo '<div class="code-product">Item number : #'.$product_number.'</div>';
 
 		//do_action( 'woocommerce_product_thumbnails' );
