@@ -25,7 +25,7 @@
                 <div class="modal-body">
                     <a data-dismiss="modal" class="close-modal"><span aria-hidden="true">&times;</span></a>
                     <div id="dvMsg">
-                    	<video width="640" height="360" style="width: 100%; height: 100%; z-index: 4001;" id="playerpopup">
+                    	<video width="640" height="360" style="width: 100%; height: 100%;" id="playerpopup">
                             <source type="video/mp4" url="http://"/>
                         </video>
                     </div>

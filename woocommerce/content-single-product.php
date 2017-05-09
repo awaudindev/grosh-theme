@@ -71,14 +71,20 @@ $file_type = $_REQUEST['filetype'];
 			// if product not found, add it
 			if ( ! $found ){
 				$cart_item_data = array('price' => $base_price,'file_type' => ($post_meta['file_type'][0] == 'animation' && empty($file_type) || $file_type == 'animation') ? 'animation' : 'image');
-    			WC()->cart->add_to_cart( $post->ID, 1, '', array(), $cart_item_data);
-    			echo '<div class="col-md-12"><div class="alert alert-success" role="alert">File added to cart.</div></div>';
+    			if(WC()->cart->add_to_cart( $post->ID, 1, '', array(), $cart_item_data)){
+	    			echo '<div class="col-md-12"><div class="alert alert-success" role="alert">File added to cart.</div></div>';
+	    		}else{
+	    			echo '<div class="col-md-12"><div class="alert alert-danger" role="alert">Failed add to cart.</div></div>';
+	    		}
 			}
 		} else {
 			// if no products in cart, add it
 			$cart_item_data = array('price' => $base_price,'file_type' => ($post_meta['file_type'][0] == 'animation' && empty($file_type) || $file_type == 'animation') ? 'animation' : 'image');
-			WC()->cart->add_to_cart( $post->ID, 1, '', array(), $cart_item_data);
-			echo '<div class="col-md-12"><div class="alert alert-success" role="alert">File added to cart.</div></div>';
+			if(WC()->cart->add_to_cart( $post->ID, 1, '', array(), $cart_item_data)){
+				echo '<div class="col-md-12"><div class="alert alert-success" role="alert">File added to cart.</div></div>';
+			}else{
+				echo '<div class="col-md-12"><div class="alert alert-danger" role="alert">Failed add to cart.</div></div>';
+			}
 		}
 
     }
