@@ -8,7 +8,7 @@
  *
  * @package grosh
  */
-
+global $post;
 ?>
 			
 	</div><!--[end:site-content]-->
@@ -19,6 +19,7 @@
 			</div>
 		</div>	
 	</footer>
+    <?php if(!has_shortcode( $post->post_content, 'woocommerce_cart')){ ?>
 	<div class="modal" id="popupMsg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog normal-dialog">
             <div class="modal-content">
@@ -33,6 +34,7 @@
             </div>
         </div>
     </div>
+    <?php } ?>
 </div>
 <?php wp_footer(); ?>
 <?php if(!is_user_logged_in() && $post->ID != get_option('woocommerce_myaccount_page_id')){ ?>

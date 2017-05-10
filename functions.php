@@ -491,6 +491,11 @@ function woocommerce_template_product_description() {
 }
 add_action( 'woocommerce_single_product_summary', 'woocommerce_template_product_description', 20 );
 
+add_action('init','setCustomerCookie');
+function setCustomerCookie(){
+	WC()->session->set_customer_session_cookie(true);
+}
+
 
 remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 10 );
 add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 21 );
