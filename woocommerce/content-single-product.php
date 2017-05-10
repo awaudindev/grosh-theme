@@ -85,6 +85,8 @@ $file_type = $_REQUEST['filetype'];
 			}else{
 				echo '<div class="col-md-12"><div class="alert alert-danger" role="alert">Failed add to cart.</div></div>';
 			}
+			
+			WC()->session->set_customer_session_cookie(true);
 		}
 
     }
@@ -297,7 +299,7 @@ $file_type = $_REQUEST['filetype'];
                     <button type="submit" class="btn btn-default btn-lg text-uppercase">check rental rate</button>
                   </div>
                   <div class="col-md-pull-6 col-md-6 padLeft0">
-                  	<a href="<?php echo get_permalink($post->ID).'?rent='.$post->ID.'&filetype='.$type; ?>" class="btn btn-default btn-lg text-uppercase">Add to Cart</a>
+                  	<a href="<?php echo get_permalink($post->ID).'?add-to-cart='.$post->ID.'&filetype='.$type; ?>" class="btn btn-default btn-lg text-uppercase">Add to Cart</a>
                   </div>  
                 </div>
                 </form>
