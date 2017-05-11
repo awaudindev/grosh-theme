@@ -493,7 +493,9 @@ add_action( 'woocommerce_single_product_summary', 'woocommerce_template_product_
 
 add_action('init','setCustomerCookie');
 function setCustomerCookie(){
-	WC()->session->set_customer_session_cookie(true);
+	if(!is_admin()){
+		WC()->session->set_customer_session_cookie(true);
+	}
 }
 
 
