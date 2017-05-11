@@ -493,7 +493,7 @@ add_action( 'woocommerce_single_product_summary', 'woocommerce_template_product_
 
 add_action('init','setCustomerCookie');
 function setCustomerCookie(){
-	if(!is_admin()){
+	if(!is_admin() && !WC()->session->has_session()){
 		WC()->session->set_customer_session_cookie(true);
 	}
 }
