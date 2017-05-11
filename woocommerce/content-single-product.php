@@ -72,7 +72,7 @@ $file_type = $_REQUEST['filetype'];
 			if ( ! $found ){
 				$cart_item_data = array('price' => $base_price,'file_type' => ($post_meta['file_type'][0] == 'animation' && empty($file_type) || $file_type == 'animation') ? 'animation' : 'image');
     			if(WC()->cart->add_to_cart( $post->ID, 1, '', array(), $cart_item_data)){
-	    			echo '<div class="col-md-12"><div class="alert alert-success" role="alert">'.wc_add_to_cart_message( $post->ID,false,true ).'</div></div><span class="clearfix"></span>';
+	    			echo '<div class="col-md-12"><div class="alert alert-success" role="alert">'.wc_add_to_cart_message( $post->ID,false,true ).'</div></div>';
 	    		}else{
 	    			echo '<div class="col-md-12"><div class="alert alert-danger" role="alert">Failed add to cart.</div></div>';
 	    		}
@@ -81,7 +81,7 @@ $file_type = $_REQUEST['filetype'];
 			// if no products in cart, add it
 			$cart_item_data = array('price' => $base_price,'file_type' => ($post_meta['file_type'][0] == 'animation' && empty($file_type) || $file_type == 'animation') ? 'animation' : 'image');
 			if(WC()->cart->add_to_cart( $post->ID, 1, '', array(), $cart_item_data)){
-				echo '<div class="col-md-12"><div class="alert alert-success" role="alert">'.wc_add_to_cart_message( $post->ID,false,true ).'</div></div><span class="clearfix"></span>';
+				echo '<div class="col-md-12"><div class="alert alert-success" role="alert">'.wc_add_to_cart_message( $post->ID,false,true ).'</div></div>';
 			}else{
 				echo '<div class="col-md-12"><div class="alert alert-danger" role="alert">Failed add to cart.</div></div>';
 			}
@@ -130,7 +130,7 @@ $file_type = $_REQUEST['filetype'];
 		}
 	 }
 ?>
-
+<span class="clearfix"></span>
 <div itemscope itemtype="<?php echo woocommerce_get_product_schema(); ?>" id="product-<?php the_ID(); ?>" <?php post_class(); ?>>
 
 	<?php

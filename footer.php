@@ -27,7 +27,7 @@ global $post;
                     <a data-dismiss="modal" class="close-modal"><span aria-hidden="true">&times;</span></a>
                     <div id="dvMsg">
                     	<video width="640" height="360" id="playerpopup">
-                            <source type="video/mp4" url="http://"/>
+                            <source type="video/mp4" url=""/>
                         </video>
                     </div>
                 </div>

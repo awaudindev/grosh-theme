@@ -25,10 +25,14 @@ jQuery(document).ready(function($){
 
 	$('.caption').on('click', function(event){
 		var product_number = $(this).data('id');
-		var url = "http://s3.amazonaws.com/groshdigital/thumbnails/watermark/" + product_number +".mp4";
-		playerpopup.setSrc(url);
-		playerpopup.play();
-		$('#popupMsg').modal('show');
+		if(product_number.length){
+			var url = "http://s3.amazonaws.com/groshdigital/thumbnails/watermark/" + product_number +".mp4";
+			playerpopup.setSrc(url);
+			playerpopup.play();
+			$('#popupMsg').modal('show');
+		}else{
+			$('video source').attr('url','');
+		}
 	});
 
 	$('.quote-price input[type=radio][name=filetype]').change(function() {
@@ -62,6 +66,7 @@ jQuery(document).ready(function($){
 			columnWidth: '.post-box'
 		});
 	});
-	
-	$('video').mediaelementplayer();
+	if($('video source').attr('url')){
+		$('video').mediaelementplayer();
+	}
 });

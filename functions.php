@@ -304,39 +304,6 @@ EOD;
 			        });
 			    }
 
-	   //      	var dates = $( "#from, #to" ).datepicker({
-				//     dateFormat: 'mm/dd/yy',
-				//     minDate : 'today' ,
-				//     defaultDate : <?php echo $start; ?>,
-				//     beforeShow : function(el,inst){
-				//     	console.log(el);
-				//     },
-				//     onSelect: function(dateText, inst) {
-				//         //set value
-				//         $("#" + this.id + "_value").val(dateText);
-				//         $("." + this.id + "_text").html(dateText);
-
-				//         var datepickerBegin = $("#from_value").val(); // lets, returning in mm/dd/yy format
-				// 		var datepickerEnd = $("#to_value").val(); // lets, returning in mm/dd/yy format
-				//         //set the min or max date
-				//         var option = this.id == "from" ? "minDate" : "maxDate",
-				//         instance = $( this ).data( "datepicker" ),
-				//         date = $.datepicker.parseDate(
-				//             instance.settings.dateFormat ||
-				//             $.datepicker._defaults.dateFormat,
-				//             dateText, instance.settings );
-				//         dates.not( this ).datepicker( "option", option, date );
-
-				// 		if ( ($.datepicker.parseDate('mm/dd/yy', datepickerBegin) >  $.datepicker.parseDate('mm/dd/yy', datepickerEnd))) {
-				// 			$("#to_value").val(dates.not( this ).datepicker( "option", option, date ).val());
-				// 	        $(".to_text").html(dates.not( this ).datepicker( "option", option, date ).val());
-				// 	        $("#to").datepicker({'minDate': $.datepicker.parseDate('mm/dd/yy', datepickerBegin)});
-				// 		}
-
-				       
-				//     }
-				// });
-
 			    $("#from").datepicker({
 			        dateFormat: 'mm/dd/yy',
 				    minDate : 'today' ,
