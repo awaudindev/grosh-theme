@@ -216,7 +216,7 @@ function grosh_scripts() {
 	wp_enqueue_style( 'select', get_template_directory_uri() . '/assets/stylesheets/bootstrap-select.css' );
 	wp_enqueue_style( 'animate', get_template_directory_uri() . '/assets/stylesheets/animate.css' );
 	wp_enqueue_style( 'search', get_template_directory_uri() . '/assets/stylesheets/search.css' );
-	wp_enqueue_style( 'datepicker', get_template_directory_uri() . '/assets/stylesheets/bootstrap-datepicker.css' );
+	wp_enqueue_style( 'datepicker', 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css' );
 	wp_enqueue_style( 'fontawesome', get_template_directory_uri() . '/assets/stylesheets/font-awesome.min.css' );	
 	wp_enqueue_style( 'mediaelement-style', get_template_directory_uri() . '/assets/stylesheets/mediaelementplayer.css' );	
 	wp_enqueue_style( 'grosh-style', get_stylesheet_uri() );
@@ -227,7 +227,7 @@ function grosh_scripts() {
 		get_theme_file_uri( '/assets/js/bootstrap.min.js' ),
 		get_theme_file_uri( '/assets/js/bootstrap.min.js' ),
 		get_theme_file_uri( '/assets/js/bootstrap-select.min.js' ),
-		get_theme_file_uri( '/assets/js/bootstrap-datepicker.js' ),
+		'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js',
 		get_theme_file_uri( '/assets/js/imagesloaded.pkgd.min.js' ),
 		get_theme_file_uri( '/assets/js/masonry.pkgd.min.js' ),
 		get_theme_file_uri( '/assets/js/modernizr.js' ),

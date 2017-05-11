@@ -2,8 +2,14 @@ jQuery(document).ready(function($){
 
 
 	if($('#datepicker1').length || $('#datepicker2').length){
-		 $('#datepicker1').datepicker();
-	     $('#datepicker2').datepicker();
+		 $('#datepicker1').datepicker({
+		 	startDate:new Date(), 
+		 	autoclose:true
+		 });
+	     $('#datepicker2').datepicker({
+	     	startDate:new Date(), 
+	     	autoclose:true
+	     });
 	 }
      
 	 $('.selectpicker').selectpicker({
