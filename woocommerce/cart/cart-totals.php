@@ -48,7 +48,7 @@ $rentalDate = WC()->session->get('rental_date');
 		</div>
 	</div>
 
-	<div class="col-md-3 padRight0 pull-right"> 
+	<div class="col-md-3 padRight0 pull-right carttotals"> 
 		<h3><?php _e( 'Cart Totals', 'woocommerce' ); ?></h3>
 		<div class="marTop70 marBot0">
 		<table cellspacing="0" class="shop_table shop_table_responsive text-right">
