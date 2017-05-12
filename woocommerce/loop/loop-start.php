@@ -16,11 +16,6 @@
  * @version     2.0.0
  */
 global $product;
-if(is_product_category()){
-	echo '<div id="grid">';
-	echo '<div id="wrap">';
-}else{
-	echo '<ul class="clearfix">';
-}
+echo '<ul class="clearfix">';
 ?>
 

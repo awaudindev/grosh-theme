@@ -234,7 +234,7 @@ function grosh_scripts() {
 		get_theme_file_uri( '/assets/js/mediaelement-and-player.min.js' ),
 		get_theme_file_uri( '/assets/js/skip-link-focus-fix.js' ),
 		get_theme_file_uri( '/assets/js/navigation.js' ),
-		'/grosh/wp-includes/js/mediaelement/wp-mediaelement.min.js',
+		get_theme_file_uri( '/assets/js/mediaelement-and-player.min.js' ),
 		get_theme_file_uri( '/assets/js/main.js' )
 	];
 	$jquery_dependent_script_paths_json = json_encode($jquery_dependent_script_paths);
@@ -306,7 +306,7 @@ EOD;
 
 			    $("#from").datepicker({
 			        dateFormat: 'mm/dd/yy',
-				    minDate : 'today' ,
+				    minDate : new Date(),
 				    defaultDate : <?php echo $start; ?>,
 			        onSelect: function (dateText,inst) {
 			        	$("#" + this.id + "_value").val(dateText);

@@ -39,7 +39,7 @@ if($product_type == "animation"){
 	<div class="thumb-post">
 		<div class="category-post" id="icon-video" data-id="<?php echo $product_number; ?>" style="display:<?php echo $class; ?>"><i class="fa fa-video-camera" aria-hidden="true"></i></div>
     	<div class="caption" data-id="<?php echo $product_number; ?>" style="display:<?php echo $class; ?>"><span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span></div>
-    	<img class="img-responsive" src="<?php echo $large_image; ?>" alt="<?php echo get_the_title($id);?>"/>
+    	<img class="img-responsive" width="350" height="150" src="<?php echo $large_image; ?>" alt="<?php echo get_the_title($id);?>"/>
     	<h5 class="title-product pad20"><a href="<?php echo esc_url( get_permalink($id) ); ?>"><?php echo get_the_title($id);?></a></h5>
 
   	</div>

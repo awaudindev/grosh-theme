@@ -28,30 +28,30 @@ $newDate2 = $newDate1;
 $rentalDate = WC()->session->get('rental_date');
 
 ?>
-<div class="col-md-12 <?php if ( WC()->customer->has_calculated_shipping() ) echo 'calculated_shipping'; ?>">
+<div class="clearfix <?php if ( WC()->customer->has_calculated_shipping() ) echo 'calculated_shipping'; ?>">
 
 	<?php do_action( 'woocommerce_before_cart_totals' ); ?>
 
-	<div class="col-md-6">
+	<div class="col-md-6 padLeft0 col-md-push-3">
 		<div class="clearfix"> 
-			<h2><?php _e( 'Rental Period', 'woocommerce' ); ?></h2>
-			<div class="row">
-				<div class="col-md-6">
-					<h3><?php _e( 'From', 'woocommerce' ); ?> : <small class="from_text"><?php echo ($rentalDate) ? $rentalDate['start'] : $newDate1; ?></small></h3>
+			<h3><?php _e( 'Rental Period', 'woocommerce' ); ?></h3>
+			<div class="clearfix">
+				<div class="pull-left">
+					<h4 class="marBot30"><?php _e( 'From', 'woocommerce' ); ?> : <small class="from_text"><?php echo ($rentalDate) ? $rentalDate['start'] : $newDate1; ?></small></h4>
 					<div id="from"></div>
 				</div>
-				<div class="col-md-6">
-					<h3><?php _e( 'To', 'woocommerce' ); ?> : <small class="to_text"><?php echo ($rentalDate) ? $rentalDate['expiry'] : $newDate2; ?></small></h3>
+				<div class="pull-right">
+					<h4 class="marBot30"><?php _e( 'To', 'woocommerce' ); ?> : <small class="to_text"><?php echo ($rentalDate) ? $rentalDate['expiry'] : $newDate2; ?></small></h4>
 					<div id="to"></div>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<div class="col-md-6"> 
-		<h2><?php _e( 'Cart Totals', 'woocommerce' ); ?></h2>
-
-		<table cellspacing="0" class="shop_table shop_table_responsive">
+	<div class="col-md-3 padRight0 pull-right"> 
+		<h3><?php _e( 'Cart Totals', 'woocommerce' ); ?></h3>
+		<div class="marTop70 marBot0">
+		<table cellspacing="0" class="shop_table shop_table_responsive text-right">
 
 			<tr class="cart-subtotal">
 				<th><?php _e( 'Subtotal', 'woocommerce' ); ?></th>
@@ -120,7 +120,7 @@ $rentalDate = WC()->session->get('rental_date');
 			<?php do_action( 'woocommerce_cart_totals_after_order_total' ); ?>
 
 		</table>
-
+		</div>
 		<div class="wc-proceed-to-checkout">
 			<?php do_action( 'woocommerce_proceed_to_checkout' ); ?>
 		</div>

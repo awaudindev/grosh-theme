@@ -80,12 +80,14 @@ do_action( 'woocommerce_before_cart' ); ?>
 
 					<td class="product-thumbnail">
 						<?php
+							$product_number = get_post_meta( $_product->id, 'product_number', true );
+							$large_image = getProductImage($product_number, true, false);
 							$thumbnail = apply_filters( 'woocommerce_cart_item_thumbnail', $_product->get_image(), $cart_item, $cart_item_key );
-
+							$img = '<img src="'.$large_image.'" width="150" class="woocommerce-placeholder wp-post-image" height="70">';
 							if ( ! $product_permalink ) {
 								echo $thumbnail;
 							} else {
-								printf( '<a href="%s">%s</a>', esc_url( $product_permalink ), $thumbnail );
+								printf( '<a href="%s">%s</a>', esc_url( $product_permalink ), $img );
 							}
 						?>
 					</td>

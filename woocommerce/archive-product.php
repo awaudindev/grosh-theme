@@ -73,7 +73,7 @@ get_header( 'shop' ); ?>
 					<?php 
 						if(is_product_category()){
 
-							wc_get_template_part( 'content', 'sub-custom-category' ); 
+							wc_get_template_part( 'content', 'product' ); 
 
 						}else{
 

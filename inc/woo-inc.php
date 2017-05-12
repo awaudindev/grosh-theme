@@ -154,7 +154,7 @@ if ( ! function_exists( 'woocommerce_get_product_thumbnail' ) ) {
 
         	$output .= '<div class="caption" data-id="'.$product_number.'" style="display:'.$class.'"><span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span></div>';
         	
-            $output .= '<img class="img-responsive" src="'.$large_image.'" alt="'.get_the_title($post->ID).'" style="width:100%;height:100%"/>';
+            $output .= '<img width="350" height="150" class="img-responsive" src="'.$large_image.'" alt="'.get_the_title($post->ID).'"/>';
 
             $output .= '<h5 class="title-product"><a href="'.esc_url( get_permalink($post->ID) ).'">'.get_the_title($post->ID).'</a></h5>';
 
@@ -203,16 +203,4 @@ function businessbloomer_remove_prices( $price, $product ) {
 	return $price;
 }
 
-add_filter( 'jwt_auth_token_before_sign', 'add_new_user_info');
-function add_new_user_info(){
-	$token = array(
-	    'iss' => get_bloginfo('url'),
-	    'data' => array(
-	        'user' => array(
-	            'id' => $user->data->ID,
-	        )
-	    )
-	);
-	//return $token;
-}
 ?>

@@ -16,11 +16,6 @@
  * @version     2.0.0
  */
 global $product;
-if(is_product_category()){
-	echo '</div>';
-	echo '</div>';
-}else{
-	echo '</ul>';
-}
+echo '</ul>';
 ?>
 
