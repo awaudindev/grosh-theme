@@ -162,7 +162,7 @@ $file_type = $_REQUEST['filetype'];
 		</div>
 		<div class="col-md-6">
 			<?php if( is_array( $bundles ) ) { ?>
-			<div class="clearfix">
+			<div class="clearfix" style="float:right;">
 			<h3 class="product_title">One Package with</h3>
 			<?php 
 				foreach ( $bundles as $key => $value ) {
@@ -180,25 +180,15 @@ $file_type = $_REQUEST['filetype'];
 			          if(IsNullOrEmptyString($product_number)){
 			            $large_image = "http://placehold.it/1200x496";
 			          }else{
-			            $large_image = getProductImage($product_number, false, false);
-			          }
-
-			          if($img_oid > 0){
-
-			            $img_url = wp_get_attachment_url( $img_oid ); //get img URL
-
-			            $image = aq_resize( $img_url, 640, 280, true, true, true ); //resize & crop img
-
+			            $large_image = getProductImage($product_number, true, false);
 			          }
 
 			?>
-				<div class="row marTop20 marBot20">
-					<div class="col-md-3">
-						<img class="img-responsive" src="<?php echo $large_image; ?>" alt="thumbnail"/>
-					</div>
-					<div class="col-md-9">
-						<h4 class="title-product"><a href="<?php echo get_permalink($key); ?>"><?php echo get_the_title($key); ?></a></h4>
-						<?php echo get_the_content($key); ?>
+				<div class="row marTop20 marBot20" style="cursor: pointer;">
+					<div class="col-md-12">
+						<img class="img-responsive" width="350" height="150" src="<?php echo $large_image; ?>" alt="<?php echo get_the_title($key); ?>"/>
+						<div class="code-bundle-product">Item number : #<?php echo $product_number; ?></div>
+						<h4 class="title-product text-center"><a href="<?php echo get_permalink($key); ?>"><?php echo get_the_title($key); ?></a></h4>
 					</div>
 				</div>
 			<?php

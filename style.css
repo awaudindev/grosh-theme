@@ -860,8 +860,14 @@ a:hover, a:active {
 .marTop60{
   margin-top: 60px;
 }
+.marTop70{
+  margin-top: 70px;
+}
 .marBot60{
   margin-bottom: 60px;
+}
+.marBot0{
+  margin-bottom: 0;
 }
 .btn{
   font-size: 14px;
@@ -1549,6 +1555,23 @@ object {
   display: block;
 }
 /*----------------------------------
+Custom datepicker style
+------------------------------------*/
+.ui-widget{
+  font-family: 'Montserrat', sans-serif !important;
+}
+.ui-widget-header{
+  background:none !important;
+  border:0 !important;
+  font-weight: normal !important;
+}
+.ui-state-default, .ui-widget-content .ui-state-default{
+ 
+}
+.ui-widget.ui-widget-content{
+  border-color:#ddd !important;
+}
+/*----------------------------------
 WOOCOMMERCE
 ------------------------------------*/
 .wpmenucart-icon-shopping-cart-0:before{
@@ -1576,6 +1599,50 @@ WOOCOMMERCE
 }
 .woocommerce-loop-product__title{
   font-size: 16px;
+}
+.woocommerce #respond input#submit.alt, 
+.woocommerce a.button.alt, 
+.woocommerce button.button.alt, 
+.woocommerce input.button.alt{
+   color: #fff;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px; /* border radius */
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box; /* prevents bg color from leaking outside the border */
+  background-color: #086fb7; /* layer fill content */
+  -moz-box-shadow: inset 0 -2px 0 rgba(0,0,0,.3); /* inner shadow */
+  -webkit-box-shadow: inset 0 -2px 0 rgba(0,0,0,.3); /* inner shadow */
+  box-shadow: inset 0 -2px 0 rgba(0,0,0,.3); /* inner shadow */
+}
+.woocommerce #respond input#submit.alt:hover,
+.woocommerce a.button.alt:hover,
+.woocommerce button.button.alt:hover,
+.woocommerce input.button.alt:hover {
+  background-color: #064d80;
+  box-shadow: none;
+  color: #fff;
+}
+.woocommerce table.shop_table{
+  background-color: #fff;
+  border-radius: 4px;
+  text-align: inherit;
+}
+#add_payment_method .wc-proceed-to-checkout a.checkout-button, 
+.woocommerce-cart .wc-proceed-to-checkout a.checkout-button, 
+.woocommerce-checkout .wc-proceed-to-checkout a.checkout-button,
+.woocommerce #respond input#submit, 
+.woocommerce a.button, 
+.woocommerce button.button, 
+.woocommerce input.button,
+.woocommerce table.shop_table tfoot td, 
+.woocommerce table.shop_table tfoot th{
+  font-weight: normal;
+}
+
+.shop_table strong{
+  font-weight: normal;
 }
 /*----------------------------------
 MEDIA QUERY
@@ -1748,6 +1815,18 @@ MEDIA QUERY
   padding: 5px 10px;
   border-radius: 3px;
   font-size: 14px;
+  color: #222;
+}
+
+.single-product .code-bundle-product{
+  position: absolute;
+  z-index: 100;
+  background: #fff;
+  left: 20px;
+  bottom: 45px;
+  padding: 3px 5px;
+  border-radius: 3px;
+  font-size: 12px;
   color: #222;
 }
 

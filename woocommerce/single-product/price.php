@@ -29,9 +29,9 @@ $base_price_motion = ($grosh_meta['base-motion-price']) ? $grosh_meta['base-moti
 $bundle_price = ($grosh_meta['package-bundle-price']) ? $grosh_meta['package-bundle-price'] : 750;
 
 ?>
-<div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+<!--<div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
 	<h3 class="price padTop30 padBot20">Rental Rates <?php if($bundles){ ?>Package <?php }else{ ?>Starting at <?php } echo $base_price_image; ?></h3>
 	<meta itemprop="price" content="<?php echo esc_attr( $product->get_display_price() ); ?>" />
 	<meta itemprop="priceCurrency" content="<?php echo esc_attr( get_woocommerce_currency() ); ?>" />
 	<link itemprop="availability" href="http://schema.org/<?php echo $product->is_in_stock() ? 'InStock' : 'OutOfStock'; ?>" />
-</div>
+</div>-->
