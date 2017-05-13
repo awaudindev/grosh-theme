@@ -22,9 +22,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 global $post, $product;
 
+$post_meta = get_post_meta( $post->ID );
 $cat_count = sizeof( get_the_terms( $post->ID, 'product_cat' ) );
 $tag_count = sizeof( get_the_terms( $post->ID, 'product_tag' ) );
-
+$bundles =  json_decode( $post_meta["wcpb_bundle_products"][0], true );
 ?>
 <div class="product_meta">
 
@@ -37,12 +38,14 @@ $tag_count = sizeof( get_the_terms( $post->ID, 'product_tag' ) );
 	<?php endif; ?>
 
 	<?php //echo $product->get_categories( ', ', '<span class="posted_in">' . _n( 'Category:', 'Categories:', $cat_count, 'woocommerce' ) . ' ', '</span>' ); ?>
-	<div class="post-meta">
-        <div class="tagged padBot20">
-        <h5 class="font700 padBot20">This product can be used with :</h5>
-    	<?php echo $product->get_tags( '&nbsp;', '<span class="tagged_as">' . _n( 'Tag:', '', $tag_count, 'woocommerce' ) . ' ', '</span>' ); ?>
+	<?php if( $bundles == null ) { ?>
+		<div class="post-meta">
+	        <div class="tagged padBot20">
+	        <h5 class="font700 padBot20">This product can be used with :</h5>
+	    	<?php echo $product->get_tags( '&nbsp;', '<span class="tagged_as">' . _n( 'Tag:', '', $tag_count, 'woocommerce' ) . ' ', '</span>' ); ?>
+		    </div>
 	    </div>
-    </div>
+	<?php } ?>
 	<?php do_action( 'woocommerce_product_meta_end' ); ?>  
 
 </div>

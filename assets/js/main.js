@@ -69,4 +69,6 @@ jQuery(document).ready(function($){
 	if($('video source').attr('url')){
 		$('video').mediaelementplayer();
 	}
+
+	
 });

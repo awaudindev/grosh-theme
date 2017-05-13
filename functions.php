@@ -221,41 +221,17 @@ function grosh_scripts() {
 	wp_enqueue_style( 'mediaelement-style', get_template_directory_uri() . '/assets/stylesheets/mediaelementplayer.css' );	
 	wp_enqueue_style( 'grosh-style', get_stylesheet_uri() );
 
-
-	$jquery_script_path = '/grosh/wp-includes/js/jquery/jquery.js';
-	$jquery_dependent_script_paths = [
-		get_theme_file_uri( '/assets/js/bootstrap.min.js' ),
-		get_theme_file_uri( '/assets/js/bootstrap.min.js' ),
-		get_theme_file_uri( '/assets/js/bootstrap-select.min.js' ),
-		'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js',
-		get_theme_file_uri( '/assets/js/imagesloaded.pkgd.min.js' ),
-		get_theme_file_uri( '/assets/js/masonry.pkgd.min.js' ),
-		get_theme_file_uri( '/assets/js/modernizr.js' ),
-		get_theme_file_uri( '/assets/js/mediaelement-and-player.min.js' ),
-		get_theme_file_uri( '/assets/js/skip-link-focus-fix.js' ),
-		get_theme_file_uri( '/assets/js/navigation.js' ),
-		get_theme_file_uri( '/assets/js/mediaelement-and-player.min.js' ),
-		get_theme_file_uri( '/assets/js/main.js' )
-	];
-	$jquery_dependent_script_paths_json = json_encode($jquery_dependent_script_paths);
-	$inline_script = <<<EOD
-(function () {
-	'use strict';
-	if (!window.fetch) return;
-	/**
-	 * Fetch Inject v1.6.8
-	 * Copyright (c) 2017 Josh Habdas
-	 * @licence ISC
-	 */
-	var fetchInject=function(){"use strict";const e=function(e,t,n,r,o,i,c){i=t.createElement(n),c=t.getElementsByTagName(n)[0],i.type=r.blob.type,i.appendChild(t.createTextNode(r.text)),i.onload=o(r),c?c.parentNode.insertBefore(i,c):t.head.appendChild(i)},t=function(t,n){if(!t||!Array.isArray(t))return Promise.reject(new Error("`inputs` must be an array"));if(n&&!(n instanceof Promise))return Promise.reject(new Error("`promise` must be a promise"));const r=[],o=n?[].concat(n):[],i=[];return t.forEach(e=>o.push(window.fetch(e).then(e=>{return[e.clone().text(),e.blob()]}).then(e=>{return Promise.all(e).then(e=>{r.push({text:e[0],blob:e[1]})})}))),Promise.all(o).then(()=>{return r.forEach(t=>{i.push({then:n=>{"text/css"===t.blob.type?e(window,document,"style",t,n):e(window,document,"script",t,n)}})}),Promise.all(i)})};return t}();
-	fetchInject(
-		$jquery_dependent_script_paths_json
-	, fetchInject([
-		"{$jquery_script_path}"
-	]));
-})();
-EOD;
-	echo "<script>{$inline_script}</script>";
+	wp_enqueue_script( 'grosh-navigation', get_template_directory_uri() . '/assets/js/navigation.js', array(), '20151215', true );
+	wp_enqueue_script( 'grosh-bootstrapjs', get_template_directory_uri() . '/assets/js/bootstrap.min.js', array());
+	wp_enqueue_script( 'grosh-selectjs', get_template_directory_uri() . '/assets/js/bootstrap-select.min.js', array());
+	wp_enqueue_script( 'grosh-datepickerjs', 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js', array());
+	wp_enqueue_script( 'grosh-masonry', get_template_directory_uri() . '/assets/js/masonry.pkgd.min.js', array());
+	wp_enqueue_script( 'grosh-images-loaded', get_template_directory_uri() . '/assets/js/imagesloaded.pkgd.min.js', array());
+	wp_enqueue_script( 'grosh-modernizr', get_template_directory_uri() . '/assets/js/modernizr.js', array());
+	wp_enqueue_script( 'grosh-videoplayer', get_template_directory_uri() . '/assets/js/mediaelement-and-player.min.js', array());
+	wp_enqueue_script( 'grosh-mainjs', get_template_directory_uri() . '/assets/js/main.js', array());
+	wp_enqueue_script( 'grosh-skip-link-focus-fix', get_template_directory_uri() . '/assets/js/skip-link-focus-fix.js', array(), '20151215', true );
+	
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );

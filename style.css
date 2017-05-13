@@ -2013,3 +2013,15 @@ float:right; margin-top:30px;}
 li.wpmenucartli a.wpmenucart-contents span{
   opacity: 0;
 }
+#add_payment_method table.cart .product-thumbnail, 
+.woocommerce-cart table.cart .product-thumbnail, 
+.woocommerce-checkout table.cart .product-thumbnail{
+    min-width: 100px;
+    width: 150px;
+}
+#add_payment_method table.cart img, 
+.woocommerce-cart table.cart img, 
+.woocommerce-checkout table.cart img{
+  width: 150px;
+}
+

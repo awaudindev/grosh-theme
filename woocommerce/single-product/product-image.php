@@ -21,7 +21,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 global $post, $product;
+$post_meta = get_post_meta( $post->ID );
 $type = $_POST['filetype'];
+$bundles =  json_decode( $post_meta["wcpb_bundle_products"][0], true );
 ?>
 <div class="col-md-12">
 	<div class="productThumb-grosh marBot60">
@@ -48,6 +50,14 @@ $type = $_POST['filetype'];
 			$large_image = getProductImage($product_number, false, false);
 			$check_animation = false;
 		}
+
+		if(is_array($bundles)){
+			reset($bundles);
+			$first_key = key($bundles);
+			$product_number = get_post_meta( $first_key, 'product_number', true );
+			$large_image = getProductImage($product_number, false, false);
+			$check_animation = false;
+		}
 		
 		if($check_animation == true){
 			?>
@@ -57,7 +67,7 @@ $type = $_POST['filetype'];
 		    </video>
 			<?php
 		}else{
-			echo '<img src="'.$large_image.'" style="'.$style.'">';
+			echo '<img id="detail-img" src="'.$large_image.'" style="'.$style.'">';
 		}
 		echo '<div class="code-product">Item number : #'.$product_number.'</div>';
 
