@@ -323,4 +323,28 @@ $file_type = $_REQUEST['filetype'];
 
 <?php do_action( 'woocommerce_after_single_product' ); 
 wp_enqueue_style( 'checkbox', get_template_directory_uri() . '/assets/stylesheets/checkbox.css' );	
+add_action('wp_footer',function(){ ?> 
+
+ <script type="text/javascript">
+  jQuery(function($){
+    $(document).ready( function() {
+    	$.ajax({
+		  type: 'POST',
+		  url: '<?php echo admin_url('admin-ajax.php'); ?>/?action=update_cart_total',
+		  beforeSend:function(){
+		  	if($('li.wpmenucartli a.wpmenucart-contents span').length) $('li.wpmenucartli a.wpmenucart-contents span').html('');
+		  },
+		  success: function(data){
+		  	var response = JSON.parse(data);
+            if($('li.wpmenucartli a.wpmenucart-contents span').length) $('li.wpmenucartli a.wpmenucart-contents span').css({'opacity':1}).html(response.total);
+		  },
+		  error:function(jqXHR,textStatus,errorThrown){
+		  	console.log(textStatus);
+		  }
+		});
+       });
+  	});
+</script>
+
+<?php },10);
 ?>

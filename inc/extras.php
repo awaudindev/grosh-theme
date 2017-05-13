@@ -204,6 +204,13 @@ function add_custom_price( $cart_object ) {
 	}
 }
 
+add_action( 'wp_ajax_update_cart_total', 'update_cart_total' );
+add_action( 'wp_ajax_nopriv_update_cart_total', 'update_cart_total' );
+function update_cart_total(){
+	echo json_encode(array('total'=>sizeof( WC()->cart->get_cart() )));
+	wp_die();
+}
+
 add_action( 'wp_ajax_check_total', 'check_total' );
 add_action( 'wp_ajax_nopriv_check_total', 'check_total' );
 function check_total() {
