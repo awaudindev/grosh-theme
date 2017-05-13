@@ -2010,3 +2010,6 @@ padding: 10px;
 height: 100px;}
 .contactform7 .btn{
 float:right; margin-top:30px;}
+li.wpmenucartli a.wpmenucart-contents span{
+  opacity: 0;
+}
