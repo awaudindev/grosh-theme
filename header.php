@@ -45,7 +45,7 @@
         		</div>
         	</div>	
 		</nav>
-		<div style="position: relative;">
+		<div style="position: relative;z-index: 10;">
 	      <div id="cd-search" class="cd-search arrow_box">
 	        <form role="search" method="get" id="searchform" action="<?php echo home_url( '/' ); ?>">
 	          <div class="container">
@@ -54,10 +54,10 @@
 	                <label>I'm looking for</label>
 	                <div class="cd-search-box">
 	                  <div class="form-group clearfix">
-	                    <input type="text" value="" name="s" id="s" class="form-control" placeholder="Find the perfect digital drop ...">
+	                    <input type="text" value="<?php echo $_GET['s']; ?>" name="s" id="s" class="form-control" placeholder="Find the perfect digital drop ...">
 	                    <select class="selectpicker" name="type" id="type">
-	                      <option value="animation">Animated images</option>
-	                      <option value="image">Still images</option>
+	                      <option value="animation" <?php if($_GET['type'] == 'animation'){ echo 'selected'; } ?>>Animated images</option>
+	                      <option value="image" <?php if($_GET['type'] == 'image'){ echo 'selected'; } ?>>Still images</option>
 	                    </select>
 	                    <input type="hidden" name="post_type" value="product">
 	                  </div>
