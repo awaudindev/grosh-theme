@@ -44,7 +44,8 @@ if ( ! empty( $breadcrumb ) ) {
 			}
 
 		} else {
-			echo esc_html( $crumb[0] );
+			$search = (!empty($_GET['s']) && ($_GET['type'] == 'item_number')) ? 'Search results for: "'.$_GET['s'].'"' : $crumb[0];
+			echo esc_html( $search );
 		}
 
 		echo $after;

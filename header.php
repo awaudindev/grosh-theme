@@ -45,7 +45,7 @@
         		</div>
         	</div>	
 		</nav>
-		<div style="position: relative;z-index: 10;">
+		<div style="position: relative;z-index: 100;">
 	      <div id="cd-search" class="cd-search arrow_box">
 	        <form role="search" method="get" id="searchform" action="<?php echo home_url( '/' ); ?>">
 	          <div class="container">
@@ -58,6 +58,7 @@
 	                    <select class="selectpicker" name="type" id="type">
 	                      <option value="animation" <?php if($_GET['type'] == 'animation'){ echo 'selected'; } ?>>Animated images</option>
 	                      <option value="image" <?php if($_GET['type'] == 'image'){ echo 'selected'; } ?>>Still images</option>
+	                      <option value="item_number" <?php if($_GET['type'] == 'item_number'){ echo 'selected'; } ?>>Item Number</option>
 	                    </select>
 	                    <input type="hidden" name="post_type" value="product">
 	                  </div>
