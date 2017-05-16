@@ -48,8 +48,8 @@ function main_product_category( $atts, $content = ""){
 	$terms = get_terms( 'product_cat', $args );
 	 
 	if ( $terms ) {
-	    $result .= '<div id="grid">';     
-   	 		$result .= '<div class="woocommerce" id="wrap">';
+	    $result .= '<div class="popular-post">';     
+   	 		$result .= '<ul class="clearfix">';
 	     
 	        foreach ( $terms as $term ) {
 
@@ -58,10 +58,10 @@ function main_product_category( $atts, $content = ""){
 
 				$thumbnail = ($image) ? $image : wc_placeholder_img_src();
 	                         
-	            $result .= '<div class="post-box"><a href="' .  esc_url( get_term_link( $term ) ) . '" class="' . $term->slug . '"><img width="350" height="150" src="' . $thumbnail . '" alt="' . $term->name . '" /><h2 class="woocommerce-loop-product__title">'.$term->name.' (' .$term->count. ')</h2></a></div>';                                                    
+	            $result .= '<li class="text-center col-md-4 col-sm-6"><a href="' .  esc_url( get_term_link( $term ) ) . '" class="' . $term->slug . '"><img width="350" height="150" src="' . $thumbnail . '" alt="' . $term->name . '" /><h2 class="woocommerce-loop-product__title">'.$term->name.' (' .$term->count. ')</h2></a></li>';                                                    
 	 
 	    	}
-	    	$result .= '</div>';	     
+	    	$result .= '</ul>';	     
 	    $result .= '</div>';
 	 
 	}

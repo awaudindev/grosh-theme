@@ -22,18 +22,42 @@ jQuery(document).ready(function($){
 		//closeNav();
 	});
 
+	var urlvideo = "";
 
 	$('.caption').on('click', function(event){
-		var product_number = $(this).data('id'),playerpopup = $('#playerpopup');
+		$('#popupMsg').modal('show'); 
+		var product_number = $(this).data('id');
+
 		if(product_number){
 			var url = "http://s3.amazonaws.com/groshdigital/thumbnails/watermark/" + product_number +".mp4";
-			playerpopup.setSrc(url);
-			playerpopup.play();
-			$('#popupMsg').modal('show');
+			urlvideo = url;
+			new MediaElementPlayer('playerpopup', {
+			    pluginPath: 'https://cdnjs.cloudflare.com/ajax/libs/mediaelement/4.0.3/',
+			    shimScriptAccess: 'always',
+			    stretching: 'fill',
+			    success: function(mediaElement) {
+				    setStream(mediaElement);
+
+				    mediaElement.addEventListener('canplay', function(e) {
+					    mejs.players['mep_0'].play();
+				    }, false);
+
+			    }
+		    });
 		}else{
 			$('video source').attr('url','');
 		}
 	});
+
+	function setStream(url){
+		 mejs.players['mep_0'].setSrc([
+            {
+			    src: urlvideo,
+			    type: "video/mp4"
+		    }
+		    ]);
+		    mejs.players['mep_0'].load();
+	}
 
 	$('.quote-price input[type=radio][name=filetype]').change(function() {
         $(".quote-price form").submit();

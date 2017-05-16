@@ -2025,3 +2025,14 @@ li.wpmenucartli a.wpmenucart-contents span{
   width: 150px;
 }
 
+.popular-post img{
+  height: 150px;
+  max-width: 100%;
+  width: 350px;
+}
+
+.woocommerce img, .woocommerce-page img{
+  height: 150px;
+  max-width: 100%;
+  width: 350px;
+}
