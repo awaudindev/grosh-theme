@@ -57,7 +57,7 @@ global $post;
     jQuery(function($){
         $(document).ready(function() {
             if($('li.wpmenucartli a.wpmenucart-contents span').length){ $('li.wpmenucartli a.wpmenucart-contents span').css({'opacity':1});}
-            $('.navbar-nav.navbar-right.main-menu').append('<li class="menu-item"><a title="Login" href="#" class="modal-login" data-toggle="modal" data-target="#myModal">Login</a></li>');
+            $('.navbar-nav.navbar-right.main-menu li:last').before('<li class="menu-item"><a title="Login" href="#" class="modal-login" data-toggle="modal" data-target="#myModal">Login</a></li>');
          });
         <?php if($_POST['register'] || $_POST['login']){ ?>
         $(window).on('load',function(){
@@ -71,7 +71,7 @@ global $post;
 <script type="text/javascript">
     jQuery(function($){
         if($('li.wpmenucartli a.wpmenucart-contents span').length){ $('li.wpmenucartli a.wpmenucart-contents span').css({'opacity':1}); }
-        $('.navbar-nav.navbar-right.main-menu').append('<li class="menu-item"><a title="Logout" href="<?php  echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>customer-logout">Logout</a></li>');
+        $('.navbar-nav.navbar-right.main-menu li:last').before('<li class="menu-item"><a title="My-Account" href="<?php echo home_url( '/my-account' ); ?>">My Account</a></li>');
     });
 </script>
 <?php } ?>

@@ -338,7 +338,10 @@ add_action( 'woocommerce_order_status_completed', 'rental_order_status_completed
  */
 function wishlist_account_menu_items( $items ) {
  
+ 	$logout = $items['customer-logout'];
+    unset( $items['customer-logout'] );
     $items['wishlist'] = __( 'Wishlist', 'iconic' );
+    $items['customer-logout'] = $logout;
  
     return $items;
  
