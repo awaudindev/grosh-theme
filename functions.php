@@ -250,8 +250,13 @@ function grosh_scripts() {
 	    function(){ 
 
 	    	$rentalDate = WC()->session->get('rental_date');
+	    	$date = new DateTime();
+	    	if($rentalDate){ $date = new DateTime($rentalDate['start']);}
+
+	    	$date->add(new DateInterval('P7D'));
 
 	    	$start = ($rentalDate) ? "$.datepicker.parseDate('mm/dd/yy','".$rentalDate['start']."')" : "'today'";
+	    	$minimum = "$.datepicker.parseDate('mm/dd/yy','".$date->format('m/d/Y')."')";
 	    	$end = ($rentalDate) ? "$.datepicker.parseDate('mm/dd/yy','".$rentalDate['expiry']."')" : "'today'" ;
 
 	    ?>
@@ -262,7 +267,7 @@ function grosh_scripts() {
 
 	        	function sendFeedback(data) {
 
-	        		$('.woocommerce .cart-collaterals .carttotals').append('<div class="loading" style="position:absolute;top:0;left:0;z-index:10;width:100%;height:100%;color:#fff;background:rgba(0,0,0,0.6);text-align:center;"><strong style="position:relative;top:50%;transform:translateY(-50%);font-size:40px;letter-spacing:1px;">Calculating....</strong></div>');
+	        		$('.woocommerce .cart-collaterals .calculated_shipping').append('<div class="loading" style="position:absolute;top:0;left:0;z-index:10;width:100%;height:100%;color:#fff;background:rgba(0,0,0,0.6);text-align:center;"><strong style="position:relative;top:50%;transform:translateY(-50%);font-size:40px;letter-spacing:1px;">Calculating....</strong></div>');
 
 			        $.post('<?php echo admin_url('admin-ajax.php'); ?>', data, function(result) {
 			            var response = JSON.parse(result),
@@ -276,7 +281,7 @@ function grosh_scripts() {
 							'<td data-title="Total"><strong>'+response.total+'</strong> </td></tr>';
 			          
 			            $('.carttotals table.shop_table').html(newtotal);
-			            $('.woocommerce .cart-collaterals .carttotals .loading').remove();
+			            $('.woocommerce .cart-collaterals .calculated_shipping .loading').remove();
 			        });
 			    }
 
@@ -290,7 +295,7 @@ function grosh_scripts() {
 
 			            var setdate2 = $(this).datepicker('getDate'),
 			            	date2 = $('#to').datepicker('getDate');
-			            setdate2.setDate(setdate2.getDate());
+			            setdate2.setDate(setdate2.getDate() + 7);
 
 			            $('#to').datepicker('option', 'minDate', setdate2);
 
@@ -302,7 +307,7 @@ function grosh_scripts() {
 			    });
 			    $('#to').datepicker({
 			        dateFormat: 'mm/dd/yy',
-				    minDate : <?php echo $start; ?> ,
+				    minDate : <?php echo $minimum; ?> ,
 				    defaultDate : <?php echo $end; ?>,
 			        onSelect: function (dateText,inst) {
 			        	$("#" + this.id + "_value").val(dateText);
