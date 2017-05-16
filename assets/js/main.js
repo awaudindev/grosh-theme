@@ -25,7 +25,7 @@ jQuery(document).ready(function($){
 
 	$('.caption').on('click', function(event){
 		var product_number = $(this).data('id');
-		if(product_number.length){
+		if(product_number){
 			var url = "http://s3.amazonaws.com/groshdigital/thumbnails/watermark/" + product_number +".mp4";
 			playerpopup.setSrc(url);
 			playerpopup.play();

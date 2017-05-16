@@ -41,8 +41,8 @@ $bundles =  json_decode( $post_meta["wcpb_bundle_products"][0], true );
 	<?php if( $bundles == null ) { ?>
 		<div class="post-meta">
 	        <div class="tagged padBot20">
-	        <h5 class="font700 padBot20">This product can be used with :</h5>
-	    	<?php echo $product->get_tags( '&nbsp;', '<span class="tagged_as">' . _n( 'Tag:', '', $tag_count, 'woocommerce' ) . ' ', '</span>' ); ?>
+	        <h5 class="font700 padBot20">Category :</h5>
+	    	<?php echo $product->get_categories( '&nbsp;', '<span class="tagged_as">' . _n( '', '', $cat_count, 'woocommerce' ) . ' ', '</span>' ); ?>
 		    </div>
 	    </div>
 	<?php } ?>
