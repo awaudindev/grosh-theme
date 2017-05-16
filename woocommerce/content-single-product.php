@@ -94,16 +94,40 @@ $file_type = $_REQUEST['filetype'];
 		// $replace_order->empty_cart( true );
   //   }
 
-	 if(!empty($_POST['start_date']) && !empty($_POST['end_date'])){
+    $datetime1 = new DateTime();
+	$datetime2 = new DateTime('+7 Day');
+
+    $newDate1 = $datetime1->format('m/d/Y');
+    $newDate2 = $datetime2->format('m/d/Y');
+
+    if(WC()->session->get('rental_date')){
+    	$rentalDate = WC()->session->get('rental_date');
+
+		$datetime1 = new DateTime($rentalDate['start']);
+		$datetime2 = new DateTime($rentalDate['expiry']);
+
+    	$newDate1 = $datetime1->format('m/d/Y');
+    	$newDate2 = $datetime2->format('m/d/Y');
+    }
+
+	if(!empty($_POST['start_date']) && !empty($_POST['end_date'])){
 
 	 	$datetime1 = new DateTime($_POST['start_date']);
 		$datetime2 = new DateTime($_POST['end_date']);
-		$interval = date_diff($datetime1, $datetime2);
 
 		$newDate1 = $datetime1->format('m/d/Y');
 		$newDate2 = $datetime2->format('m/d/Y');
 
-		if($datetime2 > $datetime1){
+		WC()->session->set(
+	     'rental_date',
+	     array(
+	        'start'   => $newDate1,
+	        'expiry'  => $newDate2));
+	}
+
+		$interval = date_diff($datetime1, $datetime2);
+
+		if($datetime2 >= $datetime1){
 			
 			if($bundles){
 				$totalrate = $firstweek = $interval->days * $bundle_price;
@@ -128,7 +152,7 @@ $file_type = $_REQUEST['filetype'];
 			}
 
 		}
-	 }
+	 
 ?>
 <span class="clearfix"></span>
 <div itemscope itemtype="<?php echo woocommerce_get_product_schema(); ?>" id="product-<?php the_ID(); ?>" <?php post_class(); ?>>
@@ -198,13 +222,13 @@ $file_type = $_REQUEST['filetype'];
                   <div class="col-md-6 padLeft0">
                     <div class="form-group">
                       <label class="padBot10">Start Date :</label>
-                      <input type="text" class="form-control calendarpicker" value="<?php echo $_POST['start_date']; ?>" placeholder="mm-dd-yyyy" name="start_date" id="datepicker1" data-format="m/d/yy">
+                      <input type="text" class="form-control calendarpicker" value="<?php echo $newDate1; ?>" placeholder="mm-dd-yyyy" name="start_date" id="datepicker1" data-format="m/d/yy">
                     </div>
                   </div>  
                   <div class="col-md-6 padRight0">
                     <div class="form-group">
                       <label class="padBot10">Expiration Date :</label>
-                      <input type="text" class="form-control calendarpicker" value="<?php echo $_POST['end_date']; ?>" placeholder="mm-dd-yyyy" name="end_date" id="datepicker2" data-format="m/d/yy">
+                      <input type="text" class="form-control calendarpicker" value="<?php echo $newDate2; ?>" placeholder="mm-dd-yyyy" name="end_date" id="datepicker2" data-format="m/d/yy">
                     </div>
                   </div>  
                 </div>
@@ -250,7 +274,7 @@ $file_type = $_REQUEST['filetype'];
 
                 <div class="clearfix">
                   <div class="col-md-push-6 col-md-6 padRight0">
-                    <button type="submit" class="btn btn-default btn-lg text-uppercase">check rental rate</button>
+                    <button type="submit" class="btn btn-default btn-lg text-uppercase">Update rental rate</button>
                   </div>
                   <div class="col-md-pull-6 col-md-6 padLeft0">
                   	<a href="<?php echo get_permalink($post->ID).'?rent='.$post->ID.'&filetype='.$type; ?>" class="btn btn-default btn-lg text-uppercase">Add to Cart</a>

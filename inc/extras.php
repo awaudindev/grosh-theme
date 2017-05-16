@@ -362,3 +362,61 @@ function wishlist_endpoint_content() {
 }
  
 add_action( 'woocommerce_account_wishlist_endpoint', 'wishlist_endpoint_content' );
+
+add_filter('posts_join', 'product_search_join' );
+function product_search_join ($join){
+    global $pagenow, $wpdb;
+    // I want the filter only when performing a search on edit page of Custom Post Type named "product"
+    if ( is_admin() && $pagenow=='edit.php' && $_GET['post_type']=='product' && $_GET['s'] != '') {    
+        $join .='LEFT JOIN '.$wpdb->postmeta. ' ON '. $wpdb->posts . '.ID = ' . $wpdb->postmeta . '.post_id ';
+    }
+    return $join;
+}
+
+add_filter( 'posts_where', 'product_search_where' );
+function product_search_where( $where ){
+    global $pagenow, $wpdb;
+    // I want the filter only when performing a search on edit page of Custom Post Type named "product"
+    if ( is_admin() && $pagenow=='edit.php' && $_GET['post_type']=='product' && $_GET['s'] != '') {
+        $where = preg_replace(
+       "/\(\s*".$wpdb->posts.".post_title\s+LIKE\s*(\'[^\']+\')\s*\)/",
+       "(".$wpdb->posts.".post_title LIKE $1) OR (".$wpdb->postmeta.".meta_value LIKE $1)", $where );
+    }
+    return $where;
+}
+
+function product_search_distinct( $where ){
+    global $pagenow, $wpdb;
+
+    if ( is_admin() && $pagenow=='edit.php' && $_GET['post_type']=='product' && $_GET['s'] != '') {
+    return "DISTINCT";
+
+    }
+    return $where;
+}
+add_filter( 'posts_distinct', 'product_search_distinct' );
+
+add_filter( 'manage_edit-product_columns', 'show_product_number',15 );
+function show_product_number($columns){
+
+   //remove column
+   unset( $columns['sku'] );
+   unset( $columns['price'] );
+
+   //add column
+   $columns['number'] = __( 'Product Number'); 
+
+   return $columns;
+}
+
+add_action( 'manage_product_posts_custom_column', 'wpso23858236_product_column_number', 10, 2 );
+
+function wpso23858236_product_column_number( $column, $postid ) {
+    if ( $column == 'number' ) {
+        echo get_post_meta( $postid, 'product_number', true );
+    }
+
+    if ( $column == 'product_type' ) {
+        echo get_post_meta( $postid, 'file_type', true );
+    }
+}
