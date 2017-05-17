@@ -267,7 +267,7 @@ function grosh_scripts() {
 
 	        	function sendFeedback(data) {
 
-	        		$('.woocommerce .cart-collaterals .calculated_shipping').append('<div class="loading" style="position:absolute;top:0;left:0;z-index:10;width:100%;height:100%;color:#fff;background:rgba(0,0,0,0.6);text-align:center;"><strong style="position:relative;top:50%;transform:translateY(-50%);font-size:40px;letter-spacing:1px;">Calculating....</strong></div>');
+	        		$('.woocommerce .cart-collaterals').append('<div class="loading" style="position:absolute;top:0;left:0;z-index:10;width:100%;height:100%;color:#fff;background:rgba(0,0,0,0.6);text-align:center;"><strong style="position:relative;top:50%;transform:translateY(-50%);font-size:40px;letter-spacing:1px;">Calculating....</strong></div>');
 
 			        $.post('<?php echo admin_url('admin-ajax.php'); ?>', data, function(result) {
 			            var response = JSON.parse(result),
@@ -281,7 +281,7 @@ function grosh_scripts() {
 							'<td data-title="Total"><strong>'+response.total+'</strong> </td></tr>';
 			          
 			            $('.carttotals table.shop_table').html(newtotal);
-			            $('.woocommerce .cart-collaterals .calculated_shipping .loading').remove();
+			            $('.woocommerce .cart-collaterals .loading').remove();
 			        });
 			    }
 

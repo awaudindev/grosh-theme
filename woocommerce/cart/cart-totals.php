@@ -38,11 +38,17 @@ $rentalDate = WC()->session->get('rental_date');
 			<div class="clearfix">
 				<div class="pull-left">
 					<h4 class="marBot30"><?php _e( 'From', 'woocommerce' ); ?> : <small class="from_text"><?php echo ($rentalDate) ? $rentalDate['start'] : $newDate1; ?></small></h4>
+					<a class="btn btn-default" href="#" onclick="event.preventDefault();jQuery(this).next('div').removeClass('hide');jQuery(this).hide();" style="margin: 0 auto">Change Date</a>
+				<div class="overlay-button hide">
 					<div id="from"></div>
+				</div>
 				</div>
 				<div class="pull-right">
 					<h4 class="marBot30"><?php _e( 'To', 'woocommerce' ); ?> : <small class="to_text"><?php echo ($rentalDate) ? $rentalDate['expiry'] : $newDate2; ?></small></h4>
+					<a class="btn btn-default" href="#" onclick="event.preventDefault();jQuery(this).next('div').removeClass('hide');jQuery(this).hide();" style="margin: 0 auto">Change Date</a>
+				<div class="overlay-button hide">
 					<div id="to"></div>
+					</div>
 				</div>
 			</div>
 		</div>
