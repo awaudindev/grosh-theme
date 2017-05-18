@@ -20,20 +20,29 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
+global $post;
+
 ?>
 
 <?php wc_print_notices(); ?>
 
 <?php do_action( 'woocommerce_before_customer_login_form' ); ?>
 
+<?php if(!is_user_logged_in() && $post->ID != get_option('woocommerce_myaccount_page_id')){ ?>
 <!-- Nav tabs -->
 <ul class="nav nav-tabs loginForm">
     <li <?php if($_POST['register'] != 'Register'){ ?>class="active"<?php } ?>><a href="#Login" data-toggle="tab">Login</a></li>
    <?php if ( get_option( 'woocommerce_enable_myaccount_registration' ) === 'yes' ) : ?> <li <?php if($_POST['register'] == 'Register'){ ?>class="active"<?php } ?>><a href="#Registration" data-toggle="tab">Registration</a></li><?php endif; ?>
 </ul>
+<?php } ?>
 <!-- Tab panes -->
+<?php if($post->ID != get_option('woocommerce_myaccount_page_id')){ ?>
 <div class="tab-content">
     <div class="tab-pane <?php if($_POST['register'] != 'Register'){ ?>active<?php } ?>" id="Login">
+<?php }else{ ?>
+	<div class="row">
+	<div class="col-md-6">
+<?php } ?>
 		<form method="post" class="login">
 
 			<?php do_action( 'woocommerce_login_form_start' ); ?>
@@ -64,11 +73,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		</form>
 
-<?php if ( get_option( 'woocommerce_enable_myaccount_registration' ) === 'yes' ) : ?>
+<?php if($post->ID != get_option('woocommerce_myaccount_page_id')){  ?>
 
 	</div>
     <div class="tab-pane <?php if($_POST['register'] == 'Register'){ ?>active<?php } ?>" id="Registration">
-
+<?php }else { ?>
+	</div>
+	<div class="col-md-6">
+<?php } ?>
 		<form method="post" class="register">
 
 			<?php do_action( 'woocommerce_register_form_start' ); ?>
@@ -110,9 +122,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<?php do_action( 'woocommerce_register_form_end' ); ?>
 
 		</form>
-
-	
-<?php endif; ?>
 </div>
 
 </div>
