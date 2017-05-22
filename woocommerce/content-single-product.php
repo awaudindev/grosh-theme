@@ -51,9 +51,16 @@ $file_type = $_REQUEST['filetype'];
 
  	$recurring_price_image = ($grosh_meta['recurring-image-price']) ? $grosh_meta['recurring-image-price'] : 3.25;
  	$recurring_price_motion = ($grosh_meta['recurring-motion-price']) ? $grosh_meta['recurring-motion-price'] : 5.75;
+ 	$recurring_package = ($grosh_meta['recurring-bundle-package-price']) ? $grosh_meta['recurring-bundle-package-price'] : 5.75;
 
-	$base_price = ($post_meta['file_type'][0] == 'animation' && empty($file_type) || $file_type == 'animation') ? $base_price_motion : $base_price_image;
-	$recurring_price = ($post_meta['file_type'][0] == 'animation' && empty($file_type) || $file_type == 'animation') ? $recurring_price_motion : $recurring_price_image;
+ 	if($bundles){
+ 		$base_price = $bundle_price;
+ 		$recurring_price = $recurring_package;
+ 	}else{
+ 		$base_price = ($post_meta['file_type'][0] == 'animation' && empty($file_type) || $file_type == 'animation') ? $base_price_motion : $base_price_image;
+		$recurring_price = ($post_meta['file_type'][0] == 'animation' && empty($file_type) || $file_type == 'animation') ? $recurring_price_motion : $recurring_price_image;	
+ 	}
+	
 
 	if(!empty($_GET['rent'])){
 
@@ -129,9 +136,9 @@ $file_type = $_REQUEST['filetype'];
 
 		if($datetime2 >= $datetime1){
 			
-			if($bundles){
-				$totalrate = $firstweek = $interval->days * $bundle_price;
-			}else{
+			//if($bundles){
+				//$totalrate = $firstweek = $interval->days * $bundle_price;
+			//}else{
 				$firstweek = $base_price;//(($interval->days > 7) ? 7 : $interval->days )* $base_price;
 
 				if($interval->days > 7){
@@ -149,7 +156,7 @@ $file_type = $_REQUEST['filetype'];
 					$totalrate = $firstweek;
 				
 				}
-			}
+			//}
 
 		}
 	 
