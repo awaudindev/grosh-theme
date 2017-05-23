@@ -415,6 +415,9 @@ function show_product_number($columns){
 add_action( 'manage_product_posts_custom_column', 'wpso23858236_product_column_number', 10, 2 );
 
 function wpso23858236_product_column_number( $column, $postid ) {
+	if($column == 'thumb'){
+		echo '<img src="http://s3.amazonaws.com/groshdigital/thumbnails/watermark/'.get_post_meta( $postid, 'product_number', true ).'.jpg" alt="">';
+	}
     if ( $column == 'number' ) {
         echo get_post_meta( $postid, 'product_number', true );
     }
