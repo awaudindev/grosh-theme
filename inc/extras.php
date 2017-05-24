@@ -405,9 +405,11 @@ function show_product_number($columns){
    //remove column
    unset( $columns['sku'] );
    unset( $columns['price'] );
+   unset( $columns['thumb']);
 
    //add column
-   $columns['number'] = __( 'Product Number'); 
+   $columns['number'] = __( 'Product Number');
+   $columns['thumbnumber'] = __( 'Thumbnail'); 
 
    return $columns;
 }
@@ -415,8 +417,12 @@ function show_product_number($columns){
 add_action( 'manage_product_posts_custom_column', 'wpso23858236_product_column_number', 10, 2 );
 
 function wpso23858236_product_column_number( $column, $postid ) {
-	if($column == 'thumb'){
-		echo '<img src="http://s3.amazonaws.com/groshdigital/thumbnails/watermark/'.get_post_meta( $postid, 'product_number', true ).'.jpg" alt="">';
+	if($column == 'thumbnumber'){
+		if(get_post_meta( $postid, 'product_number', true )){
+			echo '<img style="max-width:100%;height:auto;" src="http://s3.amazonaws.com/groshdigital/thumbnails/watermark/'.get_post_meta( $postid, 'product_number', true ).'.jpg" alt="">';
+		}else{
+			echo '<img style="max-width:100%;height:auto;" src="http://placehold.it/225x127.jpg" alt="">';
+		}
 	}
     if ( $column == 'number' ) {
         echo get_post_meta( $postid, 'product_number', true );

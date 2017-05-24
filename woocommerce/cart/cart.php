@@ -81,6 +81,13 @@ do_action( 'woocommerce_before_cart' ); ?>
 					<td class="product-thumbnail">
 						<?php
 							$product_number = get_post_meta( $_product->id, 'product_number', true );
+							$bundles =  json_decode( get_post_meta( $_product->id, 'wcpb_bundle_products', true ), true );
+							if($bundles){
+								foreach ($bundles as $key => $value) {
+									$product_number = get_post_meta( $key, 'product_number', true );
+									break;
+								}
+							}
 							$large_image = getProductImage($product_number, true, false);
 							$thumbnail = apply_filters( 'woocommerce_cart_item_thumbnail', $_product->get_image(), $cart_item, $cart_item_key );
 							$img = '<img src="'.$large_image.'" width="150" class="woocommerce-placeholder wp-post-image" height="70">';

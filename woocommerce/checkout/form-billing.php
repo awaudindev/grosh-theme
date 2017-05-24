@@ -26,11 +26,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="woocommerce-billing-fields">
 	<?php if ( wc_ship_to_billing_address_only() && WC()->cart->needs_shipping() ) : ?>
 
-		<h3><?php _e( 'Billing &amp; Shipping', 'woocommerce' ); ?></h3>
+		<h3><?php _e( 'Billing &amp; Customer', 'woocommerce' ); ?></h3>
 
 	<?php else : ?>
 
-		<h3><?php _e( 'Billing Details', 'woocommerce' ); ?></h3>
+		<h3><?php _e( 'Customer Details', 'woocommerce' ); ?></h3>
 
 	<?php endif; ?>
 
@@ -38,11 +38,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<?php foreach ( $checkout->checkout_fields['billing'] as $key => $field ) : ?>
 
-		<?php woocommerce_form_field( $key, $field, $checkout->get_value( $key ) ); ?>
+		<?php if(in_array($key, array('billing_first_name','billing_last_name','billing_company'))) woocommerce_form_field( $key, $field, $checkout->get_value( $key ) ); ?>
 
 	<?php endforeach; ?>
-
-	<?php do_action('woocommerce_after_checkout_billing_form', $checkout ); ?>
 
 	<?php if ( ! is_user_logged_in() && $checkout->enable_signup ) : ?>
 
@@ -62,11 +60,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 				<p><?php _e( 'Create an account by entering the information below. If you are a returning customer please login at the top of the page.', 'woocommerce' ); ?></p>
 
-				<?php foreach ( $checkout->checkout_fields['account'] as $key => $field ) : ?>
+					<?php foreach ( $checkout->checkout_fields['account'] as $key => $field ) : ?>
 
-					<?php woocommerce_form_field( $key, $field, $checkout->get_value( $key ) ); ?>
+						<?php woocommerce_form_field( $key, $field, $checkout->get_value( $key ) ); ?>
 
-				<?php endforeach; ?>
+					<?php endforeach; ?>
 
 				<div class="clear"></div>
 
@@ -77,4 +75,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php do_action( 'woocommerce_after_checkout_registration_form', $checkout ); ?>
 
 	<?php endif; ?>
+	
+	<?php foreach ( $checkout->checkout_fields['billing'] as $key => $field ) : ?>
+
+		<?php $field['class'] = array('form-row-wide'); if($key == 'billing_phone' || $key == 'billing_email'){ woocommerce_form_field( $key, $field, $checkout->get_value( $key ) );} ?>
+
+	<?php endforeach; ?>
+
+	<?php do_action('woocommerce_after_checkout_billing_form', $checkout ); ?>
 </div>
