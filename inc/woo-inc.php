@@ -212,4 +212,32 @@ function businessbloomer_remove_prices( $price, $product ) {
 	return $price;
 }
 
+add_filter("woocommerce_checkout_fields", "order_fields");
+
+function order_fields($fields) {
+
+    $order = array(
+        "billing_first_name", 
+        "billing_last_name", 
+        "billing_company", 
+        "billing_address_1", 
+        "billing_address_2",  
+        "billing_city", 
+        "billing_postcode",
+        "billing_state", 
+        "billing_country", 
+        "billing_email", 
+        "billing_phone"
+
+    );
+    foreach($order as $field)
+    {
+        $ordered_fields[$field] = $fields["billing"][$field];
+    }
+
+    $fields["billing"] = $ordered_fields;
+    return $fields;
+
+}
+
 ?>
