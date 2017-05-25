@@ -2030,3 +2030,17 @@ li.wpmenucartli a.wpmenucart-contents span{
   max-width: 100%;
   width: 350px;
 }
+.select2-container--default .select2-selection--single{
+    background-color: #fff;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    padding: 5px 0;
+    height: 40px;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow{
+    height: 26px;
+    position: absolute;
+    top: 8px;
+    right: 1px;
+    width: 20px;
+}
