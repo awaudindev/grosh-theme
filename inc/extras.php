@@ -432,3 +432,55 @@ function wpso23858236_product_column_number( $column, $postid ) {
         echo get_post_meta( $postid, 'file_type', true );
     }
 }
+
+add_action( 'wp_ajax_save_pdf', 'save_pdf' );
+add_action( 'wp_ajax_nopriv_save_pdf', 'save_pdf' );
+function save_pdf() {
+
+	$text_align = is_rtl() ? 'right' : 'left';
+	$order      = wc_get_order( $_GET['id']);
+	$item_count = $order->get_item_count();
+
+	?>
+	
+	<h2 style="font-family: Arial"><?php printf( __( 'Order #%s', 'woocommerce' ), $order->get_order_number() ); ?></h2>
+
+	<table class="td" cellspacing="0" cellpadding="12" style="width: 100%; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;" border="1" width="100%" style="width:100%;">
+		<thead>
+			<tr>
+				<th width="60%" class="td" scope="col" style="text-align:<?php echo $text_align; ?>;padding: 5px 10px;"><?php _e( 'Product', 'woocommerce' ); ?></th>
+				<th width="15%" class="td" scope="col" style="text-align:<?php echo $text_align; ?>;padding: 5px 10px;"><?php _e( 'Quantity', 'woocommerce' ); ?></th>
+				<th class="td" scope="col" style="text-align:<?php echo $text_align; ?>;padding: 5px 10px;"><?php _e( 'Price', 'woocommerce' ); ?></th>
+			</tr>
+		</thead>
+		<tbody>
+			<?php echo wc_get_email_order_items( $order, array(
+				'show_sku'      => $sent_to_admin,
+				'show_image'    => false,
+				'image_size'    => array( 32, 32 ),
+				'plain_text'    => $plain_text,
+				'sent_to_admin' => $sent_to_admin,
+			) ); ?>
+		</tbody>
+		<tfoot>
+			<?php
+				if ( $totals = $order->get_order_item_totals() ) {
+					$i = 0;
+					foreach ( $totals as $total ) { 
+						if($total['value'] != 'Purchase Order'){
+							$i++;
+							?><tr>
+								<th class="td" scope="row" style="padding: 5px 10px;text-align:<?php echo $text_align; ?>; <?php echo ( 1 === $i ) ? 'border-top-width: 4px;' : ''; ?>"><?php echo $total['label']; ?></th>
+								<th></th>
+								<td class="td" style="padding: 5px 10px;text-align:<?php echo $text_align; ?>; <?php echo ( 1 === $i ) ? 'border-top-width: 4px;' : ''; ?>"><?php echo $total['value']; ?></td>
+							</tr><?php
+						}
+					}
+				}
+			?>
+		</tfoot>
+	</table>
+	<?php
+
+	wp_die();
+}

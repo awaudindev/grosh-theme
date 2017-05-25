@@ -98,6 +98,7 @@ if ( $customer_orders ) : ?>
 									}
 
 									if ( $actions = apply_filters( 'woocommerce_my_account_my_orders_actions', $actions, $order ) ) {
+										echo '<a href="#" class="button btn btn-default save-pdf" data-product="'.$order->get_order_number().'"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> PDF</a>';
 										foreach ( $actions as $key => $action ) {
 											echo '<a href="' . esc_url( $action['url'] ) . '" class="button ' . sanitize_html_class( $key ) . '">' . esc_html( $action['name'] ) . '</a>';
 										}
@@ -111,3 +112,57 @@ if ( $customer_orders ) : ?>
 		</tbody>
 	</table>
 <?php endif; ?>
+<?php add_action('wp_footer',function(){ ?> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
+ <script type="text/javascript">
+  jQuery(function($){
+    $(document).ready( function() {
+    	$(window).on('load',function(){
+    	$('.save-pdf').on('click',function(e){
+    		e.preventDefault();
+    		var product = $(this).attr('data-product');
+	    	$.ajax({
+			  type: 'POST',
+			  url: '<?php echo admin_url('admin-ajax.php'); ?>/?action=save_pdf&id='+product,
+			  beforeSend:function(){
+			  	$('.download-loading').remove();
+			  	$('body').append('<div style="position:fixed;top:50%;left:50%;transform:translateX(-50%);padding:30px;background:rgba(0,0,0,0.5);color:#fff;font-weight:bold;font-size:24px;" class="download-loading">Processing....</div>');
+			  },
+			  success: function(data){
+    			var doc = new jsPDF('p', 'pt', 'letter');
+    			 margins = {
+	                top: 10,
+	                bottom: 20,
+	                left: 20,
+	                width: 542
+	            };
+	            specialElementHandlers = {
+	                // element with id of "bypass" - jQuery style selector
+	            };
+			  	$('.download-loading').remove();
+			  	doc.setFont("Arial");
+				doc.setFontType("normal");
+	            doc.fromHTML(data, margins.left, // x coord
+		            margins.top, { // y coord
+		                'width': margins.width, // max width of content on PDF
+		                'elementHandlers': specialElementHandlers
+		            },
+
+		            function (dispose) {
+		                // dispose: object with X, Y of the last line add to the PDF 
+		                //   
+				    doc.save('Order #'+product+'.pdf');
+				    }, margins);	
+			  },
+			  error:function(jqXHR,textStatus,errorThrown){
+			  	console.log(textStatus);
+			  }
+			});
+	       });
+    		});
+	    });
+  	});
+</script>
+
+<?php },15);
+
