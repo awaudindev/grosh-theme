@@ -442,10 +442,35 @@ function save_pdf() {
 	$item_count = $order->get_item_count();
 
 	?>
-	
-	<h2 style="font-family: Arial"><?php printf( __( 'Order #%s', 'woocommerce' ), $order->get_order_number() ); ?></h2>
+	<div class="row">
+        <div class="col-xs-12">
+    		<div class="invoice-title">
+    			<h3 class="text-right"><?php printf( __( 'Order #%s', 'woocommerce' ), $order->get_order_number() ); ?></h3>
+    		</div>
+    		<hr>
+    		<div class="row">
+    			<div class="col-xs-6">
+    				<address>
+    				<strong>Billed To:</strong><br>
+    					<?php echo $order->get_formatted_billing_address(); ?>
+    				</address>
+    			</div>
+    			<div class="col-xs-6 text-right">
+    				<address>
+    					<strong>Order Date:</strong><br>
+    					<?php echo date_format(date_create($order->order_date,timezone_open("Asia/Jakarta")),"m-d-Y"); ?><br><br>
+    				</address>
+    			</div>
+    		</div>
+    	</div>
+    </div>
+	<div class="panel panel-default">
+    			<div class="panel-heading">
+    				<h2 class="panel-title">Order Summary</h2>
+    			</div>
+    			<div class="panel-body">
 
-	<table class="td" cellspacing="0" cellpadding="12" style="width: 100%; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;" border="1" width="100%" style="width:100%;">
+	<table class="table table-condensed">
 		<thead>
 			<tr>
 				<th width="60%" class="td" scope="col" style="text-align:<?php echo $text_align; ?>;padding: 5px 10px;"><?php _e( 'Product', 'woocommerce' ); ?></th>
@@ -480,6 +505,7 @@ function save_pdf() {
 			?>
 		</tfoot>
 	</table>
+	</div>
 	<?php
 
 	wp_die();

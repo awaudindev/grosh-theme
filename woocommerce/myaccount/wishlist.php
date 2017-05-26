@@ -112,10 +112,59 @@ if ( $customer_orders ) : ?>
 		</tbody>
 	</table>
 <?php endif; ?>
-<?php add_action('wp_footer',function(){ ?> 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
+<?php add_action('wp_footer',function(){ ?>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script> 
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.debug.js"></script>
  <script type="text/javascript">
   jQuery(function($){
+  	 var canvasToImage = function(canvas){
+        var img = new Image();
+        var dataURL = canvas.toDataURL('image/png');
+        img.src = dataURL;
+        return img;
+    };
+    var canvasShiftImage = function(oldCanvas,shiftAmt){
+        shiftAmt = parseInt(shiftAmt) || 0;
+        if(!shiftAmt){ return oldCanvas; }
+        
+        var newCanvas = document.createElement('canvas');
+        newCanvas.height = oldCanvas.height - shiftAmt;
+        newCanvas.width = oldCanvas.width;
+        var ctx = newCanvas.getContext('2d');
+        
+        var img = canvasToImage(oldCanvas);
+        ctx.drawImage(img,0, shiftAmt, img.width, img.height, 0, 0, img.width, img.height);
+        
+        return newCanvas;
+    };
+    
+    
+    var canvasToImageSuccess = function(canvas,product){
+        var pdf = new jsPDF('p','pt','a4'),
+            pdfInternals = pdf.internal,
+            pdfPageSize = pdfInternals.pageSize,
+            pdfScaleFactor = pdfInternals.scaleFactor,
+            pdfPageWidth = pdfPageSize.width,
+            pdfPageHeight = pdfPageSize.height,
+            totalPdfHeight = 0,
+            htmlPageHeight = canvas.height,
+            htmlScaleFactor = canvas.width / (pdfPageWidth * pdfScaleFactor),
+            safetyNet = 0;
+        
+        while(totalPdfHeight < htmlPageHeight && safetyNet < 15){
+            var newCanvas = canvasShiftImage(canvas, totalPdfHeight);
+            pdf.addImage(newCanvas, 'png', 15, 15, 520, 0, null, 'NONE');
+            
+            totalPdfHeight += (pdfPageHeight * pdfScaleFactor * htmlScaleFactor);
+            
+            if(totalPdfHeight < htmlPageHeight){
+                pdf.addPage();
+            }
+            safetyNet++;
+        }
+
+	    pdf.save('Order #'+product+'.pdf');
+	};
     $(document).ready( function() {
     	$(window).on('load',function(){
     	$('.save-pdf').on('click',function(e){
@@ -125,34 +174,21 @@ if ( $customer_orders ) : ?>
 			  type: 'POST',
 			  url: '<?php echo admin_url('admin-ajax.php'); ?>/?action=save_pdf&id='+product,
 			  beforeSend:function(){
-			  	$('.download-loading').remove();
+			  	$('.download-loading,.temp-box').remove();
 			  	$('body').append('<div style="position:fixed;top:50%;left:50%;transform:translateX(-50%);padding:30px;background:rgba(0,0,0,0.5);color:#fff;font-weight:bold;font-size:24px;" class="download-loading">Processing....</div>');
 			  },
 			  success: function(data){
-    			var doc = new jsPDF('p', 'pt', 'letter');
-    			 margins = {
-	                top: 10,
-	                bottom: 20,
-	                left: 20,
-	                width: 542
-	            };
-	            specialElementHandlers = {
-	                // element with id of "bypass" - jQuery style selector
-	            };
-			  	$('.download-loading').remove();
-			  	doc.setFont("Arial");
-				doc.setFontType("normal");
-	            doc.fromHTML(data, margins.left, // x coord
-		            margins.top, { // y coord
-		                'width': margins.width, // max width of content on PDF
-		                'elementHandlers': specialElementHandlers
-		            },
+    			$('body').append('<div class="temp-box" style="max-width:540px;">'+data+'</div>');
+	            html2canvas($('.temp-box')[0],{	
+				    onrendered: function(canvas){
+				        canvasToImageSuccess(canvas,product);
+				    }
+				});
 
-		            function (dispose) {
-		                // dispose: object with X, Y of the last line add to the PDF 
-		                //   
-				    doc.save('Order #'+product+'.pdf');
-				    }, margins);	
+	            setTimeout(function() { 
+			    $(document).find($('canvas,.temp-box')).remove();
+			    }, 2000);
+			    $('.download-loading').remove();	
 			  },
 			  error:function(jqXHR,textStatus,errorThrown){
 			  	console.log(textStatus);
