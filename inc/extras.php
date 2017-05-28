@@ -442,43 +442,40 @@ function save_pdf() {
 	$item_count = $order->get_item_count();
 
 	?>
+	<div class="wrapper">
 	<div class="row">
         <div class="col-xs-12">
     		<div class="invoice-title">
-    			<h3 class="text-right"><?php printf( __( 'Order #%s', 'woocommerce' ), $order->get_order_number() ); ?></h3>
+    			<p style="font-size:30px; text-align:right; font-weight:bold;"><?php printf( __( 'PO Number #%s', 'woocommerce' ), $order->get_order_number() ); ?></p>
+    			<br/>
     		</div>
-    		<hr>
-    		<div class="row">
-    			<div class="col-xs-6">
-    				<address>
+    		<table widths='50%,50%'>
+    			<tr>
+    				<td>
     				<strong>Billed To:</strong><br>
     					<?php echo $order->get_formatted_billing_address(); ?>
-    				</address>
-    			</div>
-    			<div class="col-xs-6 text-right">
-    				<address>
+    				</td>
+    				<td style="text-align:right; ">
     					<strong>Order Date:</strong><br>
     					<?php echo date_format(date_create($order->order_date,timezone_open("Asia/Jakarta")),"m-d-Y"); ?><br><br>
-    				</address>
-    			</div>
-    		</div>
+    				</td>
+    			</tr>
+    		</table>
     	</div>
     </div>
 	<div class="panel panel-default">
     			<div class="panel-heading">
-    				<h2 class="panel-title">Order Summary</h2>
+    				<p style="text-align:center; font-size:17px; font-weight:bold;">Order Summary</p>
+    				<br/>
     			</div>
     			<div class="panel-body">
 
-	<table class="table table-condensed">
-		<thead>
+	<table widths='60%,15%,25%' border="1" style="width:100%" width="100%">
 			<tr>
-				<th width="60%" class="td" scope="col" style="text-align:<?php echo $text_align; ?>;padding: 5px 10px;"><?php _e( 'Product', 'woocommerce' ); ?></th>
-				<th width="15%" class="td" scope="col" style="text-align:<?php echo $text_align; ?>;padding: 5px 10px;"><?php _e( 'Quantity', 'woocommerce' ); ?></th>
-				<th class="td" scope="col" style="text-align:<?php echo $text_align; ?>;padding: 5px 10px;"><?php _e( 'Price', 'woocommerce' ); ?></th>
+				<td width="60%" class="td" scope="col" style="text-align:<?php echo $text_align; ?>;padding: 5px 10px;"><?php _e( 'Product', 'woocommerce' ); ?></td>
+				<td width="15%" class="td" scope="col" style="text-align:<?php echo $text_align; ?>;padding: 5px 10px;"><?php _e( 'Quantity', 'woocommerce' ); ?></td>
+				<td class="td" scope="col" style="text-align:<?php echo $text_align; ?>;padding: 5px 10px;"><?php _e( 'Price', 'woocommerce' ); ?></td>
 			</tr>
-		</thead>
-		<tbody>
 			<?php echo wc_get_email_order_items( $order, array(
 				'show_sku'      => $sent_to_admin,
 				'show_image'    => false,
@@ -486,25 +483,24 @@ function save_pdf() {
 				'plain_text'    => $plain_text,
 				'sent_to_admin' => $sent_to_admin,
 			) ); ?>
-		</tbody>
-		<tfoot>
-			<?php
-				if ( $totals = $order->get_order_item_totals() ) {
-					$i = 0;
-					foreach ( $totals as $total ) { 
-						if($total['value'] != 'Purchase Order'){
-							$i++;
-							?><tr>
-								<th class="td" scope="row" style="padding: 5px 10px;text-align:<?php echo $text_align; ?>; <?php echo ( 1 === $i ) ? 'border-top-width: 4px;' : ''; ?>"><?php echo $total['label']; ?></th>
-								<th></th>
-								<td class="td" style="padding: 5px 10px;text-align:<?php echo $text_align; ?>; <?php echo ( 1 === $i ) ? 'border-top-width: 4px;' : ''; ?>"><?php echo $total['value']; ?></td>
-							</tr><?php
-						}
+		<?php
+			if ( $totals = $order->get_order_item_totals() ) {
+				$i = 0;
+				foreach ( $totals as $total ) { 
+					if($total['value'] != 'Purchase Order'){
+						$i++;
+						?><tr>
+							<td colspan="2"><?php echo $total['label']; ?></td>
+							<td></td>
+							<td><?php echo $total['value']; ?></td>
+						</tr><?php
 					}
 				}
-			?>
-		</tfoot>
+			}
+		?>
 	</table>
+	</div>
+	</div>
 	</div>
 	<?php
 

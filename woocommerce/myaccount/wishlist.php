@@ -113,58 +113,186 @@ if ( $customer_orders ) : ?>
 	</table>
 <?php endif; ?>
 <?php add_action('wp_footer',function(){ ?>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script> 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.debug.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.28/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.28/vfs_fonts.js"></script>
  <script type="text/javascript">
   jQuery(function($){
-  	 var canvasToImage = function(canvas){
-        var img = new Image();
-        var dataURL = canvas.toDataURL('image/png');
-        img.src = dataURL;
-        return img;
-    };
-    var canvasShiftImage = function(oldCanvas,shiftAmt){
-        shiftAmt = parseInt(shiftAmt) || 0;
-        if(!shiftAmt){ return oldCanvas; }
-        
-        var newCanvas = document.createElement('canvas');
-        newCanvas.height = oldCanvas.height - shiftAmt;
-        newCanvas.width = oldCanvas.width;
-        var ctx = newCanvas.getContext('2d');
-        
-        var img = canvasToImage(oldCanvas);
-        ctx.drawImage(img,0, shiftAmt, img.width, img.height, 0, 0, img.width, img.height);
-        
-        return newCanvas;
-    };
-    
-    
-    var canvasToImageSuccess = function(canvas,product){
-        var pdf = new jsPDF('p','pt','a4'),
-            pdfInternals = pdf.internal,
-            pdfPageSize = pdfInternals.pageSize,
-            pdfScaleFactor = pdfInternals.scaleFactor,
-            pdfPageWidth = pdfPageSize.width,
-            pdfPageHeight = pdfPageSize.height,
-            totalPdfHeight = 0,
-            htmlPageHeight = canvas.height,
-            htmlScaleFactor = canvas.width / (pdfPageWidth * pdfScaleFactor),
-            safetyNet = 0;
-        
-        while(totalPdfHeight < htmlPageHeight && safetyNet < 15){
-            var newCanvas = canvasShiftImage(canvas, totalPdfHeight);
-            pdf.addImage(newCanvas, 'png', 15, 15, 520, 0, null, 'NONE');
-            
-            totalPdfHeight += (pdfPageHeight * pdfScaleFactor * htmlScaleFactor);
-            
-            if(totalPdfHeight < htmlPageHeight){
-                pdf.addPage();
-            }
-            safetyNet++;
-        }
+  	function ParseContainer(cnt, e, p, styles) {
+	var elements = [];
+	var children = e.childNodes;
+	if (children.length != 0) {
+	    for (var i = 0; i < children.length; i++) p = ParseElement(elements, children[i], p, styles);
+	}
+	if (elements.length != 0) {            
+	    for (var i = 0; i < elements.length; i++) cnt.push(elements[i]);
+	}
+	return p;
+	}
 
-	    pdf.save('Order #'+product+'.pdf');
-	};
+	function ComputeStyle(o, styles) {
+	for (var i = 0; i < styles.length; i++) {
+	    var st = styles[i].trim().toLowerCase().split(":");
+	    if (st.length == 2) {
+	        switch (st[0]) {
+	            case "font-size":{
+	                o.fontSize = parseInt(st[1]);
+	                break;
+	            }
+	            case "text-align": {
+	                switch (st[1]) {
+	                    case "right": o.alignment = 'right'; break;
+	                    case "center": o.alignment = 'center'; break;
+	                }
+	                break;
+	            }
+	            case "font-weight": {
+	                switch (st[1]) {
+	                    case "bold": o.bold = true; break;
+	                }
+	                break;
+	            }
+	            case "text-decoration": {
+	                switch (st[1]) {
+	                    case "underline": o.decoration = "underline"; break;
+	                }
+	                break;
+	            }
+	            case "font-style": {
+	                switch (st[1]) {
+	                    case "italic": o.italics = true; break;
+	                }
+	                break;
+	            }
+	        }
+	    }
+	}
+	}
+
+	function ParseElement(cnt, e, p, styles) {
+	if (!styles) styles = [];
+	if (e.getAttribute) {
+	    var nodeStyle = e.getAttribute("style");
+	    if (nodeStyle) {
+	        var ns = nodeStyle.split(";");
+	        for (var k = 0; k < ns.length; k++) styles.push(ns[k]);
+	    }
+	}
+
+	switch (e.nodeName.toLowerCase()) {
+	    case "#text": {
+	        var t = { text: e.textContent.replace(/\n/g, "") };
+	        if (styles) ComputeStyle(t, styles);
+	        p.text.push(t);
+	        break;
+	    }
+	    case "b":case "strong": {
+	        //styles.push("font-weight:bold");
+	        ParseContainer(cnt, e, p, styles.concat(["font-weight:bold"]));
+	        break;
+	    }
+	    case "u": {
+	        //styles.push("text-decoration:underline");
+	        ParseContainer(cnt, e, p, styles.concat(["text-decoration:underline"]));
+	        break;
+	    }
+	    case "i": {
+	        //styles.push("font-style:italic");
+	        ParseContainer(cnt, e, p, styles.concat(["font-style:italic"]));
+	        //styles.pop();
+	        break;
+	        //cnt.push({ text: e.innerText, bold: false });
+	    }
+	    case "span": {
+	        ParseContainer(cnt, e, p, styles);
+	        break;
+	    }
+	    case "br": {
+	        p = CreateParagraph();
+	        cnt.push(p);
+	        break;
+	    }
+	    case "table":
+	        {
+	            var t = {
+	                table: {
+	                	style: [{
+							margin: [0, 5, 0, 15]
+						}],
+	                    widths: [],
+	                    body: []
+	                }
+	            }
+	            var border = e.getAttribute("border");
+	            var isBorder = false;
+	            if (border) if (parseInt(border) == 1) isBorder = true;
+	            if (!isBorder) t.layout = 'noBorders';
+	            ParseContainer(t.table.body, e, p, styles);
+
+	            var widths = e.getAttribute("widths");
+	            if (!widths) {
+	                if (t.table.body.length != 0) {
+	                    if (t.table.body[0].length != 0) for (var k = 0; k < t.table.body[0].length; k++) t.table.widths.push("*");
+	                }
+	            } else {
+	                var w = widths.split(",");
+	                for (var k = 0; k < w.length; k++) t.table.widths.push(w[k]);
+	            }
+	            cnt.push(t);
+	            break;
+	        }
+	    case "tbody": {
+	        ParseContainer(cnt, e, p, styles);
+	        //p = CreateParagraph();
+	        break;
+	    }
+	    case "tr": {
+	        var row = [];
+	        ParseContainer(row, e, p, styles);
+	        cnt.push(row);
+	        break;
+	    }
+	    case "td": {
+	        p = CreateParagraph();
+	        var st = {stack: []}
+	        st.stack.push(p);
+
+	        var rspan = e.getAttribute("rowspan");
+	        if (rspan) st.rowSpan = parseInt(rspan);
+	        var cspan = e.getAttribute("colspan");
+	        if (cspan) st.colSpan = parseInt(cspan);
+
+	        ParseContainer(st.stack, e, p, styles);
+	        cnt.push(st);
+	        break;
+	    }
+	    case "div":case "p": {
+	        p = CreateParagraph();
+	        var st = {stack: []}
+	        st.stack.push(p);
+	        ComputeStyle(st, styles);
+	        ParseContainer(st.stack, e, p);
+
+	        cnt.push(st);
+	        break;
+	    }
+	    default: {
+	        console.log("Parsing for node " + e.nodeName + " not found");
+	        break;
+	    }
+	}
+	return p;
+	}
+
+	function ParseHtml(cnt, htmlText) {
+	var html = $(htmlText.replace(/\t/g, "").replace(/\n/g, ""));
+	var p = CreateParagraph();
+	for (var i = 0; i < html.length; i++) ParseElement(cnt, html.get(i), p);
+	}
+
+	function CreateParagraph() {
+	var p = {text:[]};
+	return p;
+	}
     $(document).ready( function() {
     	$(window).on('load',function(){
     	$('.save-pdf').on('click',function(e){
@@ -178,17 +306,10 @@ if ( $customer_orders ) : ?>
 			  	$('body').append('<div style="position:fixed;top:50%;left:50%;transform:translateX(-50%);padding:30px;background:rgba(0,0,0,0.5);color:#fff;font-weight:bold;font-size:24px;" class="download-loading">Processing....</div>');
 			  },
 			  success: function(data){
-    			$('body').append('<div class="temp-box" style="max-width:540px;">'+data+'</div>');
-	            html2canvas($('.temp-box')[0],{	
-				    onrendered: function(canvas){
-				        canvasToImageSuccess(canvas,product);
-				    }
-				});
-
-	            setTimeout(function() { 
-			    $(document).find($('canvas,.temp-box')).remove();
-			    }, 2000);
-			    $('.download-loading').remove();	
+			    $('.download-loading').remove();
+				 content = [];
+				ParseHtml(content, data);
+				pdfMake.createPdf({content: content}).download('order #'+product+'.pdf');	
 			  },
 			  error:function(jqXHR,textStatus,errorThrown){
 			  	console.log(textStatus);
