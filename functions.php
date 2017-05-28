@@ -384,6 +384,10 @@ require get_template_directory() . '/inc/register-field.php';
 require get_template_directory() . '/inc/purchase-order.php';
 
 /**
+ * Load sales tools.
+ */
+require get_template_directory() . '/inc/sales-tool.php';
+/**
  *
  * Breadcrumb
  */

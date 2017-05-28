@@ -29,5 +29,19 @@ $heading = esc_html( apply_filters( 'woocommerce_product_description_heading', _
 <?php if ( $heading ): ?>
   <h5 class="padTop20 padBot20 font700"><?php echo $heading; ?></h5>
 <?php endif; ?>
-
-<?php the_content(); ?>
+<?php
+$content = get_the_content();
+$start = strpos($content, '<p>');
+echo $start;
+$end = strpos($content, '</p>', $start);
+echo $end;
+$paragraph = substr($content, $start, $end-$start+6);
+if($paragraph == '&nbsp;')
+{
+	$content = substr_replace($content, '', 0 , 6);
+	echo '<p>'.$content.'</p>';
+}else{
+	the_content();
+}
+?>
+<?php //the_content(); ?>

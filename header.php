@@ -56,9 +56,9 @@
 	                  <div class="form-group clearfix">
 	                    <input type="text" value="<?php echo $_GET['s']; ?>" name="s" id="s" class="form-control" placeholder="Find the perfect digital drop ...">
 	                    <select class="selectpicker" name="type" id="type">
-	                      <option value="animation" <?php if($_GET['type'] == 'animation'){ echo 'selected'; } ?>>Animated images</option>
-	                      <option value="image" <?php if($_GET['type'] == 'image'){ echo 'selected'; } ?>>Still images</option>
-	                      <option value="item_number" <?php if($_GET['type'] == 'item_number'){ echo 'selected'; } ?>>Item Number</option>
+	                    	<option value="" <?php if($_GET['type'] == ''){ echo 'selected'; } ?>>All Images</option>
+	                      	<option value="animation" <?php if($_GET['type'] == 'animation'){ echo 'selected'; } ?>>Animated images</option>
+	                      	<option value="image" <?php if($_GET['type'] == 'image'){ echo 'selected'; } ?>>Still images</option>
 	                    </select>
 	                    <input type="hidden" name="post_type" value="product">
 	                  </div>

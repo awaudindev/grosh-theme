@@ -131,9 +131,11 @@ if ( ! function_exists( 'woocommerce_get_product_thumbnail' ) ) {
     function woocommerce_get_product_thumbnail( $size = 'shop_catalog', $placeholder_width = 0, $placeholder_height = 0  ) {
         global $post, $woocommerce;
         $product = wc_get_product( $post->ID );
-
+        $post_meta = get_post_meta( $post->ID );
 		$product_number = get_post_meta( $product->id, 'product_number', true );
 		$product_type = get_post_meta( $product->id, 'file_type', true );
+		$bundles =  json_decode( $post_meta["wcpb_bundle_products"][0], true );
+
 		$large_image = "";
 		if(IsNullOrEmptyString($product_number)){
 			$large_image = "http://placehold.it/225x127";
@@ -147,6 +149,13 @@ if ( ! function_exists( 'woocommerce_get_product_thumbnail' ) ) {
         }else{
           $class = "none";
         }
+
+        if(is_array($bundles)){
+			reset($bundles);
+			$first_key = key($bundles);
+			$product_number = get_post_meta( $first_key, 'product_number', true );
+			$large_image = getProductImage($product_number, true, false);
+		}
 
 		$output = '<div class="thumb-post">';
 
