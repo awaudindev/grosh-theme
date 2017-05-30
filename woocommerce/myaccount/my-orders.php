@@ -29,7 +29,7 @@ if ( $customer_orders ) : ?>
 
 	<h2><?php echo apply_filters( 'woocommerce_my_account_my_orders_title', __( 'Recent Orders', 'woocommerce' ) ); ?></h2>
 
-	<table class="shop_table shop_table_responsive my_account_orders">
+	<table class="shop_table shop_table_responsive my_account_orders table-striped">
 
 		<thead>
 			<tr>
@@ -91,7 +91,7 @@ if ( $customer_orders ) : ?>
 
 									if ( $actions = apply_filters( 'woocommerce_my_account_my_orders_actions', $actions, $order ) ) {
 										foreach ( $actions as $key => $action ) {
-											echo '<a href="' . esc_url( $action['url'] ) . '" class="button ' . sanitize_html_class( $key ) . '">' . esc_html( $action['name'] ) . '</a>';
+											echo '<a href="' . esc_url( $action['url'] ) . '" class="woocommerce-Button btn btn-default ' . sanitize_html_class( $key ) . '">' . esc_html( $action['name'] ) . '</a>';
 										}
 									}
 								?>

@@ -2044,3 +2044,13 @@ li.wpmenucartli a.wpmenucart-contents span{
     right: 1px;
     width: 20px;
 }
+.woocommerce table.my_account_orders td, 
+.woocommerce table.my_account_orders th {
+  padding: 1.6rem;
+  vertical-align: middle;
+}
+
+.table-striped > tbody > tr:nth-child(odd) > td,
+.table-striped > tbody > tr:nth-child(odd) > th {
+  background-color: #f5f5f5;
+}
