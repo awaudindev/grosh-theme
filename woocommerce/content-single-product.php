@@ -345,7 +345,9 @@ $file_type = $_REQUEST['filetype'];
 </div><!-- #product-<?php the_ID(); ?> -->
 
 <?php do_action( 'woocommerce_after_single_product' ); 
-wp_enqueue_style( 'checkbox', get_template_directory_uri() . '/assets/stylesheets/checkbox.css' );	
+wp_enqueue_style( 'checkbox', get_template_directory_uri() . '/assets/stylesheets/checkbox.css' );
+
+if(isset($_GET['rent']) && !empty($_GET['rent']) && !$found){	
 add_action('wp_footer',function(){ ?> 
 
  <script type="text/javascript">
@@ -356,10 +358,12 @@ add_action('wp_footer',function(){ ?>
 		  url: '<?php echo admin_url('admin-ajax.php'); ?>/?action=update_cart_total',
 		  beforeSend:function(){
 		  	if($('li.wpmenucartli a.wpmenucart-contents span').length) $('li.wpmenucartli a.wpmenucart-contents span').html('');
+		  	$('body').append('<div class="loading" style="position:absolute;top:0;left:0;z-index:10;width:100%;height:100%;color:#fff;background:rgba(0,0,0,0.6);text-align:center;"><strong style="position:relative;top:50%;transform:translateY(-50%);font-size:20px;letter-spacing:1px;">Updating Cart....</strong></div>');
 		  },
 		  success: function(data){
 		  	var response = JSON.parse(data);
             if($('li.wpmenucartli a.wpmenucart-contents span').length) $('li.wpmenucartli a.wpmenucart-contents span').css({'opacity':1}).html(response.total);
+            $('.loading').remove();
 		  },
 		  error:function(jqXHR,textStatus,errorThrown){
 		  	console.log(textStatus);
@@ -369,5 +373,5 @@ add_action('wp_footer',function(){ ?>
   	});
 </script>
 
-<?php },10);
+<?php },10); }
 ?>

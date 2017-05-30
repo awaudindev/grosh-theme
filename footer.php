@@ -56,7 +56,7 @@ global $post;
 <script type="text/javascript">
     jQuery(function($){
         $(document).ready(function() {
-            if($('li.wpmenucartli a.wpmenucart-contents span').length){ $('li.wpmenucartli a.wpmenucart-contents span').css({'opacity':1});}
+            if($('li.wpmenucartli a.wpmenucart-contents span').length){ }
             $('.navbar-nav.navbar-right.main-menu li:last').before('<li class="menu-item"><a title="Login" href="#" class="modal-login" data-toggle="modal" data-target="#myModal">Login</a></li>');
          });
         <?php if($_POST['register'] || $_POST['login']){ ?>
