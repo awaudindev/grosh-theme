@@ -2010,9 +2010,6 @@ padding: 10px;
 height: 100px;}
 .contactform7 .btn{
 float:right; margin-top:30px;}
-li.wpmenucartli a.wpmenucart-contents span{
-  opacity: 0;
-}
 #add_payment_method table.cart .product-thumbnail, 
 .woocommerce-cart table.cart .product-thumbnail, 
 .woocommerce-checkout table.cart .product-thumbnail{

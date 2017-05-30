@@ -281,6 +281,11 @@ function grosh_scripts() {
 							'<td data-title="Total"><strong>'+response.total+'</strong> </td></tr>';
 			          
 			            $('.carttotals table.shop_table').html(newtotal);
+			            $('table.shop_table tbody tr').each(function(){
+			            	if($(this).index() < response.datacart.length){ 
+			            		$(this).find($('td:nth-child(4)')).html(response.datacart[$(this).index()].price).next().html(response.datacart[$(this).index()].subtotal);
+			            	}
+			            });
 			            $('.woocommerce .cart-collaterals .loading').remove();
 			        });
 			    }

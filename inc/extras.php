@@ -225,43 +225,48 @@ function check_total() {
 	        'start'   => $datetime1->format('m/d/Y'),
 	        'expiry'  => $datetime2->format('m/d/Y')));
 
-	function count_total($interval){
+	$result = array();
+	$base_price_image = ($grosh_meta['base-image-price']) ? $grosh_meta['base-image-price'] : 65;
+ 	$base_price_motion = ($grosh_meta['base-motion-price']) ? $grosh_meta['base-motion-price'] : 115;
+ 	$bundle_price = ($grosh_meta['package-bundle-price']) ? $grosh_meta['package-bundle-price'] : 750;
 
-		$base_price_image = ($grosh_meta['base-image-price']) ? $grosh_meta['base-image-price'] : 65;
-	 	$base_price_motion = ($grosh_meta['base-motion-price']) ? $grosh_meta['base-motion-price'] : 115;
-	 	$bundle_price = ($grosh_meta['package-bundle-price']) ? $grosh_meta['package-bundle-price'] : 750;
+ 	$recurring_price_image = ($grosh_meta['recurring-image-price']) ? $grosh_meta['recurring-image-price'] : 3.25;
+ 	$recurring_price_motion = ($grosh_meta['recurring-motion-price']) ? $grosh_meta['recurring-motion-price'] : 5.75;
 
-	 	$recurring_price_image = ($grosh_meta['recurring-image-price']) ? $grosh_meta['recurring-image-price'] : 3.25;
-	 	$recurring_price_motion = ($grosh_meta['recurring-motion-price']) ? $grosh_meta['recurring-motion-price'] : 5.75;
+    $new_total = 0;
+    foreach ( WC()->cart->cart_contents as $key => $value ) {
+        //calculations here
 
-	    $new_total = 0;
-	    foreach ( WC()->cart->cart_contents as $key => $value ) {
-	        //calculations here
+		$base_price = ($value['file_type'] == 'animation') ? $base_price_motion : $base_price_image;
+		$recurring_price = ($value['file_type'] == 'animation' && empty($file_type) || $file_type == 'animation') ? $recurring_price_motion : $recurring_price_image;
 
-			$base_price = ($value['file_type'] == 'animation') ? $base_price_motion : $base_price_image;
-			$recurring_price = ($value['file_type'] == 'animation' && empty($file_type) || $file_type == 'animation') ? $recurring_price_motion : $recurring_price_image;
+		$firstweek = $base_price;
 
-			$firstweek = $base_price;
+		if($interval->days > 7){
 
-			if($interval->days > 7){
+			$extra = $interval->days - 7;
 
-				$extra = $interval->days - 7;
+			$extra_total = $extra * $recurring_price;
 
-				$extra_total = $extra * $recurring_price;
+			$new_total += $firstweek + $extra_total;
 
-				$new_total += $firstweek + $extra_total; 
+			array_push($result,
+				array('price' => wc_price($firstweek + $extra_total),
+			'subtotal' => wc_price($firstweek + $extra_total ))); 
 
-			}else{
+		}else{
 
-				$new_total += $firstweek;
-			
-			}
-	    }
-	    
-	    return $new_total;
-	}
+			$new_total += $firstweek;
 
-	echo json_encode(array('total'=>wc_price(count_total($interval))));
+			array_push($result,
+				array('price' => wc_price($firstweek),
+			'subtotal' => wc_price($firstweek))); 
+		
+		}
+    }
+	
+
+	echo json_encode(array( 'total' => wc_price($new_total), 'datacart' => $result));
 	wp_die();
 }
 
