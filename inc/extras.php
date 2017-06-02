@@ -58,7 +58,7 @@ function main_product_category( $atts, $content = ""){
 
 				$thumbnail = ($image) ? $image : wc_placeholder_img_src();
 	                         
-	            $result .= '<li class="text-center col-md-4 col-sm-6"><a href="' .  esc_url( get_term_link( $term ) ) . '" class="' . $term->slug . '"><img width="350" height="150" src="' . $thumbnail . '" alt="' . $term->name . '" /><h2 class="woocommerce-loop-product__title">'.$term->name.' (' .$term->count. ')</h2></a></li>';                                                    
+	            $result .= '<li class="text-center col-md-4 col-sm-6"><a href="' .  esc_url( get_term_link( $term ) ) . '" class="' . $term->slug . '"><img width="350" height="150" src="' . $thumbnail . '" alt="' . $term->name . '" /><h5 class="title-product">'.$term->name.' (' .$term->count. ')</h5></a></li>';                                                    
 	 
 	    	}
 	    	$result .= '</ul>';	     
@@ -95,58 +95,56 @@ function product_packages( $atts, $content = ""){
 
 
     $wc_query = new WP_Query($params);
+    $result .= '<div class="popular-post">';
+    	$result .= '<ul class="clearfix">';
 
-    if ($wc_query->have_posts()) :
-    	$result .= '<div id="grid">';
-    		$result .= '<div class="woocommerce" id="wrap">';
+    if ($wc_query->have_posts()) : 
+    	while ($wc_query->have_posts()) :$wc_query->the_post();
 
-      while ($wc_query->have_posts()) :$wc_query->the_post();
+      	$id = get_the_ID();
 
-      $id = get_the_ID();
+      	$product = new WC_Product($id);
 
-      $product = new WC_Product($id);
+      	$img_oid = $product->get_image_id(); 
 
-      $img_oid = $product->get_image_id(); 
+      	$image = "";
 
-      $image = "";
+      	$product_number = get_post_meta( $id, 'product_number', true );
+      	$bundles =  json_decode( get_post_meta( $id, "wcpb_bundle_products", true ), true );
 
-      $product_number = get_post_meta( $id, 'product_number', true );
-      $bundles =  json_decode( get_post_meta( $id, "wcpb_bundle_products", true ), true );
+      	$total_bundle = (is_array( $bundles )) ? count($bundles) : 1;
 
-      $total_bundle = (is_array( $bundles )) ? count($bundles) : 1;
+      	$first_key = key($bundles);
+		$product_number = get_post_meta( $first_key, 'product_number', true );
+		$large_image = getProductImage($product_number, false, false);
+		$check_animation = false;
 
-      $large_image = "";
 
-      if(IsNullOrEmptyString($product_number)){
-        $large_image = "http://placehold.it/1200x496";
-      }else{
-        $large_image = getProductImage($product_number, false, false);
-      }
+      	$result .= '<li class="text-center col-md-4 col-sm-6">';  
 
-      $result .= '<div class="post-box">   
+	        $result .= '<div class="thumb-post">';
 
-         <div class="thumb-post">
+		        $result .= '<a href="'.esc_url( get_permalink($id) ).'">';
+			    	$result .= '<img class="img-responsive" src="'.$large_image.'" alt="'.get_the_title($id).'"/>';
+			    	$result .= '<h5 class="title-product">'.get_the_title($id).' ('.$total_bundle.')</h5>';
+			    $result .= '</a>';
 
-            <img class="img-responsive" src="'.$large_image.'" alt="'.get_the_title($id).'"/>
+	        $result .= '</div>';
 
-            <h5 class="title-product pad20"><a href="'.esc_url( get_permalink($id) ).'">'.get_the_title($id).' ('.$total_bundle.')</a></h5>
-
-          </div>
-
-        </div>';
+        $result .= '</li>';
 
 
       endwhile;
-
-      $result .= '</div></div>';
 
       wp_reset_postdata();
 
       else:
 
-        $result .= 'No Product';
+        $result .= '<li>No Product</li>';
 
       endif;
+
+      $result .= '</ul></div>';
 
 	return $result;
 
