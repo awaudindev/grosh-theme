@@ -36,7 +36,9 @@ add_filter( 'body_class', 'grosh_body_classes' );
 function main_product_category( $atts, $content = ""){
 
 	extract(shortcode_atts(array(
-		'id' => ''
+		'id' => '',
+		'show' => 'category',
+		'meta' => 'image' 
 	),$atts));
 
 	$result = '';
@@ -47,7 +49,7 @@ function main_product_category( $atts, $content = ""){
 	 
 	$terms = get_terms( 'product_cat', $args );
 	 
-	if ( $terms ) {
+	if ( $terms && $show != 'post') {
 	    $result .= '<div class="popular-post">';     
    	 		$result .= '<ul class="clearfix">';
 	     
@@ -64,12 +66,103 @@ function main_product_category( $atts, $content = ""){
 	    	$result .= '</ul>';	     
 	    $result .= '</div>';
 	 
+	}else{
+		$args = array(
+			'posts_per_page'   => 9,
+			'offset'           => 0,
+			'post_status' => 'publish',
+			'post_type' => 'product',
+           'meta_key' => 'file_type',
+           'meta_value' => $meta
+		);
+
+		$query = new WP_Query($args);
+		if ( $query->have_posts() ) :
+			$i = 0;
+			$result .= '<div class="popular-post list_post" data-meta="'.$meta.'"><ul class="clearfix row">';
+				while ( $query->have_posts() ) : $query->the_post();
+					ob_start();
+					wc_get_template_part( 'content', 'product' );
+					$result .= ob_get_clean();
+					$i++; 
+				endwhile;
+			wp_reset_postdata();
+			$result .= '</ul></div>';
+		endif;
+
+		if($i > 7){
+			add_action('wp_footer',function(){ ?>
+			<script type="text/javascript">
+			  jQuery(function($){
+			    $(document).ready( function() {
+			    	$(window).on('load',function(){
+			    	$('.popular-post').append('<div class="col-md-12 loadMore"><a href="#" class="fetch_post btn btn-default aligncenter"  data-offset="1">Load More</a></div>');	
+			    	$('.fetch_post').on('click',function(e){
+			    		e.preventDefault();
+			    		var product = $('.list_post').attr('data-meta'),offset = $(this).attr('data-offset');
+				    	$.ajax({
+						  type: 'POST',
+						  url: '<?php echo admin_url('admin-ajax.php'); ?>/?action=fetch_post&meta='+product+'&offset='+offset,
+						  beforeSend:function(){
+						  	$('.fetch_post').html('<i class="fa fa-circle-o-notch fa-spin"></i> Loading Product.....');
+						  },
+						  success: function(data){
+						    $('.download-loading').remove();
+						    $('.fetch_post').html('Load More').attr('data-offset',parseInt(offset)+1);
+						    $('.popular-post ul').append(data);
+						    if((data.split('<li').length - 1) < 9 || data.length < 1) $('.loadMore').remove();	
+						  },
+						  error:function(jqXHR,textStatus,errorThrown){
+						  	console.log(textStatus);
+						  	$('.fetch_post').html('Failed to Load, Try Again!');
+						  }
+						});
+				       });
+			    		});
+				    });
+			  	});
+			</script>
+
+			<?php },15);
+		}
 	}
 
 	return $result;
 
 }
 add_shortcode('main_product','main_product_category');
+
+add_action( 'wp_ajax_fetch_post', 'fetch_post' );
+add_action( 'wp_ajax_nopriv_fetch_post', 'fetch_post' );
+function fetch_post() {
+
+	$meta = $_GET['meta'];
+	$offset = $_GET['offset'];
+
+	$result = '';
+
+	$args = array(
+		'posts_per_page'   => 9,
+		'offset'           => $offset*9,
+		'post_status' => 'publish',
+		'post_type' => 'product',
+       'meta_key' => 'file_type',
+       'meta_value' => $meta
+	);
+
+	$query = new WP_Query($args);
+	if ( $query->have_posts() ) :
+		while ( $query->have_posts() ) : $query->the_post();
+			ob_start();
+			wc_get_template_part( 'content', 'product' );
+			$result .= ob_get_clean();
+		endwhile;
+		wp_reset_postdata();
+		echo $result;
+	endif;
+
+	wp_die();
+}
 
 function product_packages( $atts, $content = ""){
 
