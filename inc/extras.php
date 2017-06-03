@@ -92,11 +92,18 @@ function main_product_category( $atts, $content = ""){
 
 		if($i > 7){
 			add_action('wp_footer',function(){ ?>
+			<style type="text/css">
+				.loadMore{
+					display: table;
+					margin-left: auto;
+					margin-right: auto;
+				}
+			</style>
 			<script type="text/javascript">
 			  jQuery(function($){
 			    $(document).ready( function() {
 			    	$(window).on('load',function(){
-			    	$('.popular-post').append('<div class="col-md-12 loadMore"><a href="#" class="fetch_post btn btn-default aligncenter"  data-offset="1">Load More</a></div>');	
+			    	$('.popular-post').append('<div class="loadMore"><a href="#" class="fetch_post btn btn-default"  data-offset="1" >Load More</a></div>');	
 			    	$('.fetch_post').on('click',function(e){
 			    		e.preventDefault();
 			    		var product = $('.list_post').attr('data-meta'),offset = $(this).attr('data-offset');
