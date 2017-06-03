@@ -17,7 +17,7 @@
          <div class="thumb-post">
            <div class="category-post" id="icon-video" data-id="'.$product_number.'" style="display:'.$class.'"><i class="fa fa-video-camera" aria-hidden="true"></i></div>
           <div class="caption" data-id="'.$product_number.'" style="display:'.$class.'"><span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span></div>
-          <img width="350" height="150" class="img-responsive" src="'.$image.'" alt="'.get_the_title($id).'"/>
+          <a href="'.esc_url( get_permalink($id) ).'"><img width="350" height="150" class="img-responsive" src="'.$image.'" alt="'.get_the_title($id).'"/></a>
             
             <h5 class="title-product pad20"><a href="'.esc_url( get_permalink($id) ).'">'.get_the_title($id).'</a></h5>
 

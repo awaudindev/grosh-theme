@@ -163,7 +163,7 @@ if ( ! function_exists( 'woocommerce_get_product_thumbnail' ) ) {
 
         	$output .= '<div class="caption" data-id="'.$product_number.'" style="display:'.$class.'"><span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span></div>';
         	
-            $output .= '<img width="350" height="150" class="img-responsive" src="'.$large_image.'" alt="'.get_the_title($post->ID).'"/>';
+            $output .= '<a href="'.esc_url( get_permalink($post->ID) ).'"><img width="350" height="150" class="img-responsive" src="'.$large_image.'" alt="'.get_the_title($post->ID).'"/></a>';
 
             $output .= '<h5 class="title-product"><a href="'.esc_url( get_permalink($post->ID) ).'">'.get_the_title($post->ID).'</a></h5>';
 
