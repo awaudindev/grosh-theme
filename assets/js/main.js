@@ -49,6 +49,13 @@ jQuery(document).ready(function($){
 		}
 	});
 
+	$('body').on('hidden.bs.modal', '#popupMsg', function () {
+		$('#playerpopup')[0].pause();
+		for (var player in mejs.players) {
+		    mejs.players[player].media.pause();
+		}
+	});
+
 	function setStream(url){
 		 mejs.players['mep_0'].setSrc([
             {
@@ -93,7 +100,7 @@ jQuery(document).ready(function($){
 	if($('video source').attr('url')){
 		$('video').mediaelementplayer();
 	}
-	
+
 	$("#player1").mediaelementplayer();
 
 	
