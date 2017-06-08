@@ -2381,3 +2381,15 @@ MEDIA QUERY
     margin-right: 90px;
   }
 }
+
+.woocommerce-items-perpage {
+    display: inline-block;
+    float: left;
+    margin: 0 10px 0 0;
+}
+
+.woocommerce-items-perpage label,.woocommerce-items-perpage .selector {
+    display: inline-block;
+    margin-right: 4px;
+    vertical-align: middle;
+}
