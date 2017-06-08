@@ -120,7 +120,7 @@ function main_product_category( $atts, $content = ""){
 		endif;
 
 		if($i > $per_page-1){
-			add_action('wp_footer',get_post_ajax($order_by,$per_page),25);
+			add_action('wp_footer',get_post_ajax($order_by,$per_page),10);
 		}
 	}
 
