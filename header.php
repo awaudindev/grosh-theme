@@ -25,23 +25,38 @@
 	<a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'grosh' ); ?></a>
 
 	<header id="masthead" class="site-header" role="banner">
-		<nav class="navbar navbar-default padTop20 padBot10">
+		<nav class="navbar navbar-default padTop10 padBot10">
 			<div class="container">
         		<div class="row">
         			<div class="navbar-header">
 		            	<?php grosh_the_custom_logo(); ?>
-		          	</div>
-		          	<ul class="nav navbar-nav navbar-right marTop5">
-              			<!--<li class="dropdown dropdown-bag">
-			                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> 
-			                  <span class="count-bag">17</span> <span class="glyphicon icon-bag"></span>
-			                </a>
-              			</li>-->
+		            	
+		          	</div> 
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false" aria-controls="navbar">
+			          <span class="sr-only">Toggle navigation</span>
+			          <span class="icon-bar top-bar"></span>
+			          <span class="icon-bar middle-bar"></span>
+			          <span class="icon-bar bottom-bar"></span>
+			        </button>      
+		          	<ul class="nav navbar-nav navbar-right marTop15 clearfix">
+              			
+              			<li>
+              				<?php if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
+							    $count = WC()->cart->cart_contents_count;
+							    ?><a class="cart-contents" href="<?php echo WC()->cart->get_cart_url(); ?>" title="<?php _e( 'View your shopping cart' ); ?>">
+
+							        <span class="cart-contents-count"><?php echo esc_html( $count ); ?></span>
+							        </a>
+							 
+							<?php } ?>
+              			</li>
               			<li class="dropdown-search"><a class="cd-search-trigger" href="#cd-search">Search<span></span></a></li>
+              			
+
 		          	</ul>
-		          
-		          	<?php wp_nav_menu( array( 'theme_location' => 'menu-1', 'menu_id' => 'bs-example-navbar-collapse-1', 'menu_class'=> 'nav navbar-nav navbar-right main-menu',  'fallback_cb' => 'wp_bootstrap_navwalker::fallback', 'walker' => new wp_bootstrap_navwalker() ) );  ?>
-		          	
+		          	<div class="menu-container marTop5 clearfix">
+		          	<?php wp_nav_menu( array( 'theme_location' => 'menu-1', 'menu_id' => 'bs-example-navbar-collapse-1', 'menu_class'=> 'nav navbar-nav main-menu collapse navbar-collapse',  'fallback_cb' => 'wp_bootstrap_navwalker::fallback', 'walker' => new wp_bootstrap_navwalker() ) );  ?>
+		          	</div>
         		</div>
         	</div>	
 		</nav>
@@ -59,13 +74,14 @@
 	                    	<option value="" <?php if($_GET['type'] == ''){ echo 'selected'; } ?>>All Images</option>
 	                      	<option value="animation" <?php if($_GET['type'] == 'animation'){ echo 'selected'; } ?>>Animated images</option>
 	                      	<option value="image" <?php if($_GET['type'] == 'image'){ echo 'selected'; } ?>>Still images</option>
-	                    </select>
+		                    <option value="item_number" <?php if($_GET['type'] == 'item_number'){ echo 'selected'; } ?>>Product Number</option>
+		                </select>
 	                    <input type="hidden" name="post_type" value="product">
 	                  </div>
 	                </div>
 	               
 	              </div>
-	              <div class="col-md-1 col-sm-2">
+	              <div class="col-md-1 col-sm-2 col-xs-12">
 	                <button type="submit" class="btn btn-default cd-btn"><span class="glyphicon icon-search" aria-hidden="true"></span></button>
 	              </div>
 	            </div>    

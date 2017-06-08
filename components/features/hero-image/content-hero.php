@@ -27,13 +27,6 @@ switch ($totp) {
     break;
 }
 ?>
-
-<?php //if ( has_post_thumbnail() ) : ?>
-	<div class="grosh-hero">
-
-		<?php //the_post_thumbnail( 'grosh-hero' ); ?>
-	</div>
-<?php //endif; ?>
 <div class="page-header"><!--[start:page-header]-->
     <div id="myCarousel" class="carousel slide">
       	<div class="carousel-inner">
@@ -54,14 +47,21 @@ switch ($totp) {
                 $large_image = getProductImage($product_number, false, true);
                 $style = "width:100%";
               }else{
-                if(IsNullOrEmptyString($product_number)){
-                  $large_image = "http://placehold.it/1200x496";
-                }else{
-                  $large_image = getProductImage($product_number, false, false);
-                }
+                $url = "http://s3.amazonaws.com/groshdigital/".$product_number.".jpg";
+                $large_image = $url;//getProductImage($product_number, false, false);
               }
               ?>
-              <div class="item <?php echo $class; ?>">
+              <div class="item <?php echo $class; ?>" data-type="<?php echo $product_type; ?>" style="background-color:#000;">
+                  <?php
+                    if($product_type == "animation"){
+                      ?>
+                      <video width="640" height="250" style="width: 100%; height: 100%; z-index: 4001;" id="player1">
+                            <!-- Pseudo HTML5 -->
+                            <source type="video/mp4" src="<?php echo $large_image; ?>" />
+                        </video>
+                      <?php
+                    }else{
+                  ?>
                   <img src="<?php echo $large_image; ?>" style="<?php echo $style; ?>" class="img-responsive" />
                   <div class="carousel-caption">
                       <h2 class="title-product font700 padBot20"><a href="<?php echo get_permalink($item); ?>"><?php echo get_the_title( $item ); ?></a></h2>
@@ -69,6 +69,7 @@ switch ($totp) {
                           <div class="size-product"><?php echo $product_number; ?></div>
                       </div>
                   </div>
+                  <?php } ?>
               </div>
               <?php
               $i++;
@@ -84,12 +85,21 @@ switch ($totp) {
         	<i class="glyphicon glyphicon-chevron-right"></i>
       	</a>
     </div>
+    <div class="hidden-lg">
+          <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+          </ol>
+        </div>
 </div><!--[end:page-header]-->
 <?php if(count($package) > 0){?>
 <div class="featured">
 	<div class="container">
         <div class="row">
+          <div class="col-md-12">
           	<h3 class="title-section text-center font700 padTop60 padBot60">Create the show you've always wanted</h3>
+          </div>  
             <?php
               for($i = 0; $i < count($package); $i++){
                 $pack = $package[$i];
