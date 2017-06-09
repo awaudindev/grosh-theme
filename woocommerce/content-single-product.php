@@ -194,7 +194,7 @@ $file_type = $_REQUEST['filetype'];
 		<div class="col-md-6">
 			<div class="quote-price"><!--[start:quote-price]-->
 
-                <form class="" action="" method="POST">
+                <form class="rental-rate" action="" method="POST">
 				<?php
 					$type = "";
 					if(!empty($_REQUEST['filetype'])){

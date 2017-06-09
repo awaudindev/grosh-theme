@@ -347,6 +347,8 @@ add_action( 'wp_ajax_check_total', 'check_total' );
 add_action( 'wp_ajax_nopriv_check_total', 'check_total' );
 function check_total() {
 
+	global $grosh_meta;
+
 	$datetime1 = new DateTime($_POST['fromdate']);
 	$datetime2 = new DateTime($_POST['todate']);
 	$interval = date_diff($datetime1, $datetime2);

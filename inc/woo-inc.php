@@ -192,21 +192,21 @@ if ( ! function_exists( 'custom_post_product_query' ) ) {
 		$type = $_GET['type'] != '' ? $_GET['type'] : '';
 		$meta_query = $q->get( 'meta_query' );
 
+		if(is_numeric($_GET['s'])){
+			$meta_query[] = array(
+	            'key'       => 'product_number',
+	            'value' 	=> $_GET['s'],
+	            'compare'   => 'LIKE'
+	        );
+	        $q->set('s','');
+	    }
+
 		 if ( $type != '' ) {
-		 	if($type == 'item_number'){
-		 		$meta_query[] = array(
-                    'key'       => 'product_number',
-                    'value' 	=> $_GET['s'],
-                    'compare'   => 'LIKE'
-                );
-                $q->set('s','');
-		 	}else{
-		        $meta_query[] = array(
-                    'key'       => 'file_type',
-                    'value' 	=> $type,
-                    'compare'   => '='
-                );
-		    }
+	        $meta_query[] = array(
+                'key'       => 'file_type',
+                'value' 	=> $type,
+                'compare'   => '='
+            );
 	    }
 	 	
 	    $q->set( 'meta_query', $meta_query );

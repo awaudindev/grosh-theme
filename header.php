@@ -74,7 +74,6 @@
 	                    	<option value="" <?php if($_GET['type'] == ''){ echo 'selected'; } ?>>All Images</option>
 	                      	<option value="animation" <?php if($_GET['type'] == 'animation'){ echo 'selected'; } ?>>Animated images</option>
 	                      	<option value="image" <?php if($_GET['type'] == 'image'){ echo 'selected'; } ?>>Still images</option>
-		                    <option value="item_number" <?php if($_GET['type'] == 'item_number'){ echo 'selected'; } ?>>Product Number</option>
 		                </select>
 	                    <input type="hidden" name="post_type" value="product">
 	                  </div>

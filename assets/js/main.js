@@ -2,12 +2,21 @@ jQuery(document).ready(function($){
 
 
 	if($('#datepicker1').length || $('#datepicker2').length){
-		 $('#datepicker1').datepicker({
-		 	startDate:new Date(), 
-		 	autoclose:true
-		 });
+		 $("#datepicker1").datepicker({
+	        dateFormat: 'mm/dd/yy',
+		    minDate : new Date(), 
+	     	autoclose:true,
+	        onSelect: function (dateText,inst) {
+
+	            var setdate2 = $(this).datepicker('getDate'),
+	            	date2 = $('#datepicker2').datepicker('getDate');
+	            setdate2.setDate(setdate2.getDate() + 7);
+
+	            $('#datepicker2').datepicker('option', 'minDate', setdate2);
+	        }
+	    });
 	     $('#datepicker2').datepicker({
-	     	startDate:new Date(), 
+	     	minDate:new Date(), 
 	     	autoclose:true
 	     });
 	 }
