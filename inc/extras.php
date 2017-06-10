@@ -289,6 +289,8 @@ add_action( 'woocommerce_before_calculate_totals', 'add_custom_price' );
 
 function add_custom_price( $cart_object ) {
 
+	global $grosh_meta;
+
 	$rentalDate = WC()->session->get('rental_date');
 
 	if(isset($rentalDate)){

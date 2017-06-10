@@ -1,24 +1,40 @@
 jQuery(document).ready(function($){
 
-
 	if($('#datepicker1').length || $('#datepicker2').length){
-		 $("#datepicker1").datepicker({
-	        dateFormat: 'mm/dd/yy',
-		    minDate : new Date(), 
-	     	autoclose:true,
-	        onSelect: function (dateText,inst) {
-
-	            var setdate2 = $(this).datepicker('getDate'),
-	            	date2 = $('#datepicker2').datepicker('getDate');
-	            setdate2.setDate(setdate2.getDate() + 7);
-
-	            $('#datepicker2').datepicker('option', 'minDate', setdate2);
-	        }
-	    });
-	     $('#datepicker2').datepicker({
-	     	minDate:new Date(), 
-	     	autoclose:true
-	     });
+	     var dateFormat = "mm-dd-yyyy",
+	     today = new Date(),
+	      from = $( "#datepicker1" )
+	        .datepicker({
+	          minDate : today,
+	          changeMonth: true,
+	          autoclose : true
+	        })
+	        .on( "change", function() {
+	          $('body').append('<div class="loading" style="position:fixed;top:0;left:0;z-index:999;width:100%;height:100%;color:#fff;background:rgba(0,0,0,0.6);text-align:center;"><strong style="position:relative;top:50%;transform:translateY(-50%);font-size:40px;letter-spacing:1px;">Updating Rental Rate....</strong></div>');
+	          $('.rental-rate').submit();
+	          to.datepicker( "option", "minDate", getDate( this ) );
+	        }),
+	      to = $( "#datepicker2" ).datepicker({
+	        minDate: "+1w",
+	        changeMonth: true,
+	        autoclose: true
+	      })
+	      .on( "change", function() {
+	      	$('body').append('<div class="loading" style="position:fixed;top:0;left:0;z-index:999;width:100%;height:100%;color:#fff;background:rgba(0,0,0,0.6);text-align:center;"><strong style="position:relative;top:50%;transform:translateY(-50%);font-size:40px;letter-spacing:1px;">Updating Rental Rate....</strong></div>');
+	        $('.rental-rate').submit();
+	        from.datepicker( "option", "maxDate", getDate( this ) );
+	      });
+	 
+	    function getDate( element ) {
+	      var date;
+	      try {
+	        date = $.datepicker.parseDate( dateFormat, element.value );
+	      } catch( error ) {
+	        date = null;
+	      }
+	 
+	      return date;
+	    }
 	 }
      
 	 $('.selectpicker').selectpicker({
