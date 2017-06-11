@@ -378,7 +378,7 @@ add_action('wp_footer',function(){ ?>
 		  },
 		  success: function(data){
 		  	var response = JSON.parse(data);
-            if($('li.wpmenucartli a.wpmenucart-contents span').length) $('li.wpmenucartli a.wpmenucart-contents span').css({'opacity':1}).html(response.total);
+            if($('.navbar-nav .cart-contents .cart-contents-count').length) $('.navbar-nav .cart-contents .cart-contents-count').html(response.total);
             $('.loading').remove();
 		  },
 		  error:function(jqXHR,textStatus,errorThrown){
