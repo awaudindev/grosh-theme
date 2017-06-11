@@ -143,7 +143,7 @@ $file_type = $_REQUEST['filetype'];
 
 		$newDate1 = $datetime1->format('m/d/Y');
 		$newDate2 = $datetime2->format('m/d/Y');
-
+		
 		WC()->session->set(
 	     'rental_date',
 	     array(
@@ -300,7 +300,7 @@ $file_type = $_REQUEST['filetype'];
 
                 <div class="clearfix">
                   <div class="col-md-12">
-                  	<a href="<?php echo get_permalink($post->ID).'?rent='.$post->ID.'&filetype='.$type; ?>" class="btn btn-default btn-lg text-uppercase">Add to Cart</a>
+                  	<a href="javascript:void(0);" onclick="$('.rental-rate').attr('action','<?php echo get_permalink($post->ID).'?rent='.$post->ID.'&filetype='.$type; ?>').submit();" class="btn btn-default btn-lg text-uppercase">Add to Cart</a>
                   </div>  
                 </div>
                 </form>
