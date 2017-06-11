@@ -44,7 +44,8 @@ switch ($totp) {
               $large_image = "";
               $style = "";
               if($product_type == "animation"){
-                $large_image = getProductImage($product_number, false, true);
+                $url = "http://s3.amazonaws.com/groshdigital/".$product_number.".mp4";
+                $large_image = $url;//getProductImage($product_number, false, true);
                 $style = "width:100%";
               }else{
                 $url = "http://s3.amazonaws.com/groshdigital/".$product_number.".jpg";
@@ -55,7 +56,7 @@ switch ($totp) {
                   <?php
                     if($product_type == "animation"){
                       ?>
-                      <video width="640" height="250" style="width: 100%; height: 100%; z-index: 4001;" id="player1">
+                      <video width="640" height="250" style="width: 100%; height: 100%; z-index: 4001;" id="player1" class="playerslider">
                             <!-- Pseudo HTML5 -->
                             <source type="video/mp4" src="<?php echo $large_image; ?>" />
                         </video>

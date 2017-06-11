@@ -134,7 +134,7 @@ jQuery(document).ready(function($){
 		$('video').mediaelementplayer();
 	}
 
-	$("#player1").mediaelementplayer();
+	$(".playerslider").mediaelementplayer();
 
 	
 });
