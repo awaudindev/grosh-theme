@@ -297,19 +297,9 @@ $file_type = $_REQUEST['filetype'];
                   	</div>    
                 </div>
                 <?php } ?>
-
-<<<<<<< HEAD
-                <div class="clearfix wrap-btn-cart ">
-                  <div class="col-md-push-6 col-md-6 col-sm-6 padRight0 left">
-                    <button type="submit" class="btn btn-default btn-lg text-uppercase">Update rental rate</button>
-                  </div>
-                  <div class="col-md-pull-6 col-md-6 col-sm-6 padLeft0 right">
-                  	<a href="<?php echo get_permalink($post->ID).'?rent='.$post->ID.'&filetype='.$type; ?>" class="btn btn-default btn-lg text-uppercase">Add to Cart</a>
-=======
                 <div class="clearfix">
                   <div class="col-md-12">
                   	<a href="javascript:void(0);" onclick="$('.rental-rate').attr('action','<?php echo get_permalink($post->ID).'?rent='.$post->ID.'&filetype='.$type; ?>').submit();" class="btn btn-default btn-lg text-uppercase">Add to Cart</a>
->>>>>>> 71b76ef58455da5b19d780064a20304c56f23f7e
                   </div>  
                 </div>
                 </form>
