@@ -75,6 +75,7 @@ switch ($totp) {
               $i++;
             }
           }
+        }
           ?>
 	    </div>
       	<?php get_product_search_form(); ?>  
