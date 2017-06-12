@@ -22,14 +22,6 @@ jQuery(document).ready(function($){
 		//closeNav();
 	});
 
-	var $carousel = $('#myCarousel');
-	$carousel.bind('slide.bs.carousel', function (e) {
-	    if(e.relatedTarget.dataset['type'] == 'animation'){
-	    	mejs.players['mep_0'].play();
-	    }else{
-	    	mejs.players['mep_0'].pause();
-	    }
-	});
 	var urlvideo = "";
 
 	$('.caption').on('click', function(event){

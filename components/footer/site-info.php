@@ -11,10 +11,10 @@
 	<div class="col-md-2 col-sm-4 col-xs-6">
 		<?php dynamic_sidebar( 'footer-2' ); ?>
 	</div>
-	 <div class="col-md-2 col-sm-4 col-xs-12">
+	 <div class="col-md-2 col-sm-4 col-xs-6">
 		<?php dynamic_sidebar( 'footer-3' ); ?>
 	</div>
-	<div class="col-md-3 col-xs-12">
+	<div class="col-md-3 col-xs-6">
 		<?php dynamic_sidebar( 'footer-4' ); ?>
 	</div>
 </div>

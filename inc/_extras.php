@@ -67,16 +67,11 @@ function main_product_category( $atts, $content = ""){
 	    $result .= '</div>';
 	 
 	}else{
-
-		$per_page = ($_GET['per_page']) ? $_GET['per_page'] : 12;
-		$order_by = ($_GET['orderby']) ? $_GET['orderby'] : 'menu_order';
-
 		$args = array(
-			'posts_per_page'   => $per_page,
+			'posts_per_page'   => 9,
 			'offset'           => 0,
 			'post_status' => 'publish',
 			'post_type' => 'product',
-			'order_by' => $order_by,
            'meta_key' => 'file_type',
            'meta_value' => $meta
 		);
@@ -84,38 +79,7 @@ function main_product_category( $atts, $content = ""){
 		$query = new WP_Query($args);
 		if ( $query->have_posts() ) :
 			$i = 0;
-			$result .= '
-				<div class="filter-sort clearfix">
-					<div class="filter-sort-box pull-left">
-						<form class="woocommerce-items-perpage" method="get">
-							<label>Show: </label>
-							<div class="selector">
-							<select name="per_page" class="per_page selectpicker" onchange="this.form.submit()">
-									<option value="12">12 items</option>
-									<option value="24">24 items</option>
-									<option value="36">36 items</option>
-									<option value="48">48 items</option>
-									<option value="-1">All items</option>
-							</select>
-							</div>
-							<input name="orderby" value="'.$order_by.'" type="hidden">
-						</form>
-					</div>
-					<div class="filter-sort-box pull-right">
-						<form class="woocommerce-items-perpage" method="get">
-							<label>Sort by:</label>
-							<div class="selector wrap-selector">
-							<select name="orderby" class="orderby selectpicker" onchange="this.form.submit()">
-									<option value="menu_order">relevance</option>
-									<option value="date">newest design</option>
-							</select>
-							</div>
-							<input name="per_page" value="'.$per_page.'" type="hidden">
-						</form>
-					</div>
-			</div>	
-			<p class="clearfix">&nbsp;</p>
-			<div class="popular-post list_post clearfix" data-meta="'.$meta.'"><ul class="clearfix">';
+			$result .= '<div class="popular-post list_post" data-meta="'.$meta.'"><ul class="clearfix row">';
 				while ( $query->have_posts() ) : $query->the_post();
 					ob_start();
 					wc_get_template_part( 'content', 'product' );
@@ -126,8 +90,47 @@ function main_product_category( $atts, $content = ""){
 			$result .= '</ul></div>';
 		endif;
 
-		if($i > $per_page-1){
-			add_action('wp_footer',get_post_ajax($order_by,$per_page),10);
+		if($i > 7){
+			add_action('wp_footer',function(){ ?>
+			<style type="text/css">
+				.loadMore{
+					display: table;
+					margin-left: auto;
+					margin-right: auto;
+				}
+			</style>
+			<script type="text/javascript">
+			  jQuery(function($){
+			    $(document).ready( function() {
+			    	$(window).on('load',function(){
+			    	$('.popular-post').append('<div class="loadMore"><a href="#" class="fetch_post btn btn-default"  data-offset="1" >Load More</a></div>');	
+			    	$('.fetch_post').on('click',function(e){
+			    		e.preventDefault();
+			    		var product = $('.list_post').attr('data-meta'),offset = $(this).attr('data-offset');
+				    	$.ajax({
+						  type: 'POST',
+						  url: '<?php echo admin_url('admin-ajax.php'); ?>/?action=fetch_post&meta='+product+'&offset='+offset,
+						  beforeSend:function(){
+						  	$('.fetch_post').html('<i class="fa fa-circle-o-notch fa-spin"></i> Loading Product.....');
+						  },
+						  success: function(data){
+						    $('.download-loading').remove();
+						    $('.fetch_post').html('Load More').attr('data-offset',parseInt(offset)+1);
+						    $('.popular-post ul').append(data);
+						    if((data.split('<li').length - 1) < 9 || data.length < 1) $('.loadMore').remove();	
+						  },
+						  error:function(jqXHR,textStatus,errorThrown){
+						  	console.log(textStatus);
+						  	$('.fetch_post').html('Failed to Load, Try Again!');
+						  }
+						});
+				       });
+			    		});
+				    });
+			  	});
+			</script>
+
+			<?php },15);
 		}
 	}
 
@@ -136,64 +139,20 @@ function main_product_category( $atts, $content = ""){
 }
 add_shortcode('main_product','main_product_category');
 
-function get_post_ajax($order_by,$per_page){ ?>
-	<style type="text/css">
-		.loadMore{
-			display: table;
-			margin-left: auto;
-			margin-right: auto;
-		}
-	</style>
-	<script type="text/javascript">
-	  jQuery(function($){
-	    $(document).ready( function() {
-	    	$(window).on('load',function(){
-	    	$('.popular-post').append('<div class="loadMore"><a href="#" class="fetch_post btn btn-default" data-orderby="<?php echo $order_by; ?>"  data-offset="1" data-perpage="<?php echo $per_page; ?>" >Load More</a></div>');	
-	    	$('.fetch_post').on('click',function(e){
-	    		e.preventDefault();
-	    		var product = $('.list_post').attr('data-meta'),offset = $(this).attr('data-offset'),orderby = $(this).attr('data-orderby'),page = $(this).attr('data-perpage');
-		    	$.ajax({
-				  type: 'POST',
-				  url: '<?php echo admin_url('admin-ajax.php'); ?>/?action=fetch_post&meta='+product+'&offset='+offset+'&orderby='+orderby+'&perpage='+page,
-				  beforeSend:function(){
-				  	$('.fetch_post').html('<i class="fa fa-circle-o-notch fa-spin"></i> Loading Product.....');
-				  },
-				  success: function(data){
-				    $('.download-loading').remove();
-				    $('.fetch_post').html('Load More').attr('data-offset',parseInt(offset)+1);
-				    $('.popular-post ul').append(data);
-				    if((data.split('<li').length - 1) < 9 || data.length < 1) $('.loadMore').remove();	
-				  },
-				  error:function(jqXHR,textStatus,errorThrown){
-				  	console.log(textStatus);
-				  	$('.fetch_post').html('Failed to Load, Try Again!');
-				  }
-				});
-		       });
-	    		});
-		    });
-	  	});
-	</script>
-
-	<?php }
-
 add_action( 'wp_ajax_fetch_post', 'fetch_post' );
 add_action( 'wp_ajax_nopriv_fetch_post', 'fetch_post' );
 function fetch_post() {
 
 	$meta = $_GET['meta'];
 	$offset = $_GET['offset'];
-	$per_page = $_GET['perpage'];
-	$orderby = $_GET['orderby'];
 
 	$result = '';
 
 	$args = array(
-		'posts_per_page'   => $per_page,
-		'offset'           => $offset*$per_page,
+		'posts_per_page'   => 9,
+		'offset'           => $offset*9,
 		'post_status' => 'publish',
 		'post_type' => 'product',
-		'order_by' => $orderby,
        'meta_key' => 'file_type',
        'meta_value' => $meta
 	);
@@ -266,7 +225,7 @@ function product_packages( $atts, $content = ""){
 	        $result .= '<div class="thumb-post">';
 
 		        $result .= '<a href="'.esc_url( get_permalink($id) ).'">';
-			    	$result .= '<img class="img-responsive" src="'.$large_image.'" alt="'.get_the_title($id).'"/>';
+			    	$result .= '<img class="img-responsive" clas="img-responsive" src="'.$large_image.'" alt="'.get_the_title($id).'"/>';
 			    	$result .= '<h5 class="title-product">'.get_the_title($id).' ('.$total_bundle.')</h5>';
 			    $result .= '</a>';
 

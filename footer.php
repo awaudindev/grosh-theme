@@ -38,12 +38,13 @@ global $post;
 </div>
 <?php wp_footer(); ?>
 <?php if(!is_user_logged_in() && $post->ID != get_option('woocommerce_myaccount_page_id')){ ?>
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+<div class="modal fade modal-sign" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <?php grosh_the_custom_logo(); ?>
             </div>
             <div class="modal-body clearfix">
                 <div class="col-md-12 woocommerce">

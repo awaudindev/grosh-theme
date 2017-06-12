@@ -32,17 +32,17 @@ $rentalDate = WC()->session->get('rental_date');
 
 	<?php do_action( 'woocommerce_before_cart_totals' ); ?>
 
-	<div class="col-md-6 padLeft0 col-md-push-3">
-		<div class="clearfix"> 
+	<div class="col-md-6 padLeft0 col-md-push-3 col-sm-12 col-xs-12">
+		<div class="clearfix rental-period"> 
 			<h3><?php _e( 'Rental Period', 'woocommerce' ); ?></h3>
 			<div class="row">
-				<div class="col-md-6">
+				<div class="col-md-6 col-xs-6">
 					<h4 class="marBot30"><?php _e( 'From', 'woocommerce' ); ?> : <small class="from_text"><?php echo ($rentalDate) ? $rentalDate['start'] : $newDate1; ?></small></h4>
 				<div class="overlay-button hide">
 					<div id="from"></div>
 				</div>
 				</div>
-				<div class="col-md-6">
+				<div class="col-md-6 col-sm-6 col-xs-6">
 					<h4 class="marBot30"><?php _e( 'To', 'woocommerce' ); ?> : <small class="to_text"><?php echo ($rentalDate) ? $rentalDate['expiry'] : $newDate2; ?></small></h4>
 				<div class="overlay-button hide">
 					<div id="to"></div>
@@ -53,7 +53,7 @@ $rentalDate = WC()->session->get('rental_date');
 		</div>
 	</div>
 
-	<div class="col-md-3 padRight0 pull-right carttotals"> 
+	<div class="col-md-3 padRight0 pull-right carttotals col-sm-12 col-xs-12"> 
 		<h3><?php _e( 'Cart Totals', 'woocommerce' ); ?></h3>
 		<div class="marTop70 marBot0">
 		<table cellspacing="0" class="shop_table shop_table_responsive text-right">

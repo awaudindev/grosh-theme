@@ -226,64 +226,64 @@ $file_type = $_REQUEST['filetype'];
 				?>
                 <h5 class="padTop20 padBot20 font500">Get a Quote</h5>
                 <div class="clearfix">
-                  <div class="col-md-6 padLeft0">
-                    <div class="form-group">
-                      <label class="padBot10">Start Date :</label>
-                      <input type="text" class="form-control calendarpicker" value="<?php echo $newDate1; ?>" placeholder="mm-dd-yyyy" name="start_date" id="datepicker1" data-format="m/d/yy">
-                    </div>
-                  </div>  
-                  <div class="col-md-6 padRight0">
-                    <div class="form-group">
-                      <label class="padBot10">Expiration Date :</label>
-                      <input type="text" class="form-control calendarpicker" value="<?php echo $newDate2; ?>" placeholder="mm-dd-yyyy" name="end_date" id="datepicker2" data-format="m/d/yy">
-                    </div>
-                  </div>  
+	                <div class="col-md-6 col-sm-6 padLeft0">
+		                <div class="form-group">
+		                    <label class="padBot10">Start Date :</label>
+		                    <input type="text" class="form-control calendarpicker" value="<?php echo $newDate1; ?>" placeholder="mm-dd-yyyy" name="start_date" id="datepicker1" data-format="m/d/yy">
+		                </div>
+	                </div>  
+	                <div class="col-md-6 col-sm-6 padRight0">
+	                  	<div class="form-group">
+		                    <label class="padBot10">Expiration Date :</label>
+		                    <input type="text" class="form-control calendarpicker" value="<?php echo $newDate2; ?>" placeholder="mm-dd-yyyy" name="end_date" id="datepicker2" data-format="m/d/yy">
+	                  	</div>
+	                </div>   	
                 </div>
 
                 <?php if($totalrate){ ?>
                 <div class="clearfix">
-                  <div class="result-rate-checked marBot10">
-                    <div class="entry-result marTop20">
-                      <div class="clearfix padLeft20 padRight20 padBot10 padTop10 font500">
-                      	<?php if($interval->days > 7){ ?>
-                        <div class="pull-left">Rental rate for 7 days :</div>
-                        <?php }else{ ?>
-                        <div class="pull-left">Rental rate for <?php echo $interval->days;?> days :</div>
-                        <?php } ?>
-                        <div class="pull-right text-right">$<?php echo $firstweek; ?></div>
-                      </div>
-                      <div class="clearfix padLeft20 result-info">
-                        <div class="text-left padTop10 padBot20 font500">
-                          <span class="glyphicon icon-dateenable"></span>
-                          Active on : <span class="clrBlue"><?php echo $newDate1;?></span>
-                        </div>
-                        <div class="text-left padBot10 font500">
-                          <span class="glyphicon icon-datedisable"></span>
-                           Disable on : <span class="clrBlue"><?php echo $newDate2;?></span>
-                        </div>
-                      </div>
-                      <hr>
-                      <?php if($interval->days > 7){ ?>
-	                  <div class="clearfix padLeft20 padRight20 padBot10 padTop10 font500">
-                        <div class="pull-left">Rental rate for extra <?php echo $extra.' '.$day; ?> :</div>
-                        <div class="pull-right text-right">$<?php echo $extra_total; ?></div>
-                      </div>
-                      <hr>
-	                  <?php } ?>
-                    </div>
-                    <div class="clearfix padLeft20 padRight20">
-                      <div class="pull-left"><h4 class="font500">Total Cost :</h4></div>
-                      <div class="pull-right text-right"><h4 class="font500">$<?php echo $totalrate; ?></h4></div>
-                    </div>  
-                  </div>    
+                  	<div class="result-rate-checked marBot10">
+                    	<div class="entry-result marTop20">
+	                      	<div class="clearfix padLeft20 padRight20 padBot10 padTop10 font500">
+	                      		<?php if($interval->days > 7){ ?>
+	                        	<div class="pull-left">Rental rate for 7 days :</div>
+	                        	<?php }else{ ?>
+	                        	<div class="pull-left">Rental rate for <?php echo $interval->days;?> days :</div>
+	                        	<?php } ?>
+	                        	<div class="pull-right text-right">$<?php echo $firstweek; ?></div>
+	                      	</div>
+	                      	<div class="clearfix padLeft20 result-info">
+	                        	<div class="text-left padTop10 padBot20 font500">
+		                          	<span class="glyphicon icon-dateenable"></span>
+		                          	Active on : <span class="clrBlue"><?php echo $newDate1;?></span>
+	                        	</div>
+	                        	<div class="text-left padBot10 font500">
+		                          	<span class="glyphicon icon-datedisable"></span>
+		                           	Disable on : <span class="clrBlue"><?php echo $newDate2;?></span>
+	                        	</div>
+	                      	</div>
+	                      	<hr />
+	                      	<?php if($interval->days > 7){ ?>
+		                  	<div class="clearfix padLeft20 padRight20 padBot10 padTop10 font500">
+	                        	<div class="pull-left">Rental rate for extra <?php echo $extra.' '.$day; ?> :</div>
+	                        	<div class="pull-right text-right">$<?php echo $extra_total; ?></div>
+	                      	</div>
+	                      	<hr />
+		                  	<?php } ?>
+                    	</div>
+                    	<div class="clearfix padLeft20 padRight20">
+                      		<div class="pull-left"><h4 class="font500">Total Cost :</h4></div>
+                      		<div class="pull-right text-right"><h4 class="font500">$<?php echo $totalrate; ?></h4></div>
+                    	</div>  
+                  	</div>    
                 </div>
                 <?php } ?>
 
-                <div class="clearfix">
-                  <div class="col-md-push-6 col-md-6 padRight0">
+                <div class="clearfix wrap-btn-cart ">
+                  <div class="col-md-push-6 col-md-6 col-sm-6 padRight0 left">
                     <button type="submit" class="btn btn-default btn-lg text-uppercase">Update rental rate</button>
                   </div>
-                  <div class="col-md-pull-6 col-md-6 padLeft0">
+                  <div class="col-md-pull-6 col-md-6 col-sm-6 padLeft0 right">
                   	<a href="<?php echo get_permalink($post->ID).'?rent='.$post->ID.'&filetype='.$type; ?>" class="btn btn-default btn-lg text-uppercase">Add to Cart</a>
                   </div>  
                 </div>
