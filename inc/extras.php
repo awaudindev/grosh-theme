@@ -82,6 +82,23 @@ function main_product_category( $atts, $content = ""){
 		);
 
 		$query = new WP_Query($args);
+
+		$per_page_array = array('12' => 12,'24' => 24,'36' => 36,'48' => 48,'All' => -1);
+		$order_by_array = array('relevance' => 'menu_order', 'newest design' => 'date');
+
+		$per_page_data = '';
+		$order_by_data = '';
+
+		foreach ($per_page_array as $k => $v) {
+			$selected = ($_GET['per_page'] == $v) ? 'selected' : '';
+			$per_page_data .= '<option value="'.$v.'" '.$selected.'>'.$k.' items</option>';
+		}
+
+		foreach ($order_by_array as $k => $v) {
+			$selected = ($_GET['orderby'] == $v) ? 'selected' : '';
+			$order_by_data .= '<option value="'.$v.'" '.$selected.'>'.$k.'</option>';
+		}
+
 		if ( $query->have_posts() ) :
 			$i = 0;
 			$result .= '
@@ -91,11 +108,7 @@ function main_product_category( $atts, $content = ""){
 							<label>Show: </label>
 							<div class="selector">
 							<select name="per_page" class="per_page selectpicker" onchange="this.form.submit()">
-									<option value="12">12 items</option>
-									<option value="24">24 items</option>
-									<option value="36">36 items</option>
-									<option value="48">48 items</option>
-									<option value="-1">All items</option>
+									'.$per_page_data.'
 							</select>
 							</div>
 							<input name="orderby" value="'.$order_by.'" type="hidden">
@@ -106,8 +119,7 @@ function main_product_category( $atts, $content = ""){
 							<label>Sort by:</label>
 							<div class="selector wrap-selector">
 							<select name="orderby" class="orderby selectpicker" onchange="this.form.submit()">
-									<option value="menu_order">relevance</option>
-									<option value="date">newest design</option>
+									'.$order_by_data.'
 							</select>
 							</div>
 							<input name="per_page" value="'.$per_page.'" type="hidden">
