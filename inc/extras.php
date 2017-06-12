@@ -296,6 +296,8 @@ add_action( 'woocommerce_before_calculate_totals', 'add_custom_price' );
 
 function add_custom_price( $cart_object ) {
 
+	global $grosh_meta;
+
 	$rentalDate = WC()->session->get('rental_date');
 
 	if(isset($rentalDate)){
@@ -353,6 +355,8 @@ function update_cart_total(){
 add_action( 'wp_ajax_check_total', 'check_total' );
 add_action( 'wp_ajax_nopriv_check_total', 'check_total' );
 function check_total() {
+
+	global $grosh_meta;
 
 	$datetime1 = new DateTime($_POST['fromdate']);
 	$datetime2 = new DateTime($_POST['todate']);

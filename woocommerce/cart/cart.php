@@ -135,7 +135,7 @@ do_action( 'woocommerce_before_cart' ); ?>
 
 		do_action( 'woocommerce_cart_contents' );
 		?>
-		<tr>
+		<tr class="hide">
 			<td colspan="5" class="actions">
 
 				<?php if ( wc_coupons_enabled() ) { ?>
@@ -149,7 +149,7 @@ do_action( 'woocommerce_before_cart' ); ?>
 
 				<input type="text" name="fromdate" id="from_value" class="hide" value="<?php echo ($rentalDate) ? $rentalDate['start'] : $newDate1; ?>" readonly="readonly" />
 				<input type="text" name="enddate" id="to_value" class="hide" value="<?php echo ($rentalDate) ? $rentalDate['expiry'] : $newDate2; ?>" readonly="readonly" />
-				<input type="submit" class="button" name="update_cart" value="<?php esc_attr_e( 'Update Cart', 'woocommerce' ); ?>" />
+				<!-- <input type="submit" class="button" name="update_cart" value="<?php esc_attr_e( 'Update Cart', 'woocommerce' ); ?>" /> -->
 
 				<?php do_action( 'woocommerce_cart_actions' ); ?>
 

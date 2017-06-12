@@ -38,7 +38,7 @@ get_header( 'shop' ); ?>
 		<div class="col-md-12 popular-post">
 		<?php if ( apply_filters( 'woocommerce_show_page_title', true ) ) : ?>
 
-			<h1 class="page-title"><?php if(!empty($_GET['s']) && ($_GET['type'] == 'item_number')){ echo 'Search results: "'.$_GET['s'].'"';}else{ woocommerce_page_title(); } ?></h1>
+			<h1 class="page-title"><?php if(!empty($_GET['s'])){ echo 'Search results: "'.$_GET['s'].'"';}else{ woocommerce_page_title(); } ?></h1>
 
 		<?php endif; ?>
 
