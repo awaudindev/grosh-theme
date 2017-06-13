@@ -2652,3 +2652,14 @@ MEDIA QUERY
    
   }
 }
+
+.bootstrap-select{
+  border: 1px solid;
+}
+.woocommerce form .form-row.woocommerce-validated select {
+    background-color: #fff;
+    border: 1px solid #ebebeb;
+    border-radius: 4px;
+    padding: 5px 0;
+    height: 40px;
+}

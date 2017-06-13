@@ -225,12 +225,20 @@ add_filter("woocommerce_checkout_fields", "order_fields");
 
 function order_fields($fields) {
 
+	$fields['billing']['billing_user_gender'] = array(
+		'type' => 'select',
+		'class' => array('select_custom'),
+		'options' => array( 'dance' => 'Dance', 'collage' => 'Collage/University', 'schools' => 'Schools (K-12)', 'theater' => 'Theater', 'eventplanner' => 'Event Planner', 'prodcompany' => 'Production Company', 'church' => 'Church', 'other' => 'Other'),
+		'label' => __('Industry', 'woocommerce'),
+	);
+
     $order = array(
         "billing_first_name", 
         "billing_last_name", 
         "billing_company", 
         "billing_address_1", 
-        "billing_address_2",  
+        "billing_address_2", 
+        "billing_user_gender", 
         "billing_city", 
         "billing_postcode",
         "billing_state", 
@@ -247,6 +255,15 @@ function order_fields($fields) {
     $fields["billing"] = $ordered_fields;
     return $fields;
 
+}
+
+add_action( 'woocommerce_checkout_order_processed', 'save_extra_fields', 20, 2 );
+
+function save_extra_fields($order_id, $posted) {
+	if (isset($posted['billing_user_gender'])) {
+		$order = wc_get_order($order_id);
+		update_user_meta($order->get_user_id(), 'billing_user_gender', $posted['billing_user_gender']);
+	}
 }
 
 ?>
