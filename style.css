@@ -2663,3 +2663,12 @@ MEDIA QUERY
     padding: 5px 0;
     height: 40px;
 }
+
+.showloginCustomer,
+.showRegistration{
+  display: block;
+}
+.showloginCustomer span,
+.showRegistration span{
+  float: right;
+}

@@ -29,16 +29,17 @@ if ( ! $checkout->enable_signup && ! $checkout->enable_guest_checkout && ! is_us
 	echo apply_filters( 'woocommerce_checkout_must_be_logged_in_message', __( 'You must be logged in to checkout.', 'woocommerce' ) );
 	return;
 }
-
+$new_customer_message .= ' <a href="#" class="showRegistration">' . __( 'New Customer', 'woocommerce' ) . '<span class="glyphicon glyphicon-plus" aria-hidden="true""></span><span class="glyphicon glyphicon-minus hide" aria-hidden="true"></span></a>';
+wc_print_notice( $new_customer_message, 'notice' );
 ?>
 
-<form name="checkout" method="post" class="checkout woocommerce-checkout" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data">
+<form name="checkout" method="post" class="checkout woocommerce-checkout" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data" >
 
 	<?php if ( sizeof( $checkout->checkout_fields ) > 0 ) : ?>
 
 		<?php do_action( 'woocommerce_checkout_before_customer_details' ); ?>
 
-		<div class="col2-set" id="customer_details">
+		<div class="col2-set" id="customer_details" style="display: none;">
 			<div class="col-1">
 				<?php do_action( 'woocommerce_checkout_billing' ); ?>
 			</div>
@@ -64,4 +65,38 @@ if ( ! $checkout->enable_signup && ! $checkout->enable_guest_checkout && ! is_us
 
 </form>
 
-<?php do_action( 'woocommerce_after_checkout_form', $checkout ); ?>
+<?php do_action( 'woocommerce_after_checkout_form', $checkout ); 
+add_action('wp_footer',function(){ ?> 
+
+<script type="text/javascript">
+	  jQuery(function($){
+
+	  	var wc_checkout_login_customer = {
+			init: function() {
+				$( document.body ).on( 'click', 'a.showloginCustomer', this.show_login_form );
+			},
+			show_login_form: function() {
+				$( 'form.login' ).slideToggle();
+				$('a.showloginCustomer span').toggleClass( 'hide' );
+				return false;
+			}
+		};
+
+		var wc_checkout_registration = {
+			init: function() {
+				$( document.body ).on( 'click', 'a.showRegistration', this.show_registration_form );
+			},
+			show_registration_form: function() {
+				$( '#customer_details' ).slideToggle();
+				$('a.showRegistration span').toggleClass( 'hide' );
+				return false;
+			}
+		};
+
+		wc_checkout_login_customer.init();
+		wc_checkout_registration.init();
+
+	  });
+</script>
+<?php },10);
+?>
