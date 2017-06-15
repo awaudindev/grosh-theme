@@ -20,14 +20,31 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
+$firstField = array();
+$secondField = array();
+
+foreach ( $checkout->checkout_fields['billing'] as $key => $field ){
+	if(!in_array($key, array('billing_postcode','billing_country'))){
+		$firstField[$key] = $field;
+	}else{
+		$secondField[$key] = $field;
+	}
+}
+
+$newField = array_merge($firstField,$secondField);
+
 ?>
 <div class="woocommerce-shipping-fields">
 	<h3><?php _e( 'Billing Details', 'woocommerce' ); ?></h3>
 	<?php do_action( 'woocommerce_before_checkout_billing_form', $checkout ); ?>
 
-	<?php foreach ( $checkout->checkout_fields['billing'] as $key => $field ) : ?>
+	<?php foreach ( $newField as $key => $field ) : ?>
 
-		<?php if(!in_array($key, array('billing_first_name','billing_last_name','billing_company','billing_email','billing_phone'))) woocommerce_form_field( $key, $field, $checkout->get_value( $key ) ); ?>
+		<?php 
+			if(!in_array($key, array('billing_first_name','billing_last_name','billing_company','billing_email','billing_phone'))){ 
+				woocommerce_form_field( $key, $field, $checkout->get_value( $key ) );
+			}
+		?>
 
 	<?php endforeach; ?>
 

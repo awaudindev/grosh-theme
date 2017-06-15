@@ -1048,6 +1048,9 @@ PRODUCT
   margin-bottom: 30px;
   padding: 0;
 }
+.popular-post .dropdown-menu li{
+  margin-bottom: 0;
+}
 .popular-post ul,
 ul.loginForm,
 .nav-stacked{

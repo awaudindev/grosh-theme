@@ -71,15 +71,7 @@ get_header( 'shop' ); ?>
 				<?php while ( have_posts() ) : the_post(); ?>
 
 					<?php 
-						if(is_product_category()){
-
-							wc_get_template_part( 'content', 'product' ); 
-
-						}else{
-
-							wc_get_template_part( 'content', 'product' ); 
-
-						}
+						wc_get_template_part( 'content', 'product' );
 					?>
 
 				<?php endwhile; // end of the loop. ?>

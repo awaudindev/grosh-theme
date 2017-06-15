@@ -68,7 +68,7 @@ function main_product_category( $atts, $content = ""){
 	 
 	}else{
 
-		$per_page = ($_GET['per_page']) ? $_GET['per_page'] : 12;
+		$per_page = ($_GET['per_page']) ? $_GET['per_page'] : get_query_var('posts_per_page');
 		$order_by = ($_GET['orderby']) ? $_GET['orderby'] : 'menu_order';
 
 		$args = array(
@@ -76,57 +76,19 @@ function main_product_category( $atts, $content = ""){
 			'offset'           => 0,
 			'post_status' => 'publish',
 			'post_type' => 'product',
-			'order_by' => $order_by,
+			'orderby' => $order_by,
            'meta_key' => 'file_type',
            'meta_value' => $meta
 		);
 
 		$query = new WP_Query($args);
 
-		$per_page_array = array('12' => 12,'24' => 24,'36' => 36,'48' => 48,'All' => -1);
-		$order_by_array = array('relevance' => 'menu_order', 'newest design' => 'date');
-
-		$per_page_data = '';
-		$order_by_data = '';
-
-		foreach ($per_page_array as $k => $v) {
-			$selected = ($_GET['per_page'] == $v) ? 'selected' : '';
-			$per_page_data .= '<option value="'.$v.'" '.$selected.'>'.$k.' items</option>';
-		}
-
-		foreach ($order_by_array as $k => $v) {
-			$selected = ($_GET['orderby'] == $v) ? 'selected' : '';
-			$order_by_data .= '<option value="'.$v.'" '.$selected.'>'.$k.'</option>';
-		}
-
 		if ( $query->have_posts() ) :
 			$i = 0;
+
+			$result .= archive_product_filter($per_page,$order_by);
+
 			$result .= '
-				<div class="filter-sort clearfix">
-					<div class="filter-sort-box pull-left">
-						<form class="woocommerce-items-perpage" method="get">
-							<label>Show: </label>
-							<div class="selector">
-							<select name="per_page" class="per_page selectpicker" onchange="this.form.submit()">
-									'.$per_page_data.'
-							</select>
-							</div>
-							<input name="orderby" value="'.$order_by.'" type="hidden">
-						</form>
-					</div>
-					<div class="filter-sort-box pull-right">
-						<form class="woocommerce-items-perpage" method="get">
-							<label>Sort by:</label>
-							<div class="selector wrap-selector">
-							<select name="orderby" class="orderby selectpicker" onchange="this.form.submit()">
-									'.$order_by_data.'
-							</select>
-							</div>
-							<input name="per_page" value="'.$per_page.'" type="hidden">
-						</form>
-					</div>
-			</div>	
-			<p class="clearfix">&nbsp;</p>
 			<div class="popular-post list_post clearfix" data-meta="'.$meta.'"><ul class="clearfix">';
 				while ( $query->have_posts() ) : $query->the_post();
 					ob_start();
@@ -138,7 +100,7 @@ function main_product_category( $atts, $content = ""){
 			$result .= '</ul></div>';
 		endif;
 
-		if($i > $per_page-1){
+		if($i > $per_page-1 || $i > $per_page){
 			add_action('wp_footer',get_post_ajax($order_by,$per_page),10);
 		}
 	}
@@ -197,6 +159,7 @@ function fetch_post() {
 	$offset = $_GET['offset'];
 	$per_page = $_GET['perpage'];
 	$orderby = $_GET['orderby'];
+	$cat = $_GET['cat'];
 
 	$result = '';
 
@@ -205,12 +168,26 @@ function fetch_post() {
 		'offset'           => $offset*$per_page,
 		'post_status' => 'publish',
 		'post_type' => 'product',
-		'order_by' => $orderby,
-       'meta_key' => 'file_type',
-       'meta_value' => $meta
+		'orderby' => $orderby
 	);
 
+	if($meta){
+	   $args['meta_key'] = 'file_type';
+       $args['meta_value'] = $meta;
+	}
+
+	if($cat){
+		$args['tax_query'] = array(
+	        array(
+	            'taxonomy' => 'product_cat',
+	            'field' => 'slug',
+	            'terms' => $cat
+	        )
+		);
+	}
+	
 	$query = new WP_Query($args);
+	
 	if ( $query->have_posts() ) :
 		while ( $query->have_posts() ) : $query->the_post();
 			ob_start();
@@ -223,6 +200,72 @@ function fetch_post() {
 
 	wp_die();
 }
+
+function archive_product_filter($per_page = 12,$order_by = 'menu_order'){
+
+	global $wp_query;
+
+	if($_GET['per_page'] && is_numeric($_GET['per_page'])){
+		$wp_query->set('posts_per_page',$_GET['per_page']);
+		$wp_query->set('orderby',$_GET['orderby']);
+		$wp_query->query($wp_query->query_vars);
+	}else if(get_query_var('posts_per_page') < 13){
+		$wp_query->set('posts_per_page',12);
+		$wp_query->set('orderby','menu_order');
+		$wp_query->query($wp_query->query_vars);
+	}
+
+	$per_page = ($_GET['per_page']) ? $_GET['per_page'] : 12 ;
+	$order_by = ($_GET['orderby']) ? $_GET['orderby'] : $order_by;
+
+	$per_page_array = array( '12' => 12,'24' => 24,'36' => 36,'48' => 48,'All' => -1);
+	$order_by_array = array('relevance' => 'menu_order', 'newest design' => 'date');
+
+	$per_page_data = '';
+	$order_by_data = '';
+
+	foreach ($per_page_array as $k => $v) {
+		$selected = ($per_page == $v) ? 'selected' : '';
+		$per_page_data .= '<option value="'.$v.'" '.$selected.'>'.$k.' items</option>';
+	}
+
+	foreach ($order_by_array as $k => $v) {
+		$selected = ($order_by == $v) ? 'selected' : '';
+		$order_by_data .= '<option value="'.$v.'" '.$selected.'>'.$k.'</option>';
+	}
+
+	$result = '';
+
+	$result .= '<div class="filter-sort clearfix">
+					<div class="filter-sort-box pull-left">
+						<form class="woocommerce-items-perpage" method="get">
+							<label>Show: </label>
+							<div class="selector">
+							<select name="per_page" class="per_page selectpicker" onchange="this.form.submit()">
+									'.$per_page_data.'
+							</select>
+							</div>
+							<input name="orderby" value="'.$order_by.'" type="hidden">
+						</form>
+					</div>
+					<div class="filter-sort-box pull-right">
+						<form class="woocommerce-items-perpage" method="get">
+							<label>Sort by:</label>
+							<div class="selector wrap-selector">
+							<select name="orderby" class="orderby selectpicker" onchange="this.form.submit()">
+									'.$order_by_data.'
+							</select>
+							</div>
+							<input name="per_page" value="'.$per_page.'" type="hidden">
+						</form>
+					</div>
+			</div>	
+			<p class="clearfix">&nbsp;</p>';
+
+	echo $result;
+
+}
+add_action( 'woocommerce_before_shop_loop' ,'archive_product_filter');
 
 function product_packages( $atts, $content = ""){
 

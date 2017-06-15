@@ -25,20 +25,60 @@ global $wp_query;
 if ( $wp_query->max_num_pages <= 1 ) {
 	return;
 }
+$cat = is_product_category() ? get_query_var('product_cat') : '';
+$per_page = ($_GET['per_page']) ? $_GET['per_page'] : 12;
+$order_by = ($_GET['orderby']) ? $_GET['orderby'] : 'menu_order';
 ?>
-<nav class="woocommerce-pagination">
+<style type="text/css">
+	.loadMore{
+		display: table;
+		margin-left: auto;
+		margin-right: auto;
+	}
+</style>
+<script type="text/javascript">
+  jQuery(function($){
+    $(document).ready( function() {
+    	$(window).on('load',function(){
+    	$('.popular-post').append('<div class="loadMore"><a href="#" class="fetch_post btn btn-default" data-orderby="<?php echo $order_by; ?>"  data-offset="1" data-perpage="<?php echo $per_page; ?>" >Load More</a></div>');	
+    	$('.fetch_post').on('click',function(e){
+    		e.preventDefault();
+    		var product = $('.list_post').attr('data-meta'),offset = $(this).attr('data-offset'),orderby = $(this).attr('data-orderby'),page = $(this).attr('data-perpage');
+	    	$.ajax({
+			  type: 'POST',
+			  url: '<?php echo admin_url('admin-ajax.php'); ?>/?action=fetch_post&cat=<?php echo $cat; ?>&offset='+offset+'&orderby='+orderby+'&perpage='+page,
+			  beforeSend:function(){
+			  	$('.fetch_post').html('<i class="fa fa-circle-o-notch fa-spin"></i> Loading Product.....');
+			  },
+			  success: function(data){
+			    $('.download-loading').remove();
+			    $('.fetch_post').html('Load More').attr('data-offset',parseInt(offset)+1);
+			    $('.popular-post ul.clearfix').append(data);
+			    if((data.split('<li').length - 1) < 9 || data.length < 1) $('.loadMore').remove();	
+			  },
+			  error:function(jqXHR,textStatus,errorThrown){
+			  	console.log(textStatus);
+			  	$('.fetch_post').html('Failed to Load, Try Again!');
+			  }
+			});
+	       });
+    		});
+	    });
+  	});
+</script>
+<!-- <nav class="woocommerce-pagination"> -->
 	<?php
-		echo paginate_links( apply_filters( 'woocommerce_pagination_args', array(
-			'base'         => esc_url_raw( str_replace( 999999999, '%#%', remove_query_arg( 'add-to-cart', get_pagenum_link( 999999999, false ) ) ) ),
-			'format'       => '',
-			'add_args'     => false,
-			'current'      => max( 1, get_query_var( 'paged' ) ),
-			'total'        => $wp_query->max_num_pages,
-			'prev_text'    => '&larr;',
-			'next_text'    => '&rarr;',
-			'type'         => 'list',
-			'end_size'     => 3,
-			'mid_size'     => 3
-		) ) );
+		// echo paginate_links( apply_filters( 'woocommerce_pagination_args', array(
+		// 	'base'         => esc_url_raw( str_replace( 999999999, '%#%', remove_query_arg( 'add-to-cart', get_pagenum_link( 999999999, false ) ) ) ),
+		// 	'format'       => '',
+		// 	'add_args'     => false,
+		// 	'current'      => max( 1, get_query_var( 'paged' ) ),
+		// 	'total'        => $wp_query->max_num_pages,
+		// 	'prev_text'    => '&larr;',
+		// 	'next_text'    => '&rarr;',
+		// 	'type'         => 'list',
+		// 	'end_size'     => 3,
+		// 	'mid_size'     => 3
+		// ) ) );
 	?>
-</nav>
+<!-- </nav> -->
