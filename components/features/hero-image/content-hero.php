@@ -34,50 +34,50 @@ switch ($totp) {
             $class = "";
             $i = 0;
             if(!empty($slider)){
-            foreach ($slider as $item) {
-              if($i == 0)
-                $class = "active";
-              else
-                $class = "";
-              $product_number = get_post_meta( $item, 'product_number', true );
-              $product_type = get_post_meta( $item, 'file_type', true );
-              $large_image = "";
-              $style = "";
-              if($product_type == "animation"){
-                $url = "http://s3.amazonaws.com/groshdigital/".$product_number.".mp4";
-                $large_image = $url;//getProductImage($product_number, false, true);
-                $style = "width:100%";
-              }else{
-                $url = "http://s3.amazonaws.com/groshdigital/".$product_number.".jpg";
-                $large_image = $url;//getProductImage($product_number, false, false);
+              foreach ($slider as $item) {
+                if($i == 0)
+                  $class = "active";
+                else
+                  $class = "";
+                $product_number = get_post_meta( $item, 'product_number', true );
+                $product_type = get_post_meta( $item, 'file_type', true );
+                $large_image = "";
+                $style = "";
+                if($product_type == "animation"){
+                  $url = "http://s3.amazonaws.com/groshdigital/".$product_number.".mp4";
+                  $large_image = $url;//getProductImage($product_number, false, true);
+                  $style = "width:100%";
+                }else{
+                  $url = "http://s3.amazonaws.com/groshdigital/".$product_number.".jpg";
+                  $large_image = $url;//getProductImage($product_number, false, false);
+                }
+                ?>
+                <div class="item <?php echo $class; ?>" data-type="<?php echo $product_type; ?>" style="background-color:#000;">
+                    <?php
+                      if($product_type == "animation"){
+                        ?>
+                        <video width="640" height="250" style="width: 100%; height: 100%; z-index: 4001;" id="player1" class="playerslider">
+                              <!-- Pseudo HTML5 -->
+                              <source type="video/mp4" src="<?php echo $large_image; ?>" />
+                          </video>
+                        <?php
+                      }else{
+                    ?>
+                    <img src="<?php echo $large_image; ?>" style="<?php echo $style; ?>" class="img-responsive" />
+                    <div class="carousel-caption">
+                        <h2 class="title-product font700 padBot20"><a href="<?php echo get_permalink($item); ?>"><?php echo get_the_title( $item ); ?></a></h2>
+                        <div class="clearfix meta-product">
+                            <div class="size-product"><?php echo $product_number; ?></div>
+                        </div>
+                    </div>
+                    <?php } ?>
+                </div>
+                <?php
+                $i++;
               }
-              ?>
-              <div class="item <?php echo $class; ?>" data-type="<?php echo $product_type; ?>" style="background-color:#000;">
-                  <?php
-                    if($product_type == "animation"){
-                      ?>
-                      <video width="640" height="250" style="width: 100%; height: 100%; z-index: 4001;" id="player1" class="playerslider">
-                            <!-- Pseudo HTML5 -->
-                            <source type="video/mp4" src="<?php echo $large_image; ?>" />
-                        </video>
-                      <?php
-                    }else{
-                  ?>
-                  <img src="<?php echo $large_image; ?>" style="<?php echo $style; ?>" class="img-responsive" />
-                  <div class="carousel-caption">
-                      <h2 class="title-product font700 padBot20"><a href="<?php echo get_permalink($item); ?>"><?php echo get_the_title( $item ); ?></a></h2>
-                      <div class="clearfix meta-product">
-                          <div class="size-product"><?php echo $product_number; ?></div>
-                      </div>
-                  </div>
-              </div>
-              <?php
-              $i++;
             }
-          }
-        }
           ?>
-	    </div>
+        </div>
       	<?php get_product_search_form(); ?>  
       	<a class="left carousel-control" href="#myCarousel" data-slide="prev">
         	<i class="glyphicon glyphicon-chevron-left"></i>
@@ -87,12 +87,12 @@ switch ($totp) {
       	</a>
     </div>
     <div class="hidden-lg">
-          <ol class="carousel-indicators">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#myCarousel" data-slide-to="1"></li>
-            <li data-target="#myCarousel" data-slide-to="2"></li>
-          </ol>
-        </div>
+      <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+      </ol>
+    </div>
 </div><!--[end:page-header]-->
 <?php if(count($package) > 0){?>
 <div class="featured">
