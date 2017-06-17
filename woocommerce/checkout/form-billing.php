@@ -84,3 +84,59 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<?php do_action('woocommerce_after_checkout_billing_form', $checkout ); ?>
 </div>
+
+<?php add_action('wp_footer',function(){ ?> 
+
+<script type="text/javascript">
+	  jQuery(function($){
+	  	$('#billing_phone').on('keypress', function(e) {
+		  var key = e.charCode || e.keyCode || 0;
+		  var phone = $(this);
+		  var phoneVal = phone.val();
+		  var sign = phoneVal.split('-');
+		  // Auto-format- do not expose the mask as the user begins to type
+		  if (key !== 8 && key !== 9) {
+		  	
+		  	phoneVal = phoneVal.replace(/[A-Za-z]/g, '').replace(/[^\d.-]/g,'').replace(/\-/g, '');
+		  	
+		    if (phoneVal.length > 2) {
+		      phone.val(phoneVal.slice(0, 3) + '-' + phoneVal.slice(3, phoneVal.length));
+		    }
+		    if (phoneVal.length > 5) {
+		      phone.val(phoneVal.slice(0, 3) + '-' + phoneVal.slice(3, 6) + '-' + phoneVal.slice(6, phoneVal.length));
+		    }
+		    if (phoneVal.length >= 10 || sign < 2 && phoneVal.length == 10) {
+		      phone.val(phoneVal.slice(0, 3) + '-' + phoneVal.slice(3, 6) + '-' + phoneVal.slice(6,9));
+		    }
+		  }
+
+		  // Allow numeric (and tab, backspace, delete) keys only
+		  return (key == 8 ||
+		    key == 9 ||
+		    key == 46 ||
+		    (key >= 48 && key <= 57) ||
+		    (key >= 96 && key <= 105));
+		})
+
+		.on('focus', function() {
+		  phone = $(this);
+
+		  if (phone.val().length === 0) {
+		    phone.val('');
+		  } else {
+		    var val = phone.val();
+		    phone.val('').val(val); // Ensure cursor remains at the end
+		  }
+		})
+
+		.on('blur', function() {
+		  $phone = $(this);
+
+		  if ($phone.val() === '(') {
+		    $phone.val('');
+		  }
+		});
+	  });
+</script>
+<?php },10);
+?>
