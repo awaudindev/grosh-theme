@@ -254,7 +254,7 @@ $file_type = $_REQUEST['filetype'];
                   <div class="col-md-6">
                     <div class="form-group">
                       <label class="padBot10">Expiration Date :</label>
-                      <input type="text" class="form-controlcalendarpicker" value="<?php echo $newDate2; ?>" name="end_date" id="datepicker2">
+                      <input type="text" class="form-control calendarpicker" value="<?php echo $newDate2; ?>" name="end_date" id="datepicker2">
                     </div>
                   </div>  
                 </div>
