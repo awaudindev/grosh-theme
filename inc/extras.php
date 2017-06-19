@@ -709,3 +709,13 @@ function save_pdf() {
 
 	wp_die();
 }
+
+add_action('woocommerce_checkout_process', 'wh_phoneValidateCheckoutFields');
+
+function wh_phoneValidateCheckoutFields() {
+    $billing_phone = filter_input(INPUT_POST, 'billing_phone');
+
+    if ( ! (preg_match('/^\(?(\d{3})\)?[-]?(\d{3})[-]?(\d{4})$/', $_POST['billing_phone'] ))){
+        wc_add_notice(__('Invalid <strong>Phone Number</strong>, please check your input.'), 'error');
+    }
+}

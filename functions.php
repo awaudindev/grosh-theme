@@ -455,6 +455,13 @@ function setCustomerCookie(){
 	}
 }
 
+add_filter( 'woocommerce_checkout_fields' , 'custom_override_checkout_fields' );
+function custom_override_checkout_fields( $fields )
+{        
+     $fields['billing']['billing_phone']['custom_attributes'] = array( "pattern" => ".{12,12}" );      
+     return $fields;    
+}
+
 
 remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 10 );
 add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 21 );
