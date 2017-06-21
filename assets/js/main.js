@@ -52,12 +52,27 @@ jQuery(document).ready(function($){
 		//closeNav();
 	});
 
+	$('#myCarousel').carousel({
+        interval:5000,
+        pause: "false"
+    });
+
 	var $carousel = $('#myCarousel');
 	$carousel.bind('slide.bs.carousel', function (e) {
 	    if(e.relatedTarget.dataset['type'] == 'animation'){
-	    	mejs.players['mep_0'].play();
+	    	var ids = e.relatedTarget.id;
+	    	var cur = "mep_"+ ids;
+	    	for (var player in mejs.players) {
+	    		if(cur == player){
+					mejs.players[player].play();
+	    		}
+			}
 	    }else{
-	    	mejs.players['mep_0'].pause();
+	    	for (var player in mejs.players) {
+	    		if(mejs.players[player].media.paused){
+	    			mejs.players[player].pause();
+	    		}
+			}
 	    }
 	});
 	var urlvideo = "";
@@ -88,7 +103,6 @@ jQuery(document).ready(function($){
 	});
 
 	$('body').on('hidden.bs.modal', '#popupMsg', function () {
-		$('#playerpopup')[0].pause();
 		for (var player in mejs.players) {
 		    mejs.players[player].media.pause();
 		}
@@ -139,7 +153,28 @@ jQuery(document).ready(function($){
 		$('video').mediaelementplayer();
 	}
 
-	$(".playerslider").mediaelementplayer();
+	$(".playerslider").mediaelementplayer({
 
-	
+		features: ['playpause','current','progress','duration','volume'] ,
+
+	    success: function(media, node, player) {
+
+	        var events = ['play' , 'ended'];
+
+	        for (var i=0, il=events.length; i<il; i++) {
+
+
+	            media.addEventListener(events[0], function(e) {
+	                $('#myCarousel').carousel('pause');
+	            });
+
+	            media.addEventListener(events[1], function(e) {
+	                $('#myCarousel').carousel('cycle');
+	                $('.mejs-poster').show();
+	            });
+	        }
+	    }
+	});
+
+	$(".playersingle").mediaelementplayer();
 });

@@ -33,6 +33,7 @@ switch ($totp) {
           <?php
             $class = "";
             $i = 0;
+            $v = 0;
             if(!empty($slider)){
               foreach ($slider as $item) {
                 if($i == 0)
@@ -43,24 +44,28 @@ switch ($totp) {
                 $product_type = get_post_meta( $item, 'file_type', true );
                 $large_image = "";
                 $style = "";
+                $named = "";
                 if($product_type == "animation"){
                   $url = "http://s3.amazonaws.com/groshdigital/".$product_number.".mp4";
                   $large_image = $url;//getProductImage($product_number, false, true);
                   $style = "width:100%";
+                  $named = "mep_" + $v;
                 }else{
                   $url = "http://s3.amazonaws.com/groshdigital/".$product_number.".jpg";
                   $large_image = $url;//getProductImage($product_number, false, false);
+                  $named = "img_0";
                 }
                 ?>
-                <div class="item <?php echo $class; ?>" data-type="<?php echo $product_type; ?>" style="background-color:#000;">
+                <div id="<?php echo $named; ?>" class="item <?php echo $class; ?>" data-type="<?php echo $product_type; ?>" style="background-color:#000;">
                     <?php
                       if($product_type == "animation"){
                         ?>
-                        <video width="640" height="250" style="width: 100%; height: 100%; z-index: 4001;" id="player1" class="playerslider">
+                        <video width="640" height="250" style="width: 100%; height: 100%; z-index: 4001;" id="player1" data-product="<?php echo $product_number; ?>" class="playerslider">
                               <!-- Pseudo HTML5 -->
                               <source type="video/mp4" src="<?php echo $large_image; ?>" />
                           </video>
                         <?php
+                        $v++;
                       }else{
                     ?>
                     <img src="<?php echo $large_image; ?>" style="<?php echo $style; ?>" class="img-responsive" />

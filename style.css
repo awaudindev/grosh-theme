@@ -2656,7 +2656,7 @@ MEDIA QUERY
   }
 }
 
-.bootstrap-select{
+.selector .bootstrap-select{
   border: 1px solid;
 }
 .woocommerce form .form-row.woocommerce-validated select {
