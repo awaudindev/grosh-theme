@@ -30,12 +30,23 @@ if ( ! $checkout->enable_signup && ! $checkout->enable_guest_checkout && ! is_us
 	return;
 }
 $new_customer_message .= ' <a href="#" class="showRegistration">' . __( 'New Customer', 'woocommerce' ) . '<span class="glyphicon glyphicon-plus" aria-hidden="true""></span><span class="glyphicon glyphicon-minus hide" aria-hidden="true"></span></a>';
-wc_print_notice( $new_customer_message, 'notice' );
 ?>
-
 <form name="checkout" method="post" class="checkout woocommerce-checkout" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data" >
+<div class="container tabs-wrap">
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active">
+      <a href="#billing" aria-controls="billing" role="tab" data-toggle="tab" aria-expanded="true">Billing Address</a>
+    </li>
+    <li>
+      <a href="#payment" aria-controls="payment" role="tab" data-toggle="tab" aria-expanded="false">Payment</a>
+    </li>
+  </ul>
 
-	<?php if ( sizeof( $checkout->checkout_fields ) > 0 ) : ?>
+<div class="tab-content">
+<div role="tabpanel" class="tab-pane active" id="billing">
+<p>&nbsp;</p>
+	<?php wc_print_notice( $new_customer_message, 'notice' );
+if ( sizeof( $checkout->checkout_fields ) > 0 ) : ?>
 
 		<?php do_action( 'woocommerce_checkout_before_customer_details' ); ?>
 
@@ -52,17 +63,20 @@ wc_print_notice( $new_customer_message, 'notice' );
 		<?php do_action( 'woocommerce_checkout_after_customer_details' ); ?>
 
 	<?php endif; ?>
-
+	 <a class="btn btn-primary continue">Continue</a>
+  </div>
+<div role="tabpanel" class="tab-pane" id="payment">
 	<h3 id="order_review_heading"><?php _e( 'Your order', 'woocommerce' ); ?></h3>
 
 	<?php do_action( 'woocommerce_checkout_before_order_review' ); ?>
 
 	<div id="order_review" class="woocommerce-checkout-review-order">
 		<?php do_action( 'woocommerce_checkout_order_review' ); ?>
+		<a class="btn btn-primary back">Go Back</a>
 	</div>
-
 	<?php do_action( 'woocommerce_checkout_after_order_review' ); ?>
-
+  </div>
+</div>
 </form>
 
 <?php do_action( 'woocommerce_after_checkout_form', $checkout ); 
@@ -70,7 +84,12 @@ add_action('wp_footer',function(){ ?>
 
 <script type="text/javascript">
 	  jQuery(function($){
-
+	  	$('.continue').click(function(){
+		  $('.nav-tabs > .active').next('li').find('a').trigger('click');
+		});
+		$('.back').click(function(){
+		  $('.nav-tabs > .active').prev('li').find('a').trigger('click');
+		});
 	  	var wc_checkout_login_customer = {
 			init: function() {
 				$( document.body ).on( 'click', 'a.showloginCustomer', this.show_login_form );
