@@ -22,8 +22,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 wc_print_notices();
 
-do_action( 'woocommerce_before_checkout_form', $checkout );
-
 // If checkout registration is disabled and not logged in, the user cannot checkout
 if ( ! $checkout->enable_signup && ! $checkout->enable_guest_checkout && ! is_user_logged_in() ) {
 	echo apply_filters( 'woocommerce_checkout_must_be_logged_in_message', __( 'You must be logged in to checkout.', 'woocommerce' ) );
@@ -34,23 +32,23 @@ $new_customer_message .= ' <a href="#" class="showRegistration">' . __( 'New Cus
 <form name="checkout" method="post" class="checkout woocommerce-checkout" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data" >
 <div class="container tabs-wrap">
   <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active">
-      <a href="#billing" aria-controls="billing" role="tab" data-toggle="tab" aria-expanded="true">Billing Address</a>
+    <li role="presentation" class="active disabled">
+      <a href="#billing" aria-controls="billing" role="tab" data-toggle="tab" aria-expanded="true">1. Billing Address</a>
     </li>
-    <li>
-      <a href="#payment" aria-controls="payment" role="tab" data-toggle="tab" aria-expanded="false">Payment</a>
+    <li class="disabled">
+      <a href="#paymentPage" aria-controls="paymentPage" role="tab" data-toggle="" aria-expanded="false">2. Payment</a>
     </li>
   </ul>
 
 <div class="tab-content">
 <div role="tabpanel" class="tab-pane active" id="billing">
-<p>&nbsp;</p>
-	<?php wc_print_notice( $new_customer_message, 'notice' );
+
+	<?php //wc_print_notice( $new_customer_message, 'notice' );
 if ( sizeof( $checkout->checkout_fields ) > 0 ) : ?>
 
 		<?php do_action( 'woocommerce_checkout_before_customer_details' ); ?>
 
-		<div class="col2-set" id="customer_details" style="display: none;">
+		<div class="col2-set" id="customer_details">
 			<div class="col-1">
 				<?php do_action( 'woocommerce_checkout_billing' ); ?>
 			</div>
@@ -65,7 +63,7 @@ if ( sizeof( $checkout->checkout_fields ) > 0 ) : ?>
 	<?php endif; ?>
 	 <a class="btn btn-primary continue">Continue</a>
   </div>
-<div role="tabpanel" class="tab-pane" id="payment">
+<div role="tabpanel" class="tab-pane" id="paymentPage">
 	<h3 id="order_review_heading"><?php _e( 'Your order', 'woocommerce' ); ?></h3>
 
 	<?php do_action( 'woocommerce_checkout_before_order_review' ); ?>
@@ -81,15 +79,64 @@ if ( sizeof( $checkout->checkout_fields ) > 0 ) : ?>
 
 <?php do_action( 'woocommerce_after_checkout_form', $checkout ); 
 add_action('wp_footer',function(){ ?> 
-
+<style type="text/css">
+	.nav-tabs{margin-left:0;}
+	#order_review .place-order{opacity: 0;height: 0;overflow: hidden;padding: 0!important;margin-bottom: 15px;}
+	.wc_payment_method.payment_method_purchase_order{display: none;}
+</style>
 <script type="text/javascript">
 	  jQuery(function($){
-	  	$('.continue').click(function(){
-		  $('.nav-tabs > .active').next('li').find('a').trigger('click');
+		$(".disabled").click(function (e) {
+	        e.preventDefault();
+	        return false;
 		});
-		$('.back').click(function(){
-		  $('.nav-tabs > .active').prev('li').find('a').trigger('click');
+
+	  	var $tabs = $('.tabs-wrap li');
+
+		$(".back").click(function (e) {
+		    $tabs.filter('.active').prev('li').removeClass("disabled");
+		    $tabs.filter('.active').prev('li').find('a[data-toggle]').each(function () {
+		       $(this).attr("data-toggle", "tab");
+		    });
+
+		    $tabs.filter('.active').prev('li').find('a[data-toggle="tab"]').tab('show');
+
+		    $tabs.filter('.active').next('li').find('a[data-toggle="tab"]').each(function () {
+		        $(this).attr("data-toggle", "").parent('li').addClass("disabled");        
+		    })
 		});
+
+		$(".continue").click(function (e) {
+		    $tabs.filter('.active').next('li').removeClass("disabled");
+		    $tabs.filter('.active').next('li').find('a[data-toggle]').each(function () {
+		        $(this).attr("data-toggle", "tab");
+		    });
+
+		    $tabs.filter('.active').next('li').find('a[data-toggle="tab"]').tab('show');
+
+		    $tabs.filter('.active').prev('li').find('a[data-toggle="tab"]').each(function () {
+		        $(this).attr("data-toggle", "").parent('li').addClass("disabled");;        
+		    })
+		});
+
+		$('#place_order').appendTo($('#order_review'));
+
+		$('.form-row.validate-required').each(function(){
+			if(!$(this).find('input').val()){
+				$(this).addClass('woocommerce-invalid');
+			}
+		});
+
+		$('#billing_user_gender').change(function() {
+			 var optionChange = $(this).find('option:selected');
+
+			 if(optionChange.val() === 'collage' || optionChange.val() === 'schools'){
+			 	$('.wc_payment_method.payment_method_purchase_order').show();
+			 }else{
+			 	$('.wc_payment_method.payment_method_purchase_order').hide();
+			 }
+		});
+
 	  	var wc_checkout_login_customer = {
 			init: function() {
 				$( document.body ).on( 'click', 'a.showloginCustomer', this.show_login_form );
