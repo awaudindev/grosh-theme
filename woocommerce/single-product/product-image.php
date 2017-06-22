@@ -61,7 +61,7 @@ $bundles =  json_decode( $post_meta["wcpb_bundle_products"][0], true );
 		
 		if($check_animation == true){
 			?>
-			<video width="640" height="360" style="width: 100%; height: 100%; z-index: 4001;" id="player1" class="playerslider">
+			<video width="640" height="360" style="width: 100%; height: 100%; z-index: 4001;" id="player1" class="playersingle">
 		        <!-- Pseudo HTML5 -->
 		        <source type="video/mp4" src="<?php echo $large_image; ?>" />
 		    </video>
