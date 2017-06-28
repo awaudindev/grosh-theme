@@ -315,28 +315,31 @@ function jc_search_post_excerpt($where = ''){
     return $where;
 }
 
+function atom_search_where($where){ 
+    global $wpdb, $wp_query;
+    if (is_search()) {
+        $search_terms = get_query_var( 'search_terms' );
 
-
-function my_smart_search( $search, &$wp_query ) {
-    global $wpdb;
- 
-    if ( empty( $search ))
-        return $search;
- 
-    $terms = $wp_query->query_vars[ 's' ];
-    $exploded = explode( ' ', $terms );
-    if( $exploded === FALSE || count( $exploded ) == 0 )
-        $exploded = array( 0 => $terms );
-         
-    $search = '';
-    foreach( $exploded as $tag ) {
-        $search .= " AND (((".$wpdb->prefix."posts.post_title LIKE '%$tag%') OR (".$wpdb->prefix."posts.post_content LIKE '%$tag%') OR EXISTS
-            (SELECT * FROM ".$wpdb->prefix."terms INNER JOIN ".$wpdb->prefix."term_taxonomy ON ".$wpdb->prefix."term_taxonomy.term_id = ".$wpdb->prefix."terms.term_id INNER JOIN ".$wpdb->prefix."term_relationships ON ".$wpdb->prefix."term_relationships.term_taxonomy_id = ".$wpdb->prefix."term_taxonomy.term_taxonomy_id WHERE taxonomy = 'post_tag' AND object_id = ".$wpdb->prefix."posts.ID AND ".$wpdb->prefix."terms.name LIKE '%$tag%' ))) AND (".$wpdb->prefix."posts.post_password = '') ";
+        $where .= " OR (";
+        $i = 0;
+        foreach ($search_terms as $search_term) {
+            $i++;
+            if ($i>1) $where .= " AND";     // --- make this OR if you prefer not requiring all search terms to match taxonomies
+            $where .= " (t.name LIKE '%".$search_term."%')";
+        }
+        $where .= " AND {$wpdb->posts}.post_status = 'publish')";
     }
-
-    return $search;
+  return $where;
 }
- 
-add_filter( 'posts_search', 'my_smart_search', 500, 2 );
+
+function atom_search_join($join){
+  global $wpdb;
+  if (is_search())
+    $join .= "LEFT JOIN {$wpdb->term_relationships} tr ON {$wpdb->posts}.ID = tr.object_id INNER JOIN {$wpdb->term_taxonomy} tt ON tt.term_taxonomy_id=tr.term_taxonomy_id INNER JOIN {$wpdb->terms} t ON t.term_id = tt.term_id";
+  return $join;
+}
+
+add_filter('posts_where','atom_search_where');
+add_filter('posts_join', 'atom_search_join');
 
 ?>

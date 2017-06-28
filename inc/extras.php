@@ -631,7 +631,7 @@ function product_search_where( $where ){
 function product_search_distinct( $where ){
     global $pagenow, $wpdb;
 
-    if ( is_admin() && $pagenow=='edit.php' && $_GET['post_type']=='product' && $_GET['s'] != '') {
+    if ( is_admin() && $pagenow=='edit.php' && $_GET['post_type']=='product' && $_GET['s'] != '' || is_search()) {
     return "DISTINCT";
 
     }
