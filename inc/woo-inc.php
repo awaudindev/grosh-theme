@@ -315,4 +315,28 @@ function jc_search_post_excerpt($where = ''){
     return $where;
 }
 
+
+
+function my_smart_search( $search, &$wp_query ) {
+    global $wpdb;
+ 
+    if ( empty( $search ))
+        return $search;
+ 
+    $terms = $wp_query->query_vars[ 's' ];
+    $exploded = explode( ' ', $terms );
+    if( $exploded === FALSE || count( $exploded ) == 0 )
+        $exploded = array( 0 => $terms );
+         
+    $search = '';
+    foreach( $exploded as $tag ) {
+        $search .= " AND (((".$wpdb->prefix."posts.post_title LIKE '%$tag%') OR (".$wpdb->prefix."posts.post_content LIKE '%$tag%') OR EXISTS
+            (SELECT * FROM ".$wpdb->prefix."terms INNER JOIN ".$wpdb->prefix."term_taxonomy ON ".$wpdb->prefix."term_taxonomy.term_id = ".$wpdb->prefix."terms.term_id INNER JOIN ".$wpdb->prefix."term_relationships ON ".$wpdb->prefix."term_relationships.term_taxonomy_id = ".$wpdb->prefix."term_taxonomy.term_taxonomy_id WHERE taxonomy = 'post_tag' AND object_id = ".$wpdb->prefix."posts.ID AND ".$wpdb->prefix."terms.name LIKE '%$tag%' ))) AND (".$wpdb->prefix."posts.post_password = '') ";
+    }
+
+    return $search;
+}
+ 
+add_filter( 'posts_search', 'my_smart_search', 500, 2 );
+
 ?>
