@@ -33,6 +33,43 @@ function grosh_body_classes( $classes ) {
 }
 add_filter( 'body_class', 'grosh_body_classes' );
 
+add_action( 'wp_ajax_load_search_results', 'load_search_results' );
+add_action( 'wp_ajax_nopriv_load_search_results', 'load_search_results' );
+
+function load_search_results() {
+
+    $query = $_GET['query'];
+    $offset = $_GET['offset'] * get_option( 'posts_per_page' );
+    
+    $args = array(
+        'post_status' => 'publish',
+        'posts_per_page' => get_option( 'posts_per_page' ),
+        'offset' => $offset,
+        's' => $query
+    );
+    $search = new WP_Query( $args );
+    
+    ob_start();
+    
+    if ( $search->have_posts() ) : 
+
+		while ( $search->have_posts() ) : $search->the_post();
+			get_template_part( 'components/post/content', 'search' );
+		endwhile;
+
+	else :
+
+		get_template_part( 'components/post/content', 'none' );
+	
+	endif;
+	
+	$content = ob_get_clean();
+	
+	echo $content;
+	die();
+			
+}
+
 function main_product_category( $atts, $content = ""){
 
 	extract(shortcode_atts(array(

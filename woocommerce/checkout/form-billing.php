@@ -58,8 +58,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 			<div class="create-account">
 
-				<p><?php if ( ! is_user_logged_in()){ _e( 'Create an account by entering the information below. If you are a returning customer please <a title="Login" href="#" class="btn btn-default" data-toggle="modal" data-target="#myModal">Login</a>.', 'woocommerce' ); } ?></p>
-
 					<?php foreach ( $checkout->checkout_fields['account'] as $key => $field ) : ?>
 
 						<?php woocommerce_form_field( $key, $field, $checkout->get_value( $key ) ); ?>

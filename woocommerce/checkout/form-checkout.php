@@ -29,6 +29,9 @@ if ( ! $checkout->enable_signup && ! $checkout->enable_guest_checkout && ! is_us
 }
 $new_customer_message .= ' <a href="#" class="showRegistration">' . __( 'New Customer', 'woocommerce' ) . '<span class="glyphicon glyphicon-plus" aria-hidden="true""></span><span class="glyphicon glyphicon-minus hide" aria-hidden="true"></span></a>';
 ?>
+<div class="row login-wrapper">
+	<div class="col-md-12"><a title="Login" href="#" class="btn btn-default" data-toggle="modal" data-target="#myModal">Login</a></div>
+</div>
 <form name="checkout" method="post" class="checkout woocommerce-checkout" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data" >
 <div class="container tabs-wrap">
   <ul class="nav nav-tabs" role="tablist">
@@ -83,6 +86,13 @@ add_action('wp_footer',function(){ ?>
 	.nav-tabs{margin-left:0;}
 	#order_review .place-order{opacity: 0;height: 0;overflow: hidden;padding: 0!important;margin-bottom: 15px;}
 	.wc_payment_method.payment_method_purchase_order{display: none;}
+	.login-wrapper{
+		top:-50px;
+		position: relative;
+	}
+	.login-wrapper a{
+		float: right;
+	}
 </style>
 <script type="text/javascript">
 	  jQuery(function($){
