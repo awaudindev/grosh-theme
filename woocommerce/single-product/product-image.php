@@ -28,6 +28,7 @@ $bundles =  json_decode( $post_meta["wcpb_bundle_products"][0], true );
 <div class="col-md-12">
 	<div class="productThumb-grosh marBot60">
 		<?php
+		$title = $product->name;
 		$product_number = get_post_meta( $product->id, 'product_number', true );
 		$product_type = get_post_meta( $product->id, 'file_type', true );
 		$large_image = "";
@@ -67,7 +68,7 @@ $bundles =  json_decode( $post_meta["wcpb_bundle_products"][0], true );
 		    </video>
 			<?php
 		}else{
-			echo '<img id="detail-img" src="'.$large_image.'" style="'.$style.'">';
+			echo '<img id="detail-img" src="'.$large_image.'" alt="'.$title.'" style="'.$style.'">';
 		}
 		echo '<div class="code-product">Item number : #'.$product_number.'</div>';
 

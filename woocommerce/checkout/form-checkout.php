@@ -29,9 +29,18 @@ if ( ! $checkout->enable_signup && ! $checkout->enable_guest_checkout && ! is_us
 }
 $new_customer_message .= ' <a href="#" class="showRegistration">' . __( 'New Customer', 'woocommerce' ) . '<span class="glyphicon glyphicon-plus" aria-hidden="true""></span><span class="glyphicon glyphicon-minus hide" aria-hidden="true"></span></a>';
 ?>
+<?php if ( ! is_user_logged_in() ){
+?>
 <div class="row login-wrapper">
-	<div class="col-md-12"><a title="Login" href="#" class="btn btn-default" data-toggle="modal" data-target="#myModal">Login</a></div>
+	<div class="col-md-12">
+		<p>
+			Create an account by entering the information below. If you are a returning customer please <a title="Login" href="#" class="btn btn-default" data-toggle="modal" data-target="#myModal">Login</a>
+		</p>
+	</div>
 </div>
+<?php
+}?>
+
 <form name="checkout" method="post" class="checkout woocommerce-checkout" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data" >
 <div class="container tabs-wrap">
   <ul class="nav nav-tabs" role="tablist">
@@ -87,11 +96,16 @@ add_action('wp_footer',function(){ ?>
 	#order_review .place-order{opacity: 0;height: 0;overflow: hidden;padding: 0!important;margin-bottom: 15px;}
 	.wc_payment_method.payment_method_purchase_order{display: none;}
 	.login-wrapper{
-		top:-50px;
+		/*top:-50px;*/
 		position: relative;
 	}
 	.login-wrapper a{
-		float: right;
+		/*float: right;*/
+	}
+	.status_info{
+		top:-70px;
+		float: left;
+		position: relative;
 	}
 </style>
 <script type="text/javascript">

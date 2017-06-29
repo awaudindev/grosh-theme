@@ -1,14 +1,5 @@
 jQuery(document).ready(function($){
 
-	$('#type').change(function() {
-		 var optionChange = $(this).find('option:selected');
-		 if((optionChange.val() === 'animation' || optionChange.val() === 'image') && $('#searchform input[name="post_type"]').length < 1){
-		 	$('#searchform').append('<input type="hidden" name="post_type" value="product">');
-		 }else if(optionChange.val() === '' && $('#searchform input[name="post_type"]').length){
-		 	$('#searchform input[name="post_type"]').remove();
-		 }
-	});
-
 	if($('#datepicker1').length || $('#datepicker2').length){
 	     var dateFormat = "mm-dd-yyyy",
 	     today = new Date(),

@@ -19,7 +19,7 @@
 	<div class="border"></div>
 	<?php if ( has_post_thumbnail() ) : ?>
 	  <?php $large_image_url = wp_get_attachment_image_src( get_post_thumbnail_id(get_the_ID()), 'grosh-featured-image' ); ?>
-	  <img src="<?php echo $large_image_url[0]; ?>" alt="" class="img-responsive" />
+	  <img src="<?php echo $large_image_url[0]; ?>" alt="<?php echo get_the_title( get_the_ID() );?>" class="img-responsive" />
 	<?php endif; ?>
 	</div>
 </div>

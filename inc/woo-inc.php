@@ -282,13 +282,13 @@ function jc_woo_search_pre_get_posts($q){
  */
 function jc_search_post_join($join = ''){
  
-    global $wp_the_query;
+    global $wpdb,$wp_the_query;
  
     // escape if not woocommerce searcg query
     if ( empty( $wp_the_query->query_vars['wc_query'] ) || empty( $wp_the_query->query_vars['s'] ) )
             return $join;
  
-    $join .= "INNER JOIN wp_postmeta AS jcmt1 ON (wp_posts.ID = jcmt1.post_id)";
+    $join .= "LEFT JOIN {$wpdb->term_relationships} tr ON {$wpdb->posts}.ID = tr.object_id INNER JOIN {$wpdb->term_taxonomy} tt ON tt.term_taxonomy_id=tr.term_taxonomy_id INNER JOIN {$wpdb->terms} t ON t.term_id = tt.term_id";
     return $join;
 }
 
@@ -299,47 +299,17 @@ function jc_search_post_join($join = ''){
  */
 function jc_search_post_excerpt($where = ''){
  
-    global $wp_the_query;
+    global $wpdb,$wp_the_query;
  
     // escape if not woocommerce search query
     if ( empty( $wp_the_query->query_vars['wc_query'] ) || empty( $wp_the_query->query_vars['s'] ) )
             return $where;
  
     $where = preg_replace("/post_title LIKE ('%[^%]+%')/", "post_title LIKE $1)
-    			OR (post_content LIKE $1)
-                OR (jcmt1.meta_key = '_sku' AND CAST(jcmt1.meta_value AS CHAR) LIKE $1)
-                OR  (jcmt1.meta_key = '_author' AND CAST(jcmt1.meta_value AS CHAR) LIKE $1)
-                OR  (jcmt1.meta_key = '_publisher' AND CAST(jcmt1.meta_value AS CHAR) LIKE $1)
-                OR  (jcmt1.meta_key = '_format' AND CAST(jcmt1.meta_value AS CHAR) LIKE $1 ", $where);
+    			OR  (post_content LIKE $1)
+    			OR  (t.name LIKE $1", $where);
  
     return $where;
 }
-
-function atom_search_where($where){ 
-    global $wpdb, $wp_query;
-    if (is_search()) {
-        $search_terms = get_query_var( 'search_terms' );
-
-        $where .= " OR (";
-        $i = 0;
-        foreach ($search_terms as $search_term) {
-            $i++;
-            if ($i>1) $where .= " AND";     // --- make this OR if you prefer not requiring all search terms to match taxonomies
-            $where .= " (t.name LIKE '%".$search_term."%')";
-        }
-        $where .= " AND {$wpdb->posts}.post_status = 'publish')";
-    }
-  return $where;
-}
-
-function atom_search_join($join){
-  global $wpdb;
-  if (is_search())
-    $join .= "LEFT JOIN {$wpdb->term_relationships} tr ON {$wpdb->posts}.ID = tr.object_id INNER JOIN {$wpdb->term_taxonomy} tt ON tt.term_taxonomy_id=tr.term_taxonomy_id INNER JOIN {$wpdb->terms} t ON t.term_id = tt.term_id";
-  return $join;
-}
-
-add_filter('posts_where','atom_search_where');
-add_filter('posts_join', 'atom_search_join');
 
 ?>
