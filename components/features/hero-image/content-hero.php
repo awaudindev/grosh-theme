@@ -68,7 +68,7 @@ switch ($totp) {
                         $v++;
                       }else{
                     ?>
-                    <img src="<?php echo $large_image; ?>" alt="<?php echo get_the_title( $item ); ?>" style="<?php echo $style; ?>" class="img-responsive" />
+                    <img src="<?php echo $large_image; ?>" title="<?php echo get_the_title( $item ); ?>" alt="<?php echo get_the_title( $item ); ?>" style="<?php echo $style; ?>" class="img-responsive" />
                     <div class="carousel-caption">
                         <h2 class="title-product font700 padBot20"><a href="<?php echo get_permalink($item); ?>"><?php echo get_the_title( $item ); ?></a></h2>
                         <div class="clearfix meta-product">

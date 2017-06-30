@@ -331,7 +331,7 @@ $file_type = $_REQUEST['filetype'];
 				?>
 					<li class="text-center col-md-4 col-sm-6 img-bundles" style="cursor: pointer;" data-id="<?php echo $product_number; ?>">
 						<div class="col-md-12">
-							<img class="img-responsive" width="350" height="150" src="<?php echo $large_image; ?>" alt="<?php echo get_the_title($key); ?>"/>
+							<img class="img-responsive" width="350" height="150" src="<?php echo $large_image; ?>" alt="<?php echo get_the_title($key); ?>" title="<?php echo get_the_title($key); ?>"/>
 							<div class="code-bundle-product">Item number : #<?php echo $product_number; ?></div>
 							<h4 class="title-product text-center"><a href="<?php echo get_permalink($key); ?>"><?php echo get_the_title($key); ?></a></h4>
 						</div>

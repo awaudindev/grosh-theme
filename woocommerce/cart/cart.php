@@ -90,7 +90,7 @@ do_action( 'woocommerce_before_cart' ); ?>
 							}
 							$large_image = getProductImage($product_number, true, false);
 							$thumbnail = apply_filters( 'woocommerce_cart_item_thumbnail', $_product->get_image(), $cart_item, $cart_item_key );
-							$img = '<img src="'.$large_image.'" alt="'.$_product->get_title().'" width="150" class="woocommerce-placeholder wp-post-image" height="70">';
+							$img = '<img src="'.$large_image.'" alt="'.$_product->get_title().'" title="'.$_product->get_title().'" width="150" class="woocommerce-placeholder wp-post-image" height="70">';
 							if ( ! $product_permalink ) {
 								echo $thumbnail;
 							} else {

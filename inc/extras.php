@@ -61,7 +61,7 @@ function main_product_category( $atts, $content = ""){
 
 				$thumbnail = ($image) ? $image : wc_placeholder_img_src();
 	                         
-	            $result .= '<li class="text-center col-md-4 col-sm-6"><a href="' .  esc_url( get_term_link( $term ) ) . '" class="' . $term->slug . '"><img width="350" height="150" src="' . $thumbnail . '" alt="' . $term->name . '" /><h5 class="title-product">'.$term->name.' (' .$term->count. ')</h5></a></li>';                                                    
+	            $result .= '<li class="text-center col-md-4 col-sm-6"><a href="' .  esc_url( get_term_link( $term ) ) . '" class="' . $term->slug . '"><img width="350" height="150" src="' . $thumbnail . '" alt="' . $term->name . '" title="' . $term->name . '"/><h5 class="title-product">'.$term->name.' (' .$term->count. ')</h5></a></li>';                                                    
 	 
 	    	}
 	    	$result .= '</ul>';	     
@@ -322,7 +322,7 @@ function product_packages( $atts, $content = ""){
 	        $result .= '<div class="thumb-post">';
 
 		        $result .= '<a href="'.esc_url( get_permalink($id) ).'">';
-			    	$result .= '<img class="img-responsive" src="'.$large_image.'" alt="'.get_the_title($id).'"/>';
+			    	$result .= '<img class="img-responsive" src="'.$large_image.'" alt="'.get_the_title($id).'" title="'.get_the_title($id).'"/>';
 			    	$result .= '<h5 class="title-product">'.get_the_title($id).' ('.$total_bundle.')</h5>';
 			    $result .= '</a>';
 

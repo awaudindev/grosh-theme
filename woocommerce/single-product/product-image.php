@@ -68,7 +68,7 @@ $bundles =  json_decode( $post_meta["wcpb_bundle_products"][0], true );
 		    </video>
 			<?php
 		}else{
-			echo '<img id="detail-img" src="'.$large_image.'" alt="'.$title.'" style="'.$style.'">';
+			echo '<img id="detail-img" src="'.$large_image.'" alt="'.$title.'" title="'.$title.'" style="'.$style.'">';
 		}
 		echo '<div class="code-product">Item number : #'.$product_number.'</div>';
 
