@@ -471,20 +471,10 @@ function check_total() {
 
 add_action( 'woocommerce_new_order', 'save_rental_date',  1, 1  );
 function save_rental_date($order_id){
+
 	$rentalDate = WC()->session->get('rental_date');
 
 	if(isset($rentalDate)){
-
-		$order = wc_get_order( $order_id );
-
-		foreach( $order-> get_items() as $item_key => $item_values ){
-			$item_id = $item_values->get_id();
-			$product_number = get_post_meta( $item_id, 'product_number', true );
-			$product_type = get_post_meta( $item_id, 'file_type', true );
-
-			wc_add_order_item_meta( $item_id, 'product_number', $product_number );
-			wc_add_order_item_meta( $item_id, 'product_type', $product_type );
-		}
 
 		$datetime1 = new DateTime($rentalDate['start']);
 		$datetime2 = new DateTime($rentalDate['expiry']);
@@ -511,11 +501,57 @@ function rental_failed($order_id) {
 }
 function rental_hold($order_id) {
     
+	global $grosh_meta;
+
+	$order = wc_get_order( $order_id );
+
+	$base_price_image = ($grosh_meta['base-image-price']) ? $grosh_meta['base-image-price'] : 65;
+ 	$recurring_price_image = ($grosh_meta['recurring-image-price']) ? $grosh_meta['recurring-image-price'] : 3.25;
+
+ 	$length = get_post_meta($order_id, 'rental_period',true);
+
+ 	$extra = $length - 7;
+
+ 	$total = ($length > 7) ? $base_price_image + ($extra * $recurring_price_image) : $base_price_image;
+
+	foreach( $order-> get_items() as $item_key => $item_values ){
+		$item_id = wc_get_order_item_meta($item_values->get_id(),'_product_id', true );
+		$product_number = get_post_meta( $item_id, 'product_number', true );
+		$line_total = wc_get_order_item_meta($item_values->get_id(),'_line_total', true );
+		$type = ($line_total == $total) ? 'image' : 'animation';
+
+		if(!wc_get_order_item_meta($item_values->get_id(), 'product_number',true)){ wc_add_order_item_meta( $item_values->get_id(), 'product_number', $product_number ); }
+		if(!wc_get_order_item_meta($item_values->get_id(), 'product_type',true)){ wc_add_order_item_meta( $item_values->get_id(), 'product_type', $type ); }
+	}
+
 }
 function rental_processing($order_id) {
    
 }
 function rental_completed($order_id) {
+
+	global $grosh_meta;
+
+	$order = wc_get_order( $order_id );
+
+	$base_price_image = ($grosh_meta['base-image-price']) ? $grosh_meta['base-image-price'] : 65;
+ 	$recurring_price_image = ($grosh_meta['recurring-image-price']) ? $grosh_meta['recurring-image-price'] : 3.25;
+
+ 	$length = get_post_meta($order_id, 'rental_period',true);
+
+ 	$extra = $length - 7;
+
+ 	$total = ($length > 7) ? $base_price_image + ($extra * $recurring_price_image) : $base_price_image;
+
+	foreach( $order-> get_items() as $item_key => $item_values ){
+		$item_id = wc_get_order_item_meta($item_values->get_id(),'_product_id', true );
+		$product_number = get_post_meta( $item_id, 'product_number', true );
+		$line_total = wc_get_order_item_meta($item_values->get_id(),'_line_total', true );
+		$type = ($line_total == $total) ? 'image' : 'animation';
+
+		if(!wc_get_order_item_meta($item_values->get_id(), 'product_number',true)){ wc_add_order_item_meta( $item_values->get_id(), 'product_number', $product_number ); }
+		if(!wc_get_order_item_meta($item_values->get_id(), 'product_type',true)){ wc_add_order_item_meta( $item_values->get_id(), 'product_type', $type ); }
+	}
     
 }
 function rental_refunded($order_id) {
@@ -525,13 +561,13 @@ function rental_cancelled($order_id) {
     
 }
 
-// add_action( 'woocommerce_order_status_pending', 'rental_pending', 10, 1);
+// add_action( 'woocommerce_order_status_pending', 'rental_pending', 10, 2);
 // add_action( 'woocommerce_order_status_failed', 'rental_failed', 10, 1);
-// add_action( 'woocommerce_order_status_on-hold', 'rental_hold', 10, 1);
+add_action( 'woocommerce_order_status_on-hold', 'rental_hold', 10, 1);
 
 // Note that it's woocommerce_order_status_on-hold, and NOT on_hold.
 // add_action( 'woocommerce_order_status_processing', 'rental_processing', 10, 1);
-// add_action( 'woocommerce_order_status_completed', 'rental_completed', 10, 1);
+add_action( 'woocommerce_order_status_completed', 'rental_completed', 10, 1);
 // add_action( 'woocommerce_order_status_refunded', 'rental_refunded', 10, 1);
 // add_action( 'woocommerce_order_status_cancelled', 'rental_cancelled', 10, 1);
 
