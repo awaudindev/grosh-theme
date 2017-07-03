@@ -475,6 +475,17 @@ function save_rental_date($order_id){
 
 	if(isset($rentalDate)){
 
+		$order = wc_get_order( $order_id );
+
+		foreach( $order-> get_items() as $item_key => $item_values ){
+			$item_id = $item_values->get_id();
+			$product_number = get_post_meta( $item_id, 'product_number', true );
+			$product_type = get_post_meta( $item_id, 'file_type', true );
+
+			wc_add_order_item_meta( $item_id, 'product_number', $product_number );
+			wc_add_order_item_meta( $item_id, 'product_type', $product_type );
+		}
+
 		$datetime1 = new DateTime($rentalDate['start']);
 		$datetime2 = new DateTime($rentalDate['expiry']);
 
