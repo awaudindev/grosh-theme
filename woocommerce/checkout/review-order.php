@@ -47,7 +47,30 @@ $end = ($rentalDate) ? $rentalDate['expiry'] : $newDate2;
 					?>
 					<tr class="<?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key ) ); ?>">
 						<td class="product-name">
-							<?php echo apply_filters( 'woocommerce_cart_item_name', $_product->get_title(), $cart_item, $cart_item_key ) . '&nbsp;'; ?>
+						<table class="nested">
+							<tr>
+								<td>
+								<?php 
+								$product_number = get_post_meta( $_product->id, 'product_number', true );
+								$bundles =  json_decode( get_post_meta( $_product->id, 'wcpb_bundle_products', true ), true );
+								if($bundles){
+									foreach ($bundles as $key => $value) {
+										$product_number = get_post_meta( $key, 'product_number', true );
+										break;
+									}
+								}
+								$large_image = getProductImage($product_number, true, false);
+								$img = '<img src="'.$large_image.'" alt="'.$_product->get_title().'" title="'.$_product->get_title().'" width="150" class="woocommerce-placeholder wp-post-image" height="70">';
+						
+								echo $img;
+
+								?>
+								</td>
+								<td align="left">
+								<?php echo apply_filters( 'woocommerce_cart_item_name', $_product->get_title(), $cart_item, $cart_item_key ) . '&nbsp;'; ?>
+								</td>
+							</tr>
+							</table>
 						</td>
 						<td class="product-total">
 							<?php echo apply_filters( 'woocommerce_cart_item_subtotal', WC()->cart->get_product_subtotal( $_product, $cart_item['quantity'] ), $cart_item, $cart_item_key ); ?>

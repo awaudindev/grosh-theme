@@ -81,7 +81,9 @@ if ( sizeof( $checkout->checkout_fields ) > 0 ) : ?>
 	<?php do_action( 'woocommerce_checkout_before_order_review' ); ?>
 
 	<div id="order_review" class="woocommerce-checkout-review-order">
-		<?php do_action( 'woocommerce_checkout_order_review' ); ?>
+		<?php do_action( 'woocommerce_checkout_order_review' ); 
+			do_action('woocommerce_checkout_custom');
+		?>
 		<a class="btn btn-primary back">Go Back</a>
 	</div>
 	<?php do_action( 'woocommerce_checkout_after_order_review' ); ?>
@@ -93,6 +95,8 @@ if ( sizeof( $checkout->checkout_fields ) > 0 ) : ?>
 add_action('wp_footer',function(){ ?> 
 <style type="text/css">
 	.nav-tabs{margin-left:0;}
+	.my-new-field .form-row label.checkbox{position: relative;padding-left:40px;}
+	.my-new-field .form-row .input-checkbox{left: 11px;top:50%;transform: translateY(-50%);margin:0!important;}
 	#order_review .place-order{opacity: 0;height: 0;overflow: hidden;padding: 0!important;margin-bottom: 15px;}
 	.wc_payment_method.payment_method_purchase_order{display: none;}
 	.login-wrapper{
@@ -106,6 +110,14 @@ add_action('wp_footer',function(){ ?>
 		top:-70px;
 		float: left;
 		position: relative;
+	}
+	.nested{margin-bottom: 0;}
+	.nested td:first-child{padding:0 12px 0 0!important;width:10%;}
+	.nested td:last-child{padding:0 0 0 12px!important;width: 90%;}
+	@media (max-width: 480px){
+		.nested td:first-child{padding:0!important;width:1px;}
+		.nested td:last-child{padding:0!important;width:100%;}
+		.nested img{display: none;}
 	}
 </style>
 <script type="text/javascript">

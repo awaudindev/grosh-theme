@@ -208,6 +208,7 @@ $file_type = $_REQUEST['filetype'];
 			 * @hooked woocommerce_template_single_sharing - 50
 			 */
 			do_action( 'woocommerce_single_product_summary' );
+			echo do_shortcode('[addtoany]');
 		?>
 		</div>
 		<div class="col-md-6">

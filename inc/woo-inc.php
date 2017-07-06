@@ -240,8 +240,8 @@ function order_fields($fields) {
         "billing_address_2", 
         "billing_user_gender", 
         "billing_city", 
-        "billing_postcode",
-        "billing_state", 
+        "billing_state",
+        "billing_postcode", 
         "billing_country", 
         "billing_email", 
         "billing_phone"
@@ -256,7 +256,29 @@ function order_fields($fields) {
     return $fields;
 
 }
-
+add_action('woocommerce_checkout_custom', 'my_custom_checkout_field');
+ 
+function my_custom_checkout_field( $checkout ) {
+ 
+    echo '<div class="my-new-field">';
+    woocommerce_form_field( 'checkout_terms', array(
+        'type'          => 'checkbox',
+        'class'         => array('input-checkbox'),
+        'label'         => __('I have read and accept the Terms & Conditions.'),
+        'required'  => true,
+        ), false );
+ 
+    echo '</div>';
+}
+ 
+/**
+ * Update the order meta with field value
+ **/
+add_action('woocommerce_checkout_update_order_meta', 'my_custom_checkout_field_update_order_meta');
+ 
+function my_custom_checkout_field_update_order_meta( $order_id ) {
+    if ($_POST['checkout_terms']) update_post_meta( $order_id, 'checkout_terms', esc_attr($_POST['my_checkbox']));
+}
 add_action( 'woocommerce_checkout_order_processed', 'save_extra_fields', 20, 2 );
 
 function save_extra_fields($order_id, $posted) {

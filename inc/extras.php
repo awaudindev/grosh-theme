@@ -766,4 +766,7 @@ function wh_phoneValidateCheckoutFields() {
     if ( ! (preg_match('/^\(?(\d{3})\)?[-]?(\d{3})[-]?(\d{4})$/', $_POST['billing_phone'] ))){
         wc_add_notice(__('Invalid <strong>Phone Number</strong>, please check your input.'), 'error');
     }
+
+    if (!$_POST['checkout_terms'])
+    	wc_add_notice(__('Please agree to the terms & condition.'), 'error');
 }
