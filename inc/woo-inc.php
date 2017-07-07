@@ -259,12 +259,15 @@ function order_fields($fields) {
 add_action('woocommerce_checkout_custom', 'my_custom_checkout_field');
  
 function my_custom_checkout_field( $checkout ) {
- 
+ 	global $grosh_meta;
+
+ 	$link = (!empty($grosh_meta['term-condition-link']) && !is_null($grosh_meta['term-condition-link'])) ? get_permalink($grosh_meta['term-condition-link']) : get_site_url();
+
     echo '<div class="my-new-field">';
     woocommerce_form_field( 'checkout_terms', array(
         'type'          => 'checkbox',
         'class'         => array('input-checkbox'),
-        'label'         => __('I have read and accept the Terms & Conditions.'),
+        'label'         => __('I have read and accept the <a href="'.$link.'" target="_blank">Terms & Conditions</a>.'),
         'required'  => true,
         ), false );
  
@@ -333,5 +336,23 @@ function jc_search_post_excerpt($where = ''){
  
     return $where;
 }
+
+function admin_order_item_thumbnail( $value, $item_id, $item){
+
+	$product_number = get_post_meta( $item->get_product_id(), 'product_number', true );
+	$bundles =  json_decode( get_post_meta( $item->get_product_id(), 'wcpb_bundle_products', true ), true );
+	if($bundles){
+		foreach ($bundles as $key => $value) {
+			$product_number = get_post_meta( $key, 'product_number', true );
+			break;
+		}
+	}
+	$large_image = getProductImage($product_number, true, false);
+	$img = '<img src="'.$large_image.'" alt="'.get_the_title($item->get_product_id()).'" title="'.get_the_title($item->get_product_id()).'" width="150" class="woocommerce-placeholder wp-post-image" height="70">';
+
+	return $img;
+
+}
+add_filter('woocommerce_admin_order_item_thumbnail','admin_order_item_thumbnail',10,3);
 
 ?>

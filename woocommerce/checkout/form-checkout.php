@@ -95,7 +95,8 @@ if ( sizeof( $checkout->checkout_fields ) > 0 ) : ?>
 add_action('wp_footer',function(){ ?> 
 <style type="text/css">
 	.nav-tabs{margin-left:0;}
-	.my-new-field .form-row label.checkbox{position: relative;padding-left:40px;}
+	.my-new-field .form-row label.checkbox{position: relative;padding-left:40px;font-weight: normal;}
+	.my-new-field .form-row label.checkbox a{font-weight: bold;color:#086FB7;}
 	.my-new-field .form-row .input-checkbox{left: 11px;top:50%;transform: translateY(-50%);margin:0!important;}
 	#order_review .place-order{opacity: 0;height: 0;overflow: hidden;padding: 0!important;margin-bottom: 15px;}
 	.wc_payment_method.payment_method_purchase_order{display: none;}

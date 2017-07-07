@@ -355,6 +355,29 @@
         )
     ) );
 
+    Redux::setSection( $opt_name, array(
+        'title'      => __( 'Checkout Page', 'redux-framework-demo' ),
+        'desc'       => '',
+        'id'         => 'checkout-subsection',
+        'subsection' => true,
+        'fields'     => array(
+            array(
+                'id'       => 'term-condition-link',
+                'type'     => 'select',
+                'multi'    => false,
+                'title'    => __( 'Select Page for Terms & Conditions', 'redux-framework-demo' ),
+                'desc'     => __( 'Link to show Terms & Conditions', 'redux-framework-demo' ),
+                'data'  => 'posts',
+                'args'  => array(
+                    'post_type'      => 'page',
+                    'posts_per_page' => -1,
+                    'orderby'        => 'title',
+                    'order'          => 'ASC',
+                )
+            )
+        )
+    ) );
+
     /*
      * <--- END SECTIONS
      */

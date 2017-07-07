@@ -6,7 +6,6 @@
  *
  * @package grosh
  */
-
 /**
  * Adds custom classes to the array of body classes.
  *
@@ -32,7 +31,6 @@ function grosh_body_classes( $classes ) {
 	return $classes;
 }
 add_filter( 'body_class', 'grosh_body_classes' );
-
 
 function main_product_category( $atts, $content = ""){
 
