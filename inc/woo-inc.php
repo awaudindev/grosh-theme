@@ -293,7 +293,6 @@ function save_extra_fields($order_id, $posted) {
 
 add_action('pre_get_posts', 'jc_woo_search_pre_get_posts');
 function jc_woo_search_pre_get_posts($q){
- 
     if ( is_search() ) {
         add_filter( 'posts_join', 'jc_search_post_join' );
         add_filter( 'posts_where', 'jc_search_post_excerpt' );

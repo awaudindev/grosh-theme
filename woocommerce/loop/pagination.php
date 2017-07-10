@@ -40,13 +40,14 @@ $order_by = ($_GET['orderby']) ? $_GET['orderby'] : 'menu_order';
   jQuery(function($){
     $(document).ready( function() {
     	$(window).on('load',function(){
-    	$('.popular-post').append('<div class="loadMore"><a href="#" class="fetch_post btn btn-default" data-orderby="<?php echo $order_by; ?>"  data-offset="1" data-perpage="<?php echo $per_page; ?>" >Load More</a></div>');	
+    	$('.popular-post').append('<div class="loadMore"><a href="#" class="fetch_post btn btn-default" <?php if(is_search()){ ?> data-query="<?php echo $_GET['s']; ?>"<?php } ?> data-orderby="<?php echo $order_by; ?>"  data-offset="1" data-perpage="<?php echo $per_page; ?>" >Load More</a></div>');	
     	$('.fetch_post').on('click',function(e){
     		e.preventDefault();
     		var product = $('.list_post').attr('data-meta'),offset = $(this).attr('data-offset'),orderby = $(this).attr('data-orderby'),page = $(this).attr('data-perpage');
+    		<?php if(is_search()){ ?>var query = $(this).attr('data-query'); <?php } ?>
 	    	$.ajax({
 			  type: 'POST',
-			  url: '<?php echo admin_url('admin-ajax.php'); ?>/?action=fetch_post&cat=<?php echo $cat; ?>&offset='+offset+'&orderby='+orderby+'&perpage='+page,
+			  url: '<?php echo admin_url('admin-ajax.php'); ?>/?action=fetch_post&cat=<?php echo $cat; ?>&offset='+offset+'&orderby='+orderby+'&perpage='+page<?php if(is_search()){ ?>+'&query='+query <?php } ?>,
 			  beforeSend:function(){
 			  	$('.fetch_post').html('<i class="fa fa-circle-o-notch fa-spin"></i> Loading Product.....');
 			  },

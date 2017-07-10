@@ -154,11 +154,12 @@ add_action( 'wp_ajax_fetch_post', 'fetch_post' );
 add_action( 'wp_ajax_nopriv_fetch_post', 'fetch_post' );
 function fetch_post() {
 
-	$meta = $_GET['meta'];
-	$offset = $_GET['offset'];
-	$per_page = $_GET['perpage'];
-	$orderby = $_GET['orderby'];
-	$cat = $_GET['cat'];
+	$meta = $_REQUEST['meta'];
+	$offset = $_REQUEST['offset'];
+	$per_page = $_REQUEST['perpage'];
+	$orderby = $_REQUEST['orderby'];
+	$cat = $_REQUEST['cat'];
+	$s = $_REQUEST['query'];
 
 	$result = '';
 
@@ -169,6 +170,10 @@ function fetch_post() {
 		'post_type' => 'product',
 		'orderby' => $orderby
 	);
+
+	if($s){
+		$args['s'] = $s;
+	}
 
 	if($meta){
 	   $args['meta_key'] = 'file_type';
@@ -233,6 +238,8 @@ function archive_product_filter($per_page = 12,$order_by = 'menu_order'){
 		$order_by_data .= '<option value="'.$v.'" '.$selected.'>'.$k.'</option>';
 	}
 
+	$search = (is_search()) ? '<input type="hidden" name="post_type" value="product"><input type="hidden" name="s" value="'.$_GET['s'].'"><input type="hidden" name="type" value="'.$_GET['type'].'">' : '';
+
 	$result = '';
 
 	$result .= '<div class="filter-sort clearfix">
@@ -244,7 +251,7 @@ function archive_product_filter($per_page = 12,$order_by = 'menu_order'){
 									'.$per_page_data.'
 							</select>
 							</div>
-							<input name="orderby" value="'.$order_by.'" type="hidden">
+							<input name="orderby" value="'.$order_by.'" type="hidden">'.$search.'
 						</form>
 					</div>
 					<div class="filter-sort-box pull-right">
@@ -255,7 +262,7 @@ function archive_product_filter($per_page = 12,$order_by = 'menu_order'){
 									'.$order_by_data.'
 							</select>
 							</div>
-							<input name="per_page" value="'.$per_page.'" type="hidden">
+							<input name="per_page" value="'.$per_page.'" type="hidden">'.$search.'
 						</form>
 					</div>
 			</div>	
