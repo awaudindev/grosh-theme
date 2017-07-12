@@ -44,7 +44,21 @@ $order_by = ($_GET['orderby']) ? $_GET['orderby'] : 'menu_order';
     	$('.fetch_post').on('click',function(e){
     		e.preventDefault();
     		var product = $('.list_post').attr('data-meta'),offset = $(this).attr('data-offset'),orderby = $(this).attr('data-orderby'),page = $(this).attr('data-perpage');
-    		<?php if(is_search()){ ?>var query = $(this).attr('data-query'); <?php } ?>
+    		<?php if(is_search()){ 
+    			$actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+    		?>
+    			var query = $(this).attr('data-query'); 
+    			$.ajaxSetup({cache:false});
+    			var content;
+    			$('.fetch_post').html('<i class="fa fa-circle-o-notch fa-spin"></i> Loading Product.....');
+    			if(parseInt(offset) < 2){offset = parseInt(offset)+1;}
+				$.get("<?php echo $actual_link; ?>&paged="+offset, function(data){
+				    content= $(data).find('.popular-post ul.clearfix li');
+				    $('.popular-post ul.clearfix').append(content);
+    				$('.fetch_post').html('Load More').attr('data-offset',parseInt(offset)+1);
+    				if(content.length < 12 || content.length < 1) $('.loadMore').remove();
+				});
+    		<?php }else{ ?>
 	    	$.ajax({
 			  type: 'POST',
 			  url: '<?php echo admin_url('admin-ajax.php'); ?>/?action=fetch_post&cat=<?php echo $cat; ?>&offset='+offset+'&orderby='+orderby+'&perpage='+page<?php if(is_search()){ ?>+'&query='+query <?php } ?>,
@@ -62,6 +76,7 @@ $order_by = ($_GET['orderby']) ? $_GET['orderby'] : 'menu_order';
 			  	$('.fetch_post').html('Failed to Load, Try Again!');
 			  }
 			});
+			<?php } ?>
 	       });
     		});
 	    });

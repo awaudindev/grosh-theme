@@ -159,7 +159,6 @@ function fetch_post() {
 	$per_page = $_REQUEST['perpage'];
 	$orderby = $_REQUEST['orderby'];
 	$cat = $_REQUEST['cat'];
-	$s = $_REQUEST['query'];
 
 	$result = '';
 
@@ -170,10 +169,6 @@ function fetch_post() {
 		'post_type' => 'product',
 		'orderby' => $orderby
 	);
-
-	if($s){
-		$args['s'] = $s;
-	}
 
 	if($meta){
 	   $args['meta_key'] = 'file_type';
@@ -209,13 +204,35 @@ function archive_product_filter($per_page = 12,$order_by = 'menu_order'){
 
 	global $wp_query;
 
+	$default = array( 'menu_order' => 'DESC', 'date' => 'ASC' );
+
 	if($_GET['per_page'] && is_numeric($_GET['per_page'])){
 		$wp_query->set('posts_per_page',$_GET['per_page']);
-		$wp_query->set('orderby',$_GET['orderby']);
+		if($_GET['orderby'] == 'menu_order'){
+			$meta = $default;
+		}else{
+ 			$meta = array( 
+		        'image_clause' => ($_GET['orderby'] == 'image') ? 'DESC' : 'ASC',
+		        'animation_clause' => ($_GET['orderby'] == 'animation') ? 'DESC' : 'ASC',
+		    );
+ 			$wp_query->set('meta_query',array(
+		        'relation' => 'OR',
+		        'image_clause' => array(
+		            'key' => 'file_type',
+		            'value' => 'image',
+		        ),
+		        'animation_clause' => array(
+		            'key' => 'file_type',
+		            'compare' => 'animation',
+		        ), 
+		    ));
+		}
+
+		$wp_query->set('orderby',$meta);
 		$wp_query->query($wp_query->query_vars);
 	}else if(get_query_var('posts_per_page') < 13){
 		$wp_query->set('posts_per_page',12);
-		$wp_query->set('orderby','menu_order');
+		$wp_query->set('orderby',$default);
 		$wp_query->query($wp_query->query_vars);
 	}
 
@@ -223,7 +240,7 @@ function archive_product_filter($per_page = 12,$order_by = 'menu_order'){
 	$order_by = ($_GET['orderby']) ? $_GET['orderby'] : $order_by;
 
 	$per_page_array = array( '12' => 12,'24' => 24,'36' => 36,'48' => 48,'All' => -1);
-	$order_by_array = array('Relevance' => 'menu_order', 'Still Images' => 'date', 'Animated Images' => 'date');
+	$order_by_array = array('Relevance' => 'menu_order', 'Still Images' => 'image', 'Animated Images' => 'animation');
 
 	$per_page_data = '';
 	$order_by_data = '';
