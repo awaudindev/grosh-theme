@@ -223,7 +223,7 @@ function archive_product_filter($per_page = 12,$order_by = 'menu_order'){
 	$order_by = ($_GET['orderby']) ? $_GET['orderby'] : $order_by;
 
 	$per_page_array = array( '12' => 12,'24' => 24,'36' => 36,'48' => 48,'All' => -1);
-	$order_by_array = array('relevance' => 'menu_order', 'newest design' => 'date');
+	$order_by_array = array('Relevance' => 'menu_order', 'Still Images' => 'date', 'Animated Images' => 'date');
 
 	$per_page_data = '';
 	$order_by_data = '';
@@ -436,13 +436,23 @@ function check_total() {
 
  	$recurring_price_image = ($grosh_meta['recurring-image-price']) ? $grosh_meta['recurring-image-price'] : 3.25;
  	$recurring_price_motion = ($grosh_meta['recurring-motion-price']) ? $grosh_meta['recurring-motion-price'] : 5.75;
+ 	$recurring_package = ($grosh_meta['recurring-bundle-package-price']) ? $grosh_meta['recurring-bundle-package-price'] : 5.75;
 
     $new_total = 0;
     foreach ( WC()->cart->cart_contents as $key => $value ) {
         //calculations here
+    	$post_meta = get_post_meta( $value['product_id'] );
+		$bundles =  json_decode( $post_meta["wcpb_bundle_products"][0], true );
 
-		$base_price = ($value['file_type'] == 'animation') ? $base_price_motion : $base_price_image;
-		$recurring_price = ($value['file_type'] == 'animation' && empty($file_type) || $file_type == 'animation') ? $recurring_price_motion : $recurring_price_image;
+		
+
+		if($bundles){
+	 		$base_price = $bundle_price;
+	 		$recurring_price = $recurring_package;
+	 	}else{
+	 		$base_price = ($value['file_type'] == 'animation') ? $base_price_motion : $base_price_image;
+			$recurring_price = ($value['file_type'] == 'animation' && empty($file_type) || $file_type == 'animation') ? $recurring_price_motion : $recurring_price_image;
+		}
 
 		$firstweek = $base_price;
 

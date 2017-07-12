@@ -354,4 +354,56 @@ function admin_order_item_thumbnail( $value, $item_id, $item){
 }
 add_filter('woocommerce_admin_order_item_thumbnail','admin_order_item_thumbnail',10,3);
 
+add_filter( 'woocommerce_cart_item_price', 'custom_cart_item_price', 10, 3 );
+add_filter( 'woocommerce_cart_item_subtotal', 'custom_cart_item_price', 10, 3 );
+function custom_cart_item_price( $price, $cart_item, $cart_item_key ) {
+
+	global $grosh_meta;
+
+	$rentalDate = WC()->session->get('rental_date');
+	$totalrate = 0;
+	if(isset($rentalDate)){
+		$datetime1 = new DateTime($rentalDate['start']);
+		$datetime2 = new DateTime($rentalDate['expiry']);
+		$interval = date_diff($datetime1, $datetime2);
+
+		$base_price_image = ($grosh_meta['base-image-price']) ? $grosh_meta['base-image-price'] : 65;
+	 	$base_price_motion = ($grosh_meta['base-motion-price']) ? $grosh_meta['base-motion-price'] : 115;
+	 	$bundle_price = ($grosh_meta['package-bundle-price']) ? $grosh_meta['package-bundle-price'] : 750;
+
+	 	$recurring_price_image = ($grosh_meta['recurring-image-price']) ? $grosh_meta['recurring-image-price'] : 3.25;
+	 	$recurring_price_motion = ($grosh_meta['recurring-motion-price']) ? $grosh_meta['recurring-motion-price'] : 5.75;
+		$recurring_package = ($grosh_meta['recurring-bundle-package-price']) ? $grosh_meta['recurring-bundle-package-price'] : 5.75;
+
+		$post_meta = get_post_meta( $cart_item['product_id'] );
+		$bundles =  json_decode( $post_meta["wcpb_bundle_products"][0], true );
+
+		if($bundles){
+	 		$base_price = $bundle_price;
+	 		$recurring_price = $recurring_package;
+	 	}else{
+	 		$base_price = ($value['file_type'] == 'animation') ? $base_price_motion : $base_price_image;
+			$recurring_price = ($value['file_type'] == 'animation' && empty($file_type) || $file_type == 'animation') ? $recurring_price_motion : $recurring_price_image;
+		}
+
+		$firstweek = $base_price;//(($interval->days > 7) ? 7 : $interval->days )* $base_price;
+
+		if($interval->days > 7){
+
+			$extra = $interval->days - 7;
+
+			$extra_total = $extra * $recurring_price;
+
+			$totalrate = $firstweek + $extra_total; 
+
+		}else{
+
+			$totalrate = $firstweek;
+		
+		}
+	}
+
+    return $totalrate;
+}
+
 ?>

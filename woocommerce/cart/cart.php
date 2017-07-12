@@ -119,6 +119,9 @@ do_action( 'woocommerce_before_cart' ); ?>
 
 					<td class="product-price" data-title="<?php _e( 'Price', 'woocommerce' ); ?>">
 						<?php
+							//print_r($cart_item);
+							//print_r($cart_item_key);
+							//print_r(WC()->cart->get_product_price( $_product ));
 							echo apply_filters( 'woocommerce_cart_item_price', WC()->cart->get_product_price( $_product ), $cart_item, $cart_item_key );
 						?>
 					</td>
