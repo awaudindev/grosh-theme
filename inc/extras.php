@@ -256,7 +256,7 @@ function archive_product_filter($per_page = 12,$order_by = 'menu_order'){
 		$order_by_data .= '<option value="'.$v.'" '.$selected.'>'.$k.'</option>';
 	}
 
-	$search = (is_search()) ? '<input type="hidden" name="post_type" value="product"><input type="hidden" name="s" value="'.$_GET['s'].'"><input type="hidden" name="type" value="'.$_GET['type'].'">' : '';
+	$search = (!is_null($_GET['s'])) ? '<input type="hidden" name="post_type" value="product"><input type="hidden" name="s" value="'.$_GET['s'].'"><input type="hidden" name="type" value="'.$_GET['type'].'">' : '';
 
 	$result = '';
 
@@ -391,11 +391,19 @@ function add_custom_price( $cart_object ) {
 
 	 	$recurring_price_image = ($grosh_meta['recurring-image-price']) ? $grosh_meta['recurring-image-price'] : 3.25;
 	 	$recurring_price_motion = ($grosh_meta['recurring-motion-price']) ? $grosh_meta['recurring-motion-price'] : 5.75;
+ 		$recurring_package = ($grosh_meta['recurring-bundle-package-price']) ? $grosh_meta['recurring-bundle-package-price'] : 5.75;
 
 		foreach ( WC()->cart->get_cart() as $key => $value ) {
+			$post_meta = get_post_meta( $value['product_id'] );
+			$bundles =  json_decode( $post_meta["wcpb_bundle_products"][0], true );
 
-			$base_price = ($value['file_type'] == 'animation') ? $base_price_motion : $base_price_image;
-			$recurring_price = ($value['file_type'] == 'animation' && empty($file_type) || $file_type == 'animation') ? $recurring_price_motion : $recurring_price_image;
+			if($bundles){
+		 		$base_price = $bundle_price;
+		 		$recurring_price = $recurring_package;
+		 	}else{
+				$base_price = ($value['file_type'] == 'animation') ? $base_price_motion : $base_price_image;
+				$recurring_price = ($value['file_type'] == 'animation') ? $recurring_price_motion : $recurring_price_image;
+			}	
 
 			$firstweek = $base_price;
 
@@ -407,6 +415,7 @@ function add_custom_price( $cart_object ) {
 
 				$value['data']->set_price($firstweek + $extra_total); 
 
+				// echo '<pre>';print_r($value['data']);echo '</pre>';
 			}else{
 
 				$value['data']->set_price($firstweek);
@@ -462,14 +471,12 @@ function check_total() {
     	$post_meta = get_post_meta( $value['product_id'] );
 		$bundles =  json_decode( $post_meta["wcpb_bundle_products"][0], true );
 
-		
-
 		if($bundles){
 	 		$base_price = $bundle_price;
 	 		$recurring_price = $recurring_package;
 	 	}else{
 	 		$base_price = ($value['file_type'] == 'animation') ? $base_price_motion : $base_price_image;
-			$recurring_price = ($value['file_type'] == 'animation' && empty($file_type) || $file_type == 'animation') ? $recurring_price_motion : $recurring_price_image;
+			$recurring_price = ($value['file_type'] == 'animation') ? $recurring_price_motion : $recurring_price_image;
 		}
 
 		$firstweek = $base_price;

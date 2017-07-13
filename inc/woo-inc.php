@@ -354,8 +354,8 @@ function admin_order_item_thumbnail( $value, $item_id, $item){
 }
 add_filter('woocommerce_admin_order_item_thumbnail','admin_order_item_thumbnail',10,3);
 
-add_filter( 'woocommerce_cart_item_price', 'custom_cart_item_price', 10, 3 );
-add_filter( 'woocommerce_cart_item_subtotal', 'custom_cart_item_price', 10, 3 );
+// add_filter( 'woocommerce_cart_item_price', 'custom_cart_item_price', 10, 3 );
+// add_filter( 'woocommerce_cart_item_subtotal', 'custom_cart_item_price', 10, 3 );
 function custom_cart_item_price( $price, $cart_item, $cart_item_key ) {
 
 	global $grosh_meta;
@@ -382,8 +382,8 @@ function custom_cart_item_price( $price, $cart_item, $cart_item_key ) {
 	 		$base_price = $bundle_price;
 	 		$recurring_price = $recurring_package;
 	 	}else{
-	 		$base_price = ($value['file_type'] == 'animation') ? $base_price_motion : $base_price_image;
-			$recurring_price = ($value['file_type'] == 'animation' && empty($file_type) || $file_type == 'animation') ? $recurring_price_motion : $recurring_price_image;
+	 		$base_price = ($cart_item['file_type'] == 'animation') ? $base_price_motion : $base_price_image;
+			$recurring_price = ($cart_item['file_type'] == 'animation' ) ? $recurring_price_motion : $recurring_price_image;
 		}
 
 		$firstweek = $base_price;//(($interval->days > 7) ? 7 : $interval->days )* $base_price;
@@ -403,7 +403,48 @@ function custom_cart_item_price( $price, $cart_item, $cart_item_key ) {
 		}
 	}
 
-    return $totalrate;
+    return wc_price($totalrate);
 }
+
+function bundle_filter_price($price,$obj){
+
+	global $grosh_meta;
+
+	if(WC()->session){
+
+		$rentalDate = WC()->session->get('rental_date');
+
+		if(isset($rentalDate)){
+
+			$datetime1 = new DateTime($rentalDate['start']);
+			$datetime2 = new DateTime($rentalDate['expiry']);
+			$interval = date_diff($datetime1, $datetime2);
+
+		 	$base_price = ($grosh_meta['package-bundle-price']) ? $grosh_meta['package-bundle-price'] : 750;
+	 		$recurring_price = ($grosh_meta['recurring-bundle-package-price']) ? $grosh_meta['recurring-bundle-package-price'] : 5.75;
+
+	 		$post_meta = get_post_meta( $obj->id );
+			$bundles =  json_decode( $post_meta["wcpb_bundle_products"][0], true );
+
+			$firstweek = $base_price;
+
+			if($interval->days > 7){
+
+				$extra = $interval->days - 7;
+
+				$extra_total = $extra * $recurring_price;
+
+				return ($firstweek + $extra_total); 
+
+			}else{
+
+				return $firstweek;
+			
+			}
+	 	}
+	 }
+
+}
+add_filter( 'wcpb_bundle_regular_price','bundle_filter_price', 99, 2 );
 
 ?>
