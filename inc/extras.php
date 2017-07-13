@@ -207,7 +207,8 @@ function archive_product_filter($per_page = 12,$order_by = 'menu_order'){
 	$default = array( 'menu_order' => 'DESC', 'date' => 'ASC' );
 
 	if($_GET['per_page'] && is_numeric($_GET['per_page'])){
-		$wp_query->set('posts_per_page',$_GET['per_page']);
+		$perpage = ($_GET['per_page'] < 0) ? 99999999 : $_GET['per_page'];
+		$wp_query->set('posts_per_page',$perpage);
 		if($_GET['orderby'] == 'menu_order'){
 			$meta = $default;
 		}else{
