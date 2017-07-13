@@ -46,13 +46,14 @@ $order_by = ($_GET['orderby']) ? $_GET['orderby'] : 'menu_order';
     		var product = $('.list_post').attr('data-meta'),offset = $(this).attr('data-offset'),orderby = $(this).attr('data-orderby'),page = $(this).attr('data-perpage');
     		<?php if(is_search()){ 
     			$actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+    			$pos = strpos($actual_link, '?');
     		?>
     			var query = $(this).attr('data-query'); 
     			$.ajaxSetup({cache:false});
     			var content;
     			$('.fetch_post').html('<i class="fa fa-circle-o-notch fa-spin"></i> Loading Product.....');
     			if(parseInt(offset) < 2){offset = parseInt(offset)+1;}
-				$.get("<?php echo $actual_link; ?>&paged="+offset, function(data){
+				$.get("<?php echo $actual_link; echo ($pos === false) ? '?' : ''; ?>&paged="+offset, function(data){
 				    content= $(data).find('.popular-post ul.clearfix li');
 				    $('.popular-post ul.clearfix').append(content);
     				$('.fetch_post').html('Load More').attr('data-offset',parseInt(offset)+1);
@@ -61,7 +62,7 @@ $order_by = ($_GET['orderby']) ? $_GET['orderby'] : 'menu_order';
     		<?php }else{ ?>
 	    	$.ajax({
 			  type: 'POST',
-			  url: '<?php echo admin_url('admin-ajax.php'); ?>/?action=fetch_post&cat=<?php echo $cat; ?>&offset='+offset+'&orderby='+orderby+'&perpage='+page<?php if(is_search()){ ?>+'&query='+query <?php } ?>,
+			  url: '<?php echo admin_url('admin-ajax.php'); ?>/?action=fetch_post&cat=<?php echo $cat; ?>&offset='+offset+'&orderby='+orderby+'&perpage='+page,
 			  beforeSend:function(){
 			  	$('.fetch_post').html('<i class="fa fa-circle-o-notch fa-spin"></i> Loading Product.....');
 			  },
