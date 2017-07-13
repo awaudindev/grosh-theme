@@ -53,7 +53,7 @@ $order_by = ($_GET['orderby']) ? $_GET['orderby'] : 'menu_order';
     			var content;
     			$('.fetch_post').html('<i class="fa fa-circle-o-notch fa-spin"></i> Loading Product.....');
     			if(parseInt(offset) < 2){offset = parseInt(offset)+1;}
-				$.get("<?php echo $actual_link; echo ($pos == true) ? '?' : ''; ?>&paged="+offset, function(data){
+				$.get("<?php echo $actual_link; echo ($pos == true) ? '' : '?'; ?>&paged="+offset, function(data){
 				    content= $(data).find('.popular-post ul.clearfix li');
 				    $('.popular-post ul.clearfix').append(content);
     				$('.fetch_post').html('Load More').attr('data-offset',parseInt(offset)+1);
