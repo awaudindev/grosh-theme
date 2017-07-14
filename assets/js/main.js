@@ -50,7 +50,7 @@ jQuery(document).ready(function($){
 
 	$('#myCarousel').carousel({
         interval:5000,
-        pause: "false"
+        pause: null
     });
 
 	var $carousel = $('#myCarousel');
@@ -58,59 +58,69 @@ jQuery(document).ready(function($){
 		if(e.relatedTarget !== undefined){
 		    if(e.relatedTarget.dataset['type'] == 'animation'){
 		    	var ids = e.relatedTarget.id;
-		    	var cur = "mep_"+ ids;
-		    	for (var player in mejs.players) {
-		    		if(cur == player){
-						mejs.players[player].play();
-		    		}
-				}
+		    	var videoid = $(e.relatedTarget).find('video').attr('id');
+		    	var cPlayer = videojs(videoid);
+		    	cPlayer.ready(function() {
+				  cPlayer.play();
+				  setTimeout(function(){
+					  cPlayer.pause();
+					}, 4500);
+				});
+		  //   	var cur = "mep_"+ ids;
+		  //   	for (var player in mejs.players) {
+		  //   		if(cur == player){
+				// 		mejs.players[player].play();
+		  //   		}
+				// }
 		    }else{
-		    	for (var player in mejs.players) {
-		    		if(mejs.players[player].media.paused){
-		    			mejs.players[player].pause();
-		    		}
-				}
+		  //   	for (var player in mejs.players) {
+		  //   		if(mejs.players[player].media.paused){
+		  //   			mejs.players[player].pause();
+		  //   		}
+				// }
 		    }
 		}
 	});
 	var urlvideo = "";
-	var myPlayer = videojs('my-video');
+	if($('#my-video').length){
+		var myPlayer = videojs('my-video');
 
-	$('.caption').on('click', function(event){
-		$('#popupMsg').modal('show'); 
-		var product_number = $(this).data('id');
-		if(product_number){
-			var url = "http://s3.amazonaws.com/groshdigital/thumbnails/watermark/" + product_number +".mp4";
-			urlvideo = url;
-			myPlayer.src(urlvideo);
-			myPlayer.ready(function() {
-			  myPlayer.play();
-			});
-			// new MediaElementPlayer('playerpopup', {
-			//     pluginPath: 'https://cdnjs.cloudflare.com/ajax/libs/mediaelement/4.0.3/',
-			//     shimScriptAccess: 'always',
-			//     stretching: 'fill',
-			//     success: function(mediaElement) {
-			// 	    setStream(mediaElement);
+		$('.caption').on('click', function(event){
+			$('#popupMsg').modal('show'); 
+			var product_number = $(this).data('id');
+			if(product_number){
+				var url = "http://s3.amazonaws.com/groshdigital/thumbnails/watermark/" + product_number +".mp4";
+				urlvideo = url;
+				myPlayer.src(urlvideo);
+				myPlayer.ready(function() {
+				  myPlayer.play();
+				});
+				// new MediaElementPlayer('playerpopup', {
+				//     pluginPath: 'https://cdnjs.cloudflare.com/ajax/libs/mediaelement/4.0.3/',
+				//     shimScriptAccess: 'always',
+				//     stretching: 'fill',
+				//     success: function(mediaElement) {
+				// 	    setStream(mediaElement);
 
-			// 	    mediaElement.addEventListener('canplay', function(e) {
-			// 		    mejs.players['mep_0'].play();
-			// 	    }, false);
+				// 	    mediaElement.addEventListener('canplay', function(e) {
+				// 		    mejs.players['mep_0'].play();
+				// 	    }, false);
 
-			//     }
-		 //    });
+				//     }
+			 //    });
 
-		}else{
-			$('video source').attr('url','');
-		}
-	});
+			}else{
+				$('video source').attr('url','');
+			}
+		});
 
-	$('body').on('hidden.bs.modal', '#popupMsg', function () {
-		// for (var player in mejs.players) {
-		//     mejs.players[player].media.pause();
-		// }
-		myPlayer.pause();
-	});
+		$('body').on('hidden.bs.modal', '#popupMsg', function () {
+			// for (var player in mejs.players) {
+			//     mejs.players[player].media.pause();
+			// }
+			myPlayer.pause();
+		});
+	}
 
 	function setStream(url){
 		 mejs.players['mep_0'].setSrc([

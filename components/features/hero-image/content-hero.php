@@ -60,7 +60,7 @@ switch ($totp) {
                     <?php
                       if($product_type == "animation"){
                         ?>
-                        <video width="640" height="250" style="width: 100%; height: 100%; z-index: 4001;" id="player1" data-product="<?php echo $product_number; ?>" class="playerslider">
+                        <video class="video-js vjs-default-skin" controls preload="auto" width="100%" height="460" style="width: 100%; height: 100%;" id="player<?php echo $v;?>" data-product="<?php echo $product_number; ?>" class="playerslider">
                               <!-- Pseudo HTML5 -->
                               <source type="video/mp4" src="<?php echo $large_image; ?>" />
                           </video>
