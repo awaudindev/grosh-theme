@@ -192,7 +192,7 @@ jQuery(document).ready(function($){
 
 	// $(".playersingle").mediaelementplayer();
 	if($('#playerSingle').length){
-		var sPlayer = videojs('playersingle');
+		var sPlayer = videojs('playerSingle');
 		sPlayer.ready(function() {
 		  sPlayer.play();
 		});
