@@ -26,14 +26,17 @@ global $post;
                 <div class="modal-body">
                     <a data-dismiss="modal" class="close-modal"><span aria-hidden="true">&times;</span></a>
                     <div id="dvMsg">
-                    	<video width="640" height="360" id="playerpopup">
-                            
-                        </video>
+                    	<video id="my-video" class="video-js vjs-default-skin" controls preload="auto" width="100%" height="460"></video>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <style type="text/css">
+        .my-video-dimensions{
+            width: 100%!important;
+        }
+    </style>
     <?php } ?>
 </div>
 <?php wp_footer(); ?>

@@ -55,53 +55,61 @@ jQuery(document).ready(function($){
 
 	var $carousel = $('#myCarousel');
 	$carousel.bind('slide.bs.carousel', function (e) {
-	    if(e.relatedTarget.dataset['type'] == 'animation'){
-	    	var ids = e.relatedTarget.id;
-	    	var cur = "mep_"+ ids;
-	    	for (var player in mejs.players) {
-	    		if(cur == player){
-					mejs.players[player].play();
-	    		}
-			}
-	    }else{
-	    	for (var player in mejs.players) {
-	    		if(mejs.players[player].media.paused){
-	    			mejs.players[player].pause();
-	    		}
-			}
-	    }
+		if(e.relatedTarget !== undefined){
+		    if(e.relatedTarget.dataset['type'] == 'animation'){
+		    	var ids = e.relatedTarget.id;
+		    	var cur = "mep_"+ ids;
+		    	for (var player in mejs.players) {
+		    		if(cur == player){
+						mejs.players[player].play();
+		    		}
+				}
+		    }else{
+		    	for (var player in mejs.players) {
+		    		if(mejs.players[player].media.paused){
+		    			mejs.players[player].pause();
+		    		}
+				}
+		    }
+		}
 	});
 	var urlvideo = "";
+	var myPlayer = videojs('my-video');
 
 	$('.caption').on('click', function(event){
 		$('#popupMsg').modal('show'); 
 		var product_number = $(this).data('id');
-
 		if(product_number){
 			var url = "http://s3.amazonaws.com/groshdigital/thumbnails/watermark/" + product_number +".mp4";
 			urlvideo = url;
-			new MediaElementPlayer('playerpopup', {
-			    pluginPath: 'https://cdnjs.cloudflare.com/ajax/libs/mediaelement/4.0.3/',
-			    shimScriptAccess: 'always',
-			    stretching: 'fill',
-			    success: function(mediaElement) {
-				    setStream(mediaElement);
+			myPlayer.src(urlvideo);
+			myPlayer.ready(function() {
+			  myPlayer.play();
+			});
+			// new MediaElementPlayer('playerpopup', {
+			//     pluginPath: 'https://cdnjs.cloudflare.com/ajax/libs/mediaelement/4.0.3/',
+			//     shimScriptAccess: 'always',
+			//     stretching: 'fill',
+			//     success: function(mediaElement) {
+			// 	    setStream(mediaElement);
 
-				    mediaElement.addEventListener('canplay', function(e) {
-					    mejs.players['mep_0'].play();
-				    }, false);
+			// 	    mediaElement.addEventListener('canplay', function(e) {
+			// 		    mejs.players['mep_0'].play();
+			// 	    }, false);
 
-			    }
-		    });
+			//     }
+		 //    });
+
 		}else{
 			$('video source').attr('url','');
 		}
 	});
 
 	$('body').on('hidden.bs.modal', '#popupMsg', function () {
-		for (var player in mejs.players) {
-		    mejs.players[player].media.pause();
-		}
+		// for (var player in mejs.players) {
+		//     mejs.players[player].media.pause();
+		// }
+		myPlayer.pause();
 	});
 
 	function setStream(url){
@@ -145,32 +153,32 @@ jQuery(document).ready(function($){
 			columnWidth: '.post-box'
 		});
 	});
-	if($('video source').attr('url')){
-		$('video').mediaelementplayer();
-	}
+	// if($('video source').attr('url')){
+	// 	$('video').mediaelementplayer();
+	// }
 
-	$(".playerslider").mediaelementplayer({
+	// $(".playerslider").mediaelementplayer({
 
-		features: ['playpause','current','progress','duration','volume'] ,
+	// 	features: ['playpause','current','progress','duration','volume'] ,
 
-	    success: function(media, node, player) {
+	//     success: function(media, node, player) {
 
-	        var events = ['play' , 'ended'];
+	//         var events = ['play' , 'ended'];
 
-	        for (var i=0, il=events.length; i<il; i++) {
+	//         for (var i=0, il=events.length; i<il; i++) {
 
 
-	            media.addEventListener(events[0], function(e) {
-	                $('#myCarousel').carousel('pause');
-	            });
+	//             media.addEventListener(events[0], function(e) {
+	//                 $('#myCarousel').carousel('pause');
+	//             });
 
-	            media.addEventListener(events[1], function(e) {
-	                $('#myCarousel').carousel('cycle');
-	                $('.mejs-poster').show();
-	            });
-	        }
-	    }
-	});
+	//             media.addEventListener(events[1], function(e) {
+	//                 $('#myCarousel').carousel('cycle');
+	//                 $('.mejs-poster').show();
+	//             });
+	//         }
+	//     }
+	// });
 
-	$(".playersingle").mediaelementplayer();
+	// $(".playersingle").mediaelementplayer();
 });
