@@ -191,4 +191,10 @@ jQuery(document).ready(function($){
 	// });
 
 	// $(".playersingle").mediaelementplayer();
+	if($('#playerSingle').length){
+		var sPlayer = videojs('playersingle');
+		sPlayer.ready(function() {
+		  sPlayer.play();
+		});
+	}
 });
