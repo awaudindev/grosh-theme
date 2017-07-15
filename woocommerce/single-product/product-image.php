@@ -25,6 +25,59 @@ $post_meta = get_post_meta( $post->ID );
 $type = $_POST['filetype'];
 $bundles =  json_decode( $post_meta["wcpb_bundle_products"][0], true );
 ?>
+<?php if( is_array( $bundles ) ) { ?>
+	<div class="col-md-12">
+		<h3 class="product_title">Package Includes:</h3>
+		<ul class="clearfix products">
+		<?php 
+			foreach ( $bundles as $key => $value ) {
+				$bundle = new WC_Product( $key );
+
+				$img_oid = $bundle->get_image_id(); 
+
+		        $image = "";
+
+		        $product_number = get_post_meta( $key, 'product_number', true );
+		        $product_type = get_post_meta( $key, 'file_type', true );
+		        
+		        $large_image = "";
+
+		        $large_image = getProductImage($product_number, true, false);
+
+		        $class = "";
+		        $status_img = "";
+		        if($product_type == "animation"){
+		          $class = "block";
+		          $status_img = "";
+		        }else{
+		          $class = "none";
+		          $status_img = "p_bundles_item";
+		        }
+		        $title = get_the_title($key);
+
+		?>
+			<li class="col-md-4 col-sm-6 col-xs-12" style="cursor: pointer;">
+				<div class="thumb-post">
+		        	<div class="category-post" id="icon-video" data-id="<?php echo $product_number; ?>" style="display:<?php echo $class;?>">
+		        		<i class="fa fa-video-camera" aria-hidden="true"></i>
+		        	</div>
+		          	<div class="caption" data-id="<?php echo $product_number; ?>" style="display:<?php echo $class; ?>">
+		          		<span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span>
+		          	</div>
+		          	<a href="#" class="<?php echo $status_img; ?>" data-id="<?php echo $product_number; ?>">
+		          		<img width="350" height="150" class="img-responsive" src="<?php echo $large_image; ?>" alt="<?php echo $title; ?>" title="<?php echo $title; ?>"/>
+		          	</a>
+		            <h5 class="title-product pad20 text-center">
+		            	<a href="#"><?php echo $title; ?></a>
+		            </h5>
+		         </div>
+			</li>
+		<?php
+			}
+		?>
+		</ul>
+	</div>
+<?php }else{ ?>
 <div class="col-md-12">
 	<div class="productThumb-grosh marBot60">
 		<?php
@@ -76,3 +129,4 @@ $bundles =  json_decode( $post_meta["wcpb_bundle_products"][0], true );
 		?>
 	</div>
 </div>
+<?php } ?>

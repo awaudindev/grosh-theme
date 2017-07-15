@@ -81,6 +81,19 @@ jQuery(document).ready(function($){
 		    }
 		}
 	});
+	$(".p_bundles_item").off().on("click", function(e){
+		$('#p_preview_b').modal('show');
+		var product_number = $(this).data('id');
+		if(product_number){
+			var url = "http://s3.amazonaws.com/groshdigital/watermark/" + product_number +".jpg";
+			$('#p_preview_b #img_p_bun').attr('src',url);
+		}
+	});
+
+	$('#p_preview_b').on("hidden.bs.modal", function () {
+		$('#p_preview_b #img_p_bun').attr('src','http://project.wedangsusu.com/grosh/wp-content/themes/grosh/assets/images/Spinner.gif');
+	});
+
 	var urlvideo = "";
 	if($('#my-video').length){
 		var myPlayer = videojs('my-video');
@@ -89,7 +102,7 @@ jQuery(document).ready(function($){
 			$('#popupMsg').modal('show'); 
 			var product_number = $(this).data('id');
 			if(product_number){
-				var url = "http://s3.amazonaws.com/groshdigital/thumbnails/watermark/" + product_number +".mp4";
+				var url = "http://s3.amazonaws.com/groshdigital/watermark/" + product_number +".mp4";
 				urlvideo = url;
 				myPlayer.src(urlvideo);
 				myPlayer.ready(function() {

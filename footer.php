@@ -32,6 +32,18 @@ global $post;
             </div>
         </div>
     </div>
+    <div class="modal" id="p_preview_b" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog normal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <a data-dismiss="modal" class="close-modal"><span aria-hidden="true">&times;</span></a>
+                    <div id="c_preview" style="text-align:center;">
+                        <img id="img_p_bun" src="http://project.wedangsusu.com/grosh/wp-content/themes/grosh/assets/images/Spinner.gif">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <style type="text/css">
         .my-video-dimensions{
             width: 100%!important;
