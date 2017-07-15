@@ -56,6 +56,7 @@ $file_type = $_REQUEST['filetype'];
  	if($bundles){
  		$base_price = $bundle_price;
  		$recurring_price = $recurring_package;
+		update_post_meta( $post->ID, '_wcpb_product_sale_price', '' );
  	}else{
  		$base_price = ($post_meta['file_type'][0] == 'animation' && empty($file_type) || $file_type == 'animation') ? $base_price_motion : $base_price_image;
 		$recurring_price = ($post_meta['file_type'][0] == 'animation' && empty($file_type) || $file_type == 'animation') ? $recurring_price_motion : $recurring_price_image;	
@@ -300,7 +301,7 @@ $file_type = $_REQUEST['filetype'];
                 <?php } ?>
                 <div class="clearfix">
                   <div class="col-md-12">
-                  	<a href="javascript:void(0);" onclick="$('.rental-rate').attr('action','<?php echo get_permalink($post->ID).'?rent='.$post->ID.'&filetype='.$type; ?>').submit();" class="btn btn-default btn-lg text-uppercase">Add to Cart</a>
+                  	<a href="javascript:void(0);" onclick="jQuery('.rental-rate').attr('action','<?php echo get_permalink($post->ID).'?rent='.$post->ID.'&filetype='.$type; ?>').submit();" class="btn btn-default btn-lg text-uppercase">Add to Cart</a>
                   </div>  
                 </div>
                 </form>

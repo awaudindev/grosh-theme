@@ -90,16 +90,14 @@ if ( sizeof( $checkout->checkout_fields ) > 0 ) : ?>
   </div>
 </div>
 </form>
-
-<?php do_action( 'woocommerce_after_checkout_form', $checkout ); 
-add_action('wp_footer',function(){ ?> 
 <style type="text/css">
 	.nav-tabs{margin-left:0;}
 	.my-new-field .form-row label.checkbox{position: relative;padding-left:40px;font-weight: normal;}
 	.my-new-field .form-row label.checkbox a{font-weight: bold;color:#086FB7;}
 	.my-new-field .form-row .input-checkbox{left: 11px;top:50%;transform: translateY(-50%);margin:0!important;}
 	#order_review .place-order{opacity: 0;height: 0;overflow: hidden;padding: 0!important;margin-bottom: 15px;}
-	.wc_payment_method.payment_method_purchase_order{display: none;}
+	<?php if($checkout->get_value( 'billing_user_gender' ) != 'collage' && $checkout->get_value( 'billing_user_gender' ) != 'schools') { ?>.wc_payment_method.payment_method_purchase_order{display: none;} 
+	<?php } ?>
 	.login-wrapper{
 		/*top:-50px;*/
 		position: relative;
@@ -121,6 +119,8 @@ add_action('wp_footer',function(){ ?>
 		.nested img{display: none;}
 	}
 </style>
+<?php do_action( 'woocommerce_after_checkout_form', $checkout ); 
+add_action('wp_footer',function(){ ?> 
 <script type="text/javascript">
 	  jQuery(function($){
 		$(".disabled").click(function (e) {
