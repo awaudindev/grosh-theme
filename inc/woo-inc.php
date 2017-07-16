@@ -447,4 +447,85 @@ function bundle_filter_price($price,$obj){
 }
 add_filter( 'wcpb_bundle_regular_price','bundle_filter_price', 99, 2 );
 
+add_filter('woocommerce_admin_order_actions','change_rent_status',10,2);
+function change_rent_status($actions, $the_order){
+  
+  global $post;
+
+  $status = get_post_meta($post->ID,'status');
+
+  if ( $the_order->has_status( array( 'completed') ) ) {
+    // echo '<pre>';print_r(get_post_meta($post->ID,'status'));echo '</pre>';
+    if($status[0] != 'expired'){
+	    $actions['start'] = array(
+	      'url'       => wp_nonce_url( admin_url( 'admin-ajax.php?action=rent_status&status=active&order_id=' . $post->ID ), 'woocommerce-mark-order-status' ),
+	      'name'      => __( 'Start', 'woocommerce' ),
+	      'action'    => "start",
+	    );
+	}else if($status[0] == 'expired'){
+		$actions['expired'] = array(
+	      'url'       => wp_nonce_url( admin_url( 'admin-ajax.php?action=rent_status&status=expired&order_id=' . $post->ID ), 'woocommerce-mark-order-status' ),
+	      'name'      => __( 'Expired', 'woocommerce' ),
+	      'action'    => "expired",
+	    );
+	}
+  }
+
+  return $actions;
+
+}
+add_action( 'wp_ajax_rent_status', 'rent_status' );
+add_action( 'wp_ajax_nopriv_rent_status', 'rent_status' );
+function rent_status() {
+  if ( current_user_can( 'edit_shop_orders' ) && check_admin_referer( 'woocommerce-mark-order-status' ) ) {
+    $status = sanitize_text_field( $_GET['status'] );
+
+    update_post_meta( $_GET['order_id'], 'status', $status);
+  }
+
+  wp_safe_redirect( wp_get_referer() ? wp_get_referer() : admin_url( 'edit.php?post_type=shop_order' ) );
+  exit;
+}
+
+add_action('admin_head', 'my_custom_fonts');
+
+function my_custom_fonts() {
+  echo '<style>
+    .order_actions .start,.order_actions .expired{
+      display: block;
+      text-indent: -9999px;
+      position: relative;
+      padding: 0!important;
+      height: 2em!important;
+      width: 2em;
+    }
+    .order_actions .start::after,
+    .order_actions .expired::after{
+      font-family: Dashicons;
+      text-indent: 0;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      left: 0;
+      line-height: 1.85;
+      margin: 0;
+      text-align: center;
+      font-weight: 400;
+      top: 0;
+      speak: none;
+      font-variant: normal;
+      text-transform: none;
+      -webkit-font-smoothing: antialiased;
+    }
+    .order_actions .start::after{
+    	content: "\f522";
+    	color:#43e045;
+    }
+    .order_actions .expired::after{
+    	content: "\f534";
+    	color:#ff0000;
+    }
+  </style>';
+}
+
 ?>
