@@ -67,7 +67,7 @@ function main_product_category( $atts, $content = ""){
 	 
 	}else{
 
-		$per_page = ($_GET['per_page']) ? $_GET['per_page'] : get_query_var('posts_per_page');
+		$per_page = ($_GET['per_page']) ? intval($_GET['per_page']) : intval(get_query_var('posts_per_page'));
 		$order_by = ($_GET['orderby']) ? $_GET['orderby'] : 'menu_order';
 
 		$args = array(
@@ -82,8 +82,9 @@ function main_product_category( $atts, $content = ""){
 
 		$query = new WP_Query($args);
 
+		$i = 0;
+
 		if ( $query->have_posts() ) :
-			$i = 0;
 
 			$result .= archive_product_filter($per_page,$order_by);
 
@@ -98,8 +99,8 @@ function main_product_category( $atts, $content = ""){
 			wp_reset_postdata();
 			$result .= '</ul></div>';
 		endif;
-
-		if($i > $per_page-1 || $i > $per_page){
+		
+		if(($i > ($per_page-1) || $i > $per_page) && $per_page != -1){
 			add_action('wp_footer',function() use ($order_by,$per_page){get_post_ajax($order_by,$per_page);},10);
 		}
 	}
