@@ -2675,3 +2675,10 @@ MEDIA QUERY
 .showRegistration span{
   float: right;
 }
+.video-js {
+    position: relative !important;
+    width: 100% !important;
+}
+.video-js .vjs-tech{
+  height: 350px !important;
+}
