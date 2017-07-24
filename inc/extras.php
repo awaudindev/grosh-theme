@@ -811,3 +811,15 @@ function wh_phoneValidateCheckoutFields() {
     if (!$_POST['checkout_terms'])
     	wc_add_notice(__('Please agree to the terms & condition.'), 'error');
 }
+
+function wpb_woo_my_account_order() {
+	$myorder = array(
+		'dashboard' => __( 'Dashboard', 'woocommerce' ),
+	 	'edit-account' => __( 'Change My Details', 'woocommerce' ),
+		'orders' => __( 'Orders', 'woocommerce' ),
+	 	'edit-address' => __( 'Billing Address', 'woocommerce' ),
+	 	'customer-logout' => __( 'Logout', 'woocommerce' ),
+	 );
+	 return $myorder;
+}
+add_filter ( 'woocommerce_account_menu_items', 'wpb_woo_my_account_order' );
