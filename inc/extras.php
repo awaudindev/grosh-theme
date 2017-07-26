@@ -265,7 +265,7 @@ function archive_product_filter($per_page = 12,$order_by = 'menu_order'){
 					<div class="filter-sort-box pull-left">
 						<form class="woocommerce-items-perpage" method="get">
 							<label>Show: </label>
-							<div class="selector">
+							<div class="selector wrap-selector">
 							<select name="per_page" class="per_page selectpicker" onchange="this.form.submit()">
 									'.$per_page_data.'
 							</select>

@@ -507,6 +507,7 @@ abbr, acronym {
 mark, ins {
   background: #fff9c0;
   text-decoration: none;
+  font-weight: 500;
 }
 
 big {
@@ -1806,7 +1807,6 @@ border-top-color: transparent;
 }
 .filter-sort .selector{
   float:left; 
-  border:1px solid #ddd; 
   background:#fff;
 }
 .filter-sort .wrap-selector{
@@ -2279,8 +2279,7 @@ MEDIA QUERY
     margin-right:15px;
   }
   .filter-sort .selector{
-    float:left; 
-    border:1px solid #ddd; 
+    float:left;  
     background:#fff;
   }
   .filter-sort .wrap-selector{
@@ -2583,6 +2582,9 @@ MEDIA QUERY
   }
 }
 @media(max-width: 375px){
+  .filter-sort{
+    width: 100%;
+  }
   .carousel .item{
     height: 200px;
   }
@@ -2628,8 +2630,7 @@ MEDIA QUERY
     left: 40px;
   }
   .filter-sort-box{
-    width: 100%;
-    float: none !important;
+    width: 46%;
     margin-bottom: 20px;
   }
   .filter-sort .selector{
@@ -2681,4 +2682,7 @@ MEDIA QUERY
 }
 .video-js .vjs-tech{
   height: 350px !important;
+}
+.popular-post .term-description{
+  padding-bottom: 50px;
 }
