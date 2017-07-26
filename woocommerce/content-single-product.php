@@ -137,10 +137,10 @@ $file_type = $_REQUEST['filetype'];
 
 		$diff = date_diff($datetime1, $datetime2);
 
-		if($diff->days < 7){
-			$temp = new DateTime($_POST['start_date']);
-			$datetime2 =  $temp->add(new DateInterval('P7D'));
-		}
+		// if($diff->days < 7){
+		// 	$temp = new DateTime($_POST['start_date']);
+		// 	$datetime2 =  $temp->add(new DateInterval('P7D'));
+		// }
 
 		$newDate1 = $datetime1->format('m/d/Y');
 		$newDate2 = $datetime2->format('m/d/Y');

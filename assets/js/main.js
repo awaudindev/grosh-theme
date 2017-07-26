@@ -17,7 +17,7 @@ jQuery(document).ready(function($){
 	          to[0].datepicker('setStartDate', getDate( this ));
 	        }),
 	      to = $( "#datepicker2" ).datepicker({
-	        minDate: "+1w",
+	        // minDate: "+1w",
 	        changeMonth: true,
 	        autoclose: true,
 	        startDate: document.getElementById("datepicker1").value
