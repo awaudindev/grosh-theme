@@ -31,6 +31,7 @@ $day = ($periodRent > 1) ? 'days' : 'day';
 <table class="shop_table order_details">
 	<thead>
 		<tr>
+			<th class="product-img"><?php _e( 'Image', 'woocommerce' ); ?></th>
 			<th class="product-name"><?php _e( 'Product', 'woocommerce' ); ?></th>
 			<th class="product-total"><?php _e( 'Total', 'woocommerce' ); ?></th>
 		</tr>
@@ -57,6 +58,7 @@ $day = ($periodRent > 1) ? 'days' : 'day';
 			foreach ( $order->get_order_item_totals() as $key => $total ) {
 				?>
 				<tr>
+					<td>&nbsp;</td>
 					<th scope="row"><?php  
 					if($total['label'] == 'Total:'){
 						echo str_replace(':',' rent for '.$periodRent[0].' '.$day.':',$total['label']);

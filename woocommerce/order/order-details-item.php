@@ -25,13 +25,29 @@ if ( ! apply_filters( 'woocommerce_order_item_visible', true, $item ) ) {
 }
 ?>
 <tr class="<?php echo esc_attr( apply_filters( 'woocommerce_order_item_class', 'order_item', $item, $order ) ); ?>">
+	<td class="product-img" style="width:30%">
+		<?php
+			$ids = $product->get_id();
+			$bundles =  json_decode( get_post_meta( $ids, "wcpb_bundle_products", true ), true );
+			if( is_array( $bundles ) ) {
+				$total_bundle = (is_array( $bundles )) ? count($bundles) : 1;
+      			$first_key = key($bundles);
+      			$product_number = get_post_meta( $first_key, 'product_number', true );
+			}else{
+				$product_number = get_post_meta( $ids, 'product_number', true );
+			}
+			$large_image = getProductImage($product_number, false, false);
+			echo '<img class="img-responsive" src="'.$large_image.'" alt="'.$item['name'].'" title="'.$item['name'].'"/>';
+
+		?>
+	</td>
 	<td class="product-name">
 		<?php
 			$is_visible        = $product && $product->is_visible();
 			$product_permalink = apply_filters( 'woocommerce_order_item_permalink', $is_visible ? $product->get_permalink( $item ) : '', $item, $order );
 
 			echo apply_filters( 'woocommerce_order_item_name', $product_permalink ? sprintf( '<a href="%s">%s</a>', $product_permalink, $item['name'] ) : $item['name'], $item, $is_visible );
-			echo apply_filters( 'woocommerce_order_item_quantity_html', ' <strong class="product-quantity">' . sprintf( '&times; %s', $item['qty'] ) . '</strong>', $item );
+			//echo apply_filters( 'woocommerce_order_item_quantity_html', ' <strong class="product-quantity">' . sprintf( '&times; %s', $item['qty'] ) . '</strong>', $item );
 
 			do_action( 'woocommerce_order_item_meta_start', $item_id, $item, $order );
 
