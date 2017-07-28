@@ -42,6 +42,7 @@ switch ($totp) {
                   $class = "";
                 $product_number = get_post_meta( $item, 'product_number', true );
                 $product_type = get_post_meta( $item, 'file_type', true );
+                $quote = get_post_meta( $item, 'quote_homepage', true );
                 $large_image = "";
                 $style = "";
                 $named = "";
@@ -57,25 +58,24 @@ switch ($totp) {
                 }
                 ?>
                 <div id="<?php echo $named; ?>" class="item <?php echo $class; ?>" data-type="<?php echo $product_type; ?>" style="background-color:#000;">
-                    <?php
-                      if($product_type == "animation"){
-                        ?>
-                        <video class="video-js vjs-default-skin" controls preload="auto" width="100%" height="460" style="width: 100%; height: 100%;" id="player<?php echo $v;?>" data-product="<?php echo $product_number; ?>" class="playerslider">
-                              <!-- Pseudo HTML5 -->
-                              <source type="video/mp4" src="<?php echo $large_image; ?>" />
-                          </video>
-                        <?php
-                        $v++;
-                      }else{
-                    ?>
-                    <img src="<?php echo $large_image; ?>" title="<?php echo get_the_title( $item ); ?>" alt="<?php echo get_the_title( $item ); ?>" style="<?php echo $style; ?>" class="img-responsive" />
-                    <div class="carousel-caption">
-                        <h2 class="title-product font700 padBot20"><a href="<?php echo get_permalink($item); ?>"><?php echo get_the_title( $item ); ?></a></h2>
-                        <div class="clearfix meta-product">
-                            <div class="size-product"><?php echo $product_number; ?></div>
-                        </div>
-                    </div>
-                    <?php } ?>
+                    <a href="<?php echo get_permalink($item); ?>">
+                      <?php
+                        if($product_type == "animation"){
+                          ?>
+                          <video class="video-js vjs-default-skin" controls preload="auto" width="100%" height="460" style="width: 100%; height: 100%;" id="player<?php echo $v;?>" data-product="<?php echo $product_number; ?>" class="playerslider">
+                                <!-- Pseudo HTML5 -->
+                                <source type="video/mp4" src="<?php echo $large_image; ?>" />
+                            </video>
+                          <?php
+                          $v++;
+                        }else{
+                      ?>
+                      <img src="<?php echo $large_image; ?>" title="<?php echo get_the_title( $item ); ?>" alt="<?php echo get_the_title( $item ); ?>" style="<?php echo $style; ?>" class="img-responsive" />
+                      <div class="carousel-caption">
+                        <?php echo $quote; ?>
+                      </div>
+                      <?php } ?>
+                    </a>
                 </div>
                 <?php
                 $i++;
@@ -83,7 +83,7 @@ switch ($totp) {
             }
           ?>
         </div>
-      	<?php get_product_search_form(); ?>  
+      	<?php //get_product_search_form(); ?>  
       	<a class="left carousel-control" href="#myCarousel" data-slide="prev">
         	<i class="glyphicon glyphicon-chevron-left"></i>
       	</a>

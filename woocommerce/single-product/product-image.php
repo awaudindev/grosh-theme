@@ -84,6 +84,7 @@ $bundles =  json_decode( $post_meta["wcpb_bundle_products"][0], true );
 		$title = $product->name;
 		$product_number = get_post_meta( $product->id, 'product_number', true );
 		$product_type = get_post_meta( $product->id, 'file_type', true );
+		$groshlink = get_post_meta( $product->id, 'grosh_link', true );
 		$large_image = "";
 		$style = "";
 		$check_animation = true;
@@ -127,6 +128,9 @@ $bundles =  json_decode( $post_meta["wcpb_bundle_products"][0], true );
 
 		//do_action( 'woocommerce_product_thumbnails' );
 		?>
+		<div style="float: right;font-size: 20px;padding: 10px 0;font-weight: 500;">
+			<a href="<?php echo $groshlink; ?>">Interested in a painted backdrop?</a>
+		</div>
 	</div>
 </div>
 <?php } ?>

@@ -1166,7 +1166,7 @@ CAROUSEL
 .carousel-caption {
   z-index: 10;
   text-align: left;
-  bottom: 100px;
+  top: 50px;
   padding: 0;
   text-shadow: 3px 4px 5px rgba(0,0,0,.75);
 }
@@ -2681,7 +2681,7 @@ MEDIA QUERY
     width: 100% !important;
 }
 .video-js .vjs-tech{
-  height: 350px !important;
+  /*height: 350px !important;*/
 }
 .popular-post .term-description{
   padding-bottom: 50px;

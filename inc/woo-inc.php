@@ -46,6 +46,24 @@ function woo_add_custom_general_fields() {
 
 	);
 
+	woocommerce_wp_text_input(
+
+		array(
+
+		'id' => 'grosh_link',
+
+		'label' => __( 'URL of Product on Grosh.com:', 'woocommerce' ),
+
+		'placeholder' => 'URL of Product on Grosh.com',
+
+		'desc_tip' => 'true',
+
+		'description' => __( 'URL of Product on Grosh.com', 'woocommerce' )
+
+		)
+
+	);
+
 
 
 	woocommerce_wp_select( 
@@ -70,6 +88,14 @@ function woo_add_custom_general_fields() {
 
 	);
 
+	wp_nonce_field( plugin_basename( __FILE__ ), 'quote_noncename' ); 
+    $field_value = get_post_meta( $product->id, 'quote_homepage', true );
+    
+    echo '<p class="form-field quote_homepage_field ">';
+    	echo '<label for="quote_homepage">Quote Homepage</label>';
+    	wp_editor( $field_value, 'quote_homepage' );
+    echo '</p>';
+
 }
 
 function woo_add_custom_general_fields_save( $post_id ){
@@ -77,18 +103,25 @@ function woo_add_custom_general_fields_save( $post_id ){
 	// Textarea
 
 	$woocommerce_number = $_POST['product_number'];
-
 	$woocommerce_type = $_POST['file_type'];
+	$woocommerce_groshlink = $_POST['grosh_link'];
+	$woocommerce_quote = $_POST['quote_homepage'];
 
 	if( !empty( $woocommerce_number ) )
 
 	update_post_meta( $post_id, 'product_number', esc_html( $woocommerce_number ) );
 
+	if( !empty( $woocommerce_groshlink ) )
 
+	update_post_meta( $post_id, 'grosh_link', esc_html( $woocommerce_groshlink ) );
 
 	if( !empty( $woocommerce_type ) )
 
 	update_post_meta( $post_id, 'file_type', esc_html( $woocommerce_type ) );
+
+	if( !empty( $woocommerce_quote ) )
+
+	update_post_meta( $post_id, 'quote_homepage',  $woocommerce_quote  );
 
 }
 
