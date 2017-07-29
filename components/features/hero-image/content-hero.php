@@ -58,24 +58,29 @@ switch ($totp) {
                 }
                 ?>
                 <div id="<?php echo $named; ?>" class="item <?php echo $class; ?>" data-type="<?php echo $product_type; ?>" style="background-color:#000;">
-                    <a href="<?php echo get_permalink($item); ?>">
+                    
                       <?php
                         if($product_type == "animation"){
                           ?>
-                          <video class="video-js vjs-default-skin" controls preload="auto" width="100%" height="460" style="width: 100%; height: 100%;" id="player<?php echo $v;?>" data-product="<?php echo $product_number; ?>" class="playerslider">
-                                <!-- Pseudo HTML5 -->
-                                <source type="video/mp4" src="<?php echo $large_image; ?>" />
-                            </video>
+                          <video class="video-js vjs-default-skin" controls preload="auto" width="60%" height="500" style="width: 100%; height: 100%;" id="player<?php echo $v;?>" data-product="<?php echo $product_number; ?>" class="playerslider">
+                              <!-- Pseudo HTML5 -->
+                              <source type="video/mp4" src="<?php echo $large_image; ?>" />
+                          </video>
+                          <div style="color:#fff;height: 80%;width: 30.8%;position: absolute;top: 0;right: 60px;margin: 45px 0 20px 0;">
+                             <?php echo $quote; ?>
+                          </div>
                           <?php
                           $v++;
                         }else{
                       ?>
-                      <img src="<?php echo $large_image; ?>" title="<?php echo get_the_title( $item ); ?>" alt="<?php echo get_the_title( $item ); ?>" style="<?php echo $style; ?>" class="img-responsive" />
-                      <div class="carousel-caption">
-                        <?php echo $quote; ?>
-                      </div>
+                      <a href="<?php echo get_permalink($item); ?>">
+                        <img src="<?php echo $large_image; ?>" title="<?php echo get_the_title( $item ); ?>" alt="<?php echo get_the_title( $item ); ?>" style="<?php echo $style; ?>" class="img-responsive" />
+                        <div class="carousel-caption">
+                          <?php echo $quote; ?>
+                        </div>
+                      </a>
                       <?php } ?>
-                    </a>
+                    
                 </div>
                 <?php
                 $i++;

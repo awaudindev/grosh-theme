@@ -2678,7 +2678,7 @@ MEDIA QUERY
 }
 .video-js {
     position: relative !important;
-    width: 100% !important;
+    width: 100%;
 }
 .video-js .vjs-tech{
   /*height: 350px !important;*/
