@@ -251,20 +251,6 @@
         'subsection' => true,
         'fields'     => array(
             array(
-                'id'       => 'feature-product-home',
-                'type'     => 'select',
-                'multi'    => true,
-                'title'    => __( 'Select Product', 'redux-framework-demo' ),
-                'desc'     => __( 'Product feature on homepage', 'redux-framework-demo' ),
-                'data'  => 'posts',
-                'args'  => array(
-                    'post_type'      => 'product',
-                    'posts_per_page' => -1,
-                    'orderby'        => 'title',
-                    'order'          => 'ASC',
-                )
-            ),
-            array(
                 'id'       => 'slider-homepage-select',
                 'type'     => 'select',
                 'multi'    => true,
@@ -279,6 +265,27 @@
                 )
             ),
             array(
+                'id'       => 'title-step',
+                'type'     => 'text',
+                'title'    => __('Text Step', 'redux-framework-demo'),
+                'subtitle' => __('', 'redux-framework-demo'),
+                'desc'     => __('Change text for step how it works', 'redux-framework-demo'),
+                'validate' => '',
+                'msg'      => '',
+                'default'  => 'How it works' 
+            ),
+            array(
+                'id'          => 'show-step',
+                'type'        => 'slides',
+                'title'       => __('Show Step', 'redux-framework-demo'),
+                'subtitle'    => __('You can change and updated Step How it Works', 'redux-framework-demo'),
+                'placeholder' => array(
+                    'title'           => __('Title', 'redux-framework-demo'),
+                    'description'     => __('Description', 'redux-framework-demo'),
+                    'url'             => __('URL', 'redux-framework-demo'),
+                ),
+            ),
+            array(
                 'id'          => 'show-slides',
                 'type'        => 'slides',
                 'title'       => __('Show Options', 'redux-framework-demo'),
@@ -288,6 +295,30 @@
                     'description'     => __('Description', 'redux-framework-demo'),
                     'url'             => __('URL', 'redux-framework-demo'),
                 ),
+            ),
+            array(
+                'id'       => 'title-popular-scenes',
+                'type'     => 'text',
+                'title'    => __('Text Popular Scenes', 'redux-framework-demo'),
+                'subtitle' => __('', 'redux-framework-demo'),
+                'desc'     => __('Change text for Popular Scene', 'redux-framework-demo'),
+                'validate' => '',
+                'msg'      => '',
+                'default'  => 'Popular Scenes' 
+            ),
+            array(
+                'id'       => 'feature-product-home',
+                'type'     => 'select',
+                'multi'    => true,
+                'title'    => __( 'Select Product', 'redux-framework-demo' ),
+                'desc'     => __( 'Product feature on homepage', 'redux-framework-demo' ),
+                'data'  => 'posts',
+                'args'  => array(
+                    'post_type'      => 'product',
+                    'posts_per_page' => -1,
+                    'orderby'        => 'title',
+                    'order'          => 'ASC',
+                )
             )
         )
     ) );

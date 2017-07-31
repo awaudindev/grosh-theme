@@ -25,7 +25,7 @@
 <div class="popular-post">
   <div class="container">
     <div class="row">
-      <h3 class="title-section text-center font700 padTop60 padBot60">Popular Scenes</h3>
+      <h3 class="title-section text-center font700 padTop60 padBot60"><?php echo $grosh_meta['title-popular-scenes']; ?></h3>
       <ul class="clearfix">
         <?php
         if(count($grosh_meta['feature-product-home'])){

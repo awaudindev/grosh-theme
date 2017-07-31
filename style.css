@@ -783,7 +783,8 @@ a {
   color: #222;
 }
 a:visited {
-  color: #086fb8;
+  color: #222;
+  background-color: transparent;
 }
 a:hover, a:focus, a:active {
   color: #086fb8;
@@ -1117,6 +1118,55 @@ ul.loginForm,
 /*----------------------
 CAROUSEL
 ------------------------*/
+.playerslider{
+  -webkit-box-shadow: 1px 1px 12px 0px rgba(50, 50, 50, 0.33);
+  -moz-box-shadow:1px 1px 12px 0px rgba(50, 50, 50, 0.33);
+  box-shadow:1px 1px 12px 0px rgba(50, 50, 50, 0.33);
+}
+.video-slide{
+  margin-top: 90px; 
+  margin-left: 110px;
+}
+.quote-slide{
+  margin-top: 130px;
+  color: #fff;
+}
+.quote-slide h2{
+  font-size: 24px;
+}
+.quote-slide blockquote{
+  border-left:0;
+  padding: 20px;
+  font-size: 14px;
+  background-color:#9dd0f2;
+  border-radius:5px;
+  margin:30px 0;
+  position: relative;
+}
+.quote-slide blockquote em{
+  line-height: 24px;
+}
+.quote-slide blockquote:before, 
+.quote-slide q:before{
+  content: " “ ";
+  font-size: 70px;
+  position: absolute;
+  right: -10px;
+  background: #086fb8;
+  color: #fff;
+  width: 44px;
+  height: 44px;
+  border-radius: 100%;
+  text-align: center;
+  bottom: -10px;
+  line-height: 78px;
+  border: 2px solid #fff;
+  font-family: 'Arial';
+  -webkit-box-shadow: 0px 0px 12px -2px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 12px -2px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 12px -2px rgba(0,0,0,0.75);
+}
+
 .carousel {
   
 }
@@ -1599,8 +1649,14 @@ SITE FOOTER
 .widget li a{
   color: #222;
 }
+.widget ul > li{
+
+  line-height: 36px;
+}
 .site-footer .widget li{
   margin-bottom: 10px;
+  line-height: inherit;
+
 }
 .site-footer .widget li a:hover{
    color: #086fb8;
@@ -2039,13 +2095,11 @@ border-top-color: transparent;
 .panel-green {
     border-color: #5cb85c;
 }
-
 .panel-green .panel-heading {
     border-color: #5cb85c;
     color: #fff;
     background-color: #5cb85c;
 }
-
 .panel-green a {
     color: #5cb85c;
 }
@@ -2088,6 +2142,60 @@ border-top-color: transparent;
 
 .panel-yellow a:hover {
     color: #df8a13;
+}
+.panel-default{
+  background-color:transparent;
+  border:0;
+  border-bottom: 1px solid #ccc;
+}
+.panel-default:last-child{
+  border-bottom: 0;
+}
+.panel-default > .panel-heading + .panel-collapse > .panel-body{
+  border:0;
+}
+.panel-group .panel + .panel{
+  margin-top: 0;
+}
+.panel-default > .panel-heading{
+  background-color: transparent;
+  padding-left: 0;
+}
+.panel-group .panel{
+  border-radius: 0;
+  box-shadow: none;
+}
+.page-template-faq .panel-group .glyphicon{
+  float: right;
+  color: #cae5f7;
+}
+.page-template-faq .panel-title{
+  font-size: 14px;
+}
+.page-template-faq .panel-body{
+  padding-left: 0;
+}
+.page-template-faq .nav-tabs{
+  margin-left: 0;
+}
+.page-template-faq .nav-tabs > li{
+  float: none;
+  display: inline-block;
+}
+
+.page-template-faq .nav-tabs > li > a:hover {
+  background-color: transparent;
+  border-color: transparent;
+}
+.page-template-faq .nav-tabs > li.active > a, 
+.page-template-faq .nav-tabs > li.active > a:hover, 
+.page-template-faq .nav-tabs > li.active > a:focus{
+  background-color: transparent;
+  border-color: #086fb8;
+  border-top: 0;
+  color: #086fb8;
+  border-left: 0;
+  border-right: 0;
 }
 .contactform7 .wpcf7-text, .contactform7 .wpcf7-email{
 border: 1px solid #ccc;

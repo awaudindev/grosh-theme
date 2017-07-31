@@ -6,6 +6,7 @@
  */
 global $grosh_meta;
 $slider = $grosh_meta['slider-homepage-select'];
+$step = $grosh_meta['show-step'];
 $package = $grosh_meta['show-slides'];
 $totp = count($package);
 $parent_class = "12";
@@ -24,6 +25,25 @@ switch ($totp) {
     break;
   default:
     $parent_class = "12";
+    break;
+}
+$total_step = count($step);
+$step_class = "12";
+switch ($total_step) {
+  case 1:
+    $step_class = "12";
+    break;
+  case 2:
+    $step_class = "6";
+    break;
+  case 3:
+    $step_class = "4";
+    break;
+  case 4:
+    $step_class = "3";
+    break;
+  default:
+    $step_class = "12";
     break;
 }
 ?>
@@ -57,17 +77,22 @@ switch ($totp) {
                   $named = "img_0";
                 }
                 ?>
-                <div id="<?php echo $named; ?>" class="item <?php echo $class; ?>" data-type="<?php echo $product_type; ?>" style="background-color:#000;">
+                <div id="<?php echo $named; ?>" class="item <?php echo $class; ?>" data-type="<?php echo $product_type; ?>" style="background-color:#086fb8;">
                     
                       <?php
                         if($product_type == "animation"){
                           ?>
-                          <video class="video-js vjs-default-skin" controls preload="auto" width="60%" height="500" style="width: 100%; height: 100%;" id="player<?php echo $v;?>" data-product="<?php echo $product_number; ?>" class="playerslider">
-                              <!-- Pseudo HTML5 -->
-                              <source type="video/mp4" src="<?php echo $large_image; ?>" />
-                          </video>
-                          <div style="color:#fff;height: 80%;width: 30.8%;position: absolute;top: 0;right: 60px;margin: 45px 0 20px 0;">
-                             <?php echo $quote; ?>
+                          <div class="col-md-6"> 
+                            <div class="video-slide">
+                            <video class="video-js vjs-default-skin vjs-big-play-centered playerslider" data-setup='{"fluid": true}' controls autoplay preload="auto" width="640" height="350" id="player<?php echo $v;?>" data-product="<?php echo $product_number; ?>">
+                                <source type="video/mp4" src="<?php echo $large_image; ?>" />
+                            </video>
+                            </div>
+                          </div>
+                          <div class="col-md-4 col-md-push-1">
+                            <div class="quote-slide">
+                               <?php echo $quote; ?>
+                            </div>
                           </div>
                           <?php
                           $v++;
@@ -104,14 +129,26 @@ switch ($totp) {
       </ol>
     </div>
 </div><!--[end:page-header]-->
-<?php if(count($package) > 0){?>
+<?php if((count($package) > 0) || (count($step) > 0)){?>
 <div class="featured">
 	<div class="container">
         <div class="row">
           <div class="col-md-12">
-          	<h3 class="title-section text-center font700 padTop60 padBot60">Create the show you've always wanted</h3>
+          	<h3 class="title-section text-center font700 padTop60 padBot60"><?php echo $grosh_meta['title-step']; ?></h3>
           </div>  
             <?php
+              for($i = 0; $i < count($step); $i++){
+                $st = $step[$i];
+                ?>
+                <div class="col-md-<?php echo $step_class;?> col-sm-<?php echo $step_class;?>">
+                  <div class="icon-feat text-center"><img src="<?php echo $st['image']; ?>"/></div>
+                  <h5 class="title-entry text-center padTop20 padBot10"><a href="<?php echo $st['url']; ?>"><?php echo $st['title']; ?></a></h5>
+                  <p class="text-center">
+                    <?php echo $st['description']; ?>
+                  </p>
+                </div>
+                <?php
+              }
               for($i = 0; $i < count($package); $i++){
                 $pack = $package[$i];
                 ?>
