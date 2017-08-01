@@ -264,6 +264,7 @@
                     'order'          => 'ASC',
                 )
             ),
+            
             array(
                 'id'       => 'title-step',
                 'type'     => 'text',
@@ -382,6 +383,27 @@
                 'desc'     => __('', 'redux-framework-demo'),
                 'validate' => 'numeric',
                 'msg'      => 'Only accept number'
+            )
+        )
+    ) );
+
+    Redux::setSection( $opt_name, array(
+        'title'      => __( 'FAQ Page', 'redux-framework-demo' ),
+        'desc'       => '',
+        'id'         => 'faq-subsection',
+        'subsection' => true,
+        'fields'     => array(
+            array(
+                'id'       => 'faq',
+                'type'     => 'select',
+                'multi'    => true,
+                'title'    => __('FAQ', 'redux-framework-demo'), 
+                'desc'     => __('You can change or order you faq.', 'redux-framework-demo'),
+                'data'  => 'terms',
+                'args'  => array(
+                    'taxonomies' => array( 'faq_category' ),
+                    'hide_empty' => false,
+                )
             )
         )
     ) );

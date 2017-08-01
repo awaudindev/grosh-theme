@@ -1310,6 +1310,10 @@ CAROUSEL
 #searchForm .btn{
   float: right;
 }
+.featured .col-md-4,
+.featured .col-sm-4{
+  margin-bottom: 60px;
+}
 .box-form{
   border-radius: 3px;
   border:1px solid #ebebeb;

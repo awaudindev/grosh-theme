@@ -129,7 +129,7 @@ $bundles =  json_decode( $post_meta["wcpb_bundle_products"][0], true );
 		//do_action( 'woocommerce_product_thumbnails' );
 		?>
 		<div style="float: right;font-size: 20px;padding: 10px 0;font-weight: 500;">
-			<a href="<?php echo $groshlink; ?>">Interested in a painted backdrop?</a>
+			<a href="<?php echo $groshlink; ?>" target="_blank">Interested in a painted backdrop?</a>
 		</div>
 	</div>
 </div>
