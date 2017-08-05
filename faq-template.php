@@ -46,10 +46,10 @@ get_header();
 							 	<?php $i = 0; foreach ( $terms as $id ) { $term = get_term( $id ); $class = $i == 0 ? "active":""?>
 								    <div role="tabpanel" class="tab-pane <?php echo $class; ?>" id="<?php echo $term->slug; ?>faq">
 								    	<div class="clearfix">
-											<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+											<div class="panel-group" id="accordion<?php echo $id; ?>" role="tablist" aria-multiselectable="true">
 												<?php
 													$args = array(
-													'post_type' => 'faq',
+													'post_type' => 'faq_item',
 													'tax_query' => array(
 													    array(
 													    'taxonomy' => 'faq_category',
@@ -60,16 +60,17 @@ get_header();
 													);
 													$query = new WP_Query( $args );
 													while ($query->have_posts()) : $query->the_post();
+													$idchild = get_the_ID();
 													?>
 													<div class="panel panel-default">
 												    	<div class="panel-heading" role="tab" id="heading-2">
 													      	<h4 class="panel-title">
-													        	<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-2" aria-expanded="false" aria-controls="collapseTwo"><span class="glyphicon glyphicon-plus"></span>
+													        	<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion<?php echo $id; ?>" href="#collapse-<?php echo $idchild; ?>" aria-expanded="false" aria-controls="collapseTwo"><span class="glyphicon glyphicon-plus"></span>
 													          	<?php the_title(); ?>
 													        	</a>
 													      	</h4>
 												    	</div>
-												    	<div id="collapse-2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-2">
+												    	<div id="collapse-<?php echo $idchild; ?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-2">
 												      		<div class="panel-body">
 												        		<?php the_content(); ?>
 												      		</div>

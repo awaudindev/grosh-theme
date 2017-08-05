@@ -131,11 +131,11 @@ function custom_post_type() {
     'publicly_queryable'    => true,
     'capability_type'       => 'page',
   );
-  register_post_type( 'faq', $args );
+  register_post_type( 'faq_item', $args );
 
   register_taxonomy(
         'faq_category',
-        'faq',
+        'faq_item',
         array(
             'labels' => array(
                 'name' => 'Faq Category',

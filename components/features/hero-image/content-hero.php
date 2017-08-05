@@ -84,7 +84,7 @@ switch ($total_step) {
                           ?>
                           <div class="col-md-6"> 
                             <div class="video-slide">
-                            <video class="video-js vjs-default-skin vjs-big-play-centered playerslider" data-setup='{"fluid": true}' controls autoplay preload="auto" width="640" height="350" id="player<?php echo $v;?>" data-product="<?php echo $product_number; ?>">
+                            <video class="video-js vjs-default-skin vjs-big-play-centered playerslider" data-setup='{"fluid": true}' controls autoplay preload="auto" width="670" height="400" id="player<?php echo $v;?>" data-product="<?php echo $product_number; ?>">
                                 <source type="video/mp4" src="<?php echo $large_image; ?>" />
                             </video>
                             </div>

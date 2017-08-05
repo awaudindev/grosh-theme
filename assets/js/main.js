@@ -94,11 +94,12 @@ jQuery(document).ready(function($){
 		$('#p_preview_b #img_p_bun').attr('src','http://project.wedangsusu.com/grosh/wp-content/themes/grosh/assets/images/Spinner.gif');
 	});
 
+	
 	var urlvideo = "";
 	if($('#my-video').length){
 		var myPlayer = videojs('my-video');
 
-		$('.caption').on('click', function(event){
+		$('body').on('click', '.type-product .caption', function(event) {
 			$('#popupMsg').modal('show'); 
 			var product_number = $(this).data('id');
 			if(product_number){
