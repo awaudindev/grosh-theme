@@ -823,3 +823,11 @@ function wpb_woo_my_account_order() {
 	 return $myorder;
 }
 add_filter ( 'woocommerce_account_menu_items', 'wpb_woo_my_account_order' );
+
+add_action( 'woocommerce_order_item_add_action_buttons', 'pdf_button' );
+
+function pdf_button( $order ){
+
+	echo '<button type="button" class="button save-pdf" data-product="'.$order->get_id().'">Save as PDF</button>';
+
+}
