@@ -23,16 +23,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 foreach ( $items as $item_id => $item ) :
 	$_product     = apply_filters( 'woocommerce_order_item_product', $order->get_product_from_item( $item ), $item );
 	$item_meta    = new WC_Order_Item_Meta( $item, $_product );
+	$ids = $_product->get_id();
+	$bundles =  json_decode( get_post_meta( $ids, "wcpb_bundle_products", true ), true );
+	if( is_array( $bundles ) ) {
+		$total_bundle = (is_array( $bundles )) ? count($bundles) : 1;
+			$first_key = key($bundles);
+			$product_number = get_post_meta( $first_key, 'product_number', true );
+	}else{
+		$product_number = get_post_meta( $ids, 'product_number', true );
+	}
+	$large_image = getProductImage($product_number, true, false);
 
 	if ( apply_filters( 'woocommerce_order_item_visible', true, $item ) ) {
 		?>
 		<tr class="<?php echo esc_attr( apply_filters( 'woocommerce_order_item_class', 'order_item', $item, $order ) ); ?>">
-			<td class="td" style="text-align:left;padding: 5px 10px; vertical-align:middle; border: 1px solid #eee; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif; word-wrap:break-word;"><?php
 
+			<td class="td" style="text-align:left;padding: 5px 10px; vertical-align:middle; border-top: 1px solid #eee;border-bottom: 1px solid #eee; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;"><?php 
 				// Show title/image etc
 				if ( $show_image ) {
-					echo apply_filters( 'woocommerce_order_item_thumbnail', '<div style="margin-bottom: 5px"><img src="' . ( $_product->get_image_id() ? current( wp_get_attachment_image_src( $_product->get_image_id(), 'thumbnail') ) : wc_placeholder_img_src() ) .'" alt="' . esc_attr__( 'Product Image', 'woocommerce' ) . '" height="' . esc_attr( $image_size[1] ) . '" width="' . esc_attr( $image_size[0] ) . '" style="vertical-align:middle; margin-right: 10px;" /></div>', $item );
-				}
+					echo '<div style="margin-bottom: 5px"><img class="img-responsive" src="'.$large_image.'" alt="'.$item['name'].'" title="'.$item['name'].'" style="vertical-align:middle; margin-right: 10px;max-width:100%;height:auto;display:block;" /></div>';
+				}; ?></td>
+			<td class="td" style="text-align:left;padding: 5px 10px; vertical-align:middle; border-top: 1px solid #eee; border-bottom: 1px solid #eee;font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif; word-wrap:break-word;"><?php
 
 				// Product name
 				echo apply_filters( 'woocommerce_order_item_name', $item['name'], $item, false );
@@ -59,8 +70,7 @@ foreach ( $items as $item_id => $item ) :
 				do_action( 'woocommerce_order_item_meta_end', $item_id, $item, $order, $plain_text );
 
 			?></td>
-			<td class="td" style="text-align:left;padding: 5px 10px; vertical-align:middle; border: 1px solid #eee; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;"><?php echo apply_filters( 'woocommerce_email_order_item_quantity', $item['qty'], $item ); ?></td>
-			<td class="td" style="text-align:left; padding: 5px 10px; vertical-align:middle; border: 1px solid #eee; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;"><?php echo $order->get_formatted_line_subtotal( $item ); ?></td>
+			<td class="td" style="text-align:left; padding: 5px 10px; vertical-align:middle; border-top: 1px solid #eee;border-bottom: 1px solid #eee; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;"><?php echo $order->get_formatted_line_subtotal( $item ); ?></td>
 		</tr>
 		<?php
 	}

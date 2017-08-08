@@ -732,68 +732,67 @@ function save_pdf() {
 	$text_align = is_rtl() ? 'right' : 'left';
 	$order      = wc_get_order( $_GET['id']);
 	$item_count = $order->get_item_count();
-
+	$periodRent = get_post_meta( $_GET['id'], 'rental_period');
 	?>
-	<div class="wrapper">
-	<div class="row">
-        <div class="col-xs-12">
-    		<div class="invoice-title">
-    			<p style="font-size:30px; text-align:right; font-weight:bold;"><?php printf( __( 'PO Number #%s', 'woocommerce' ), $order->get_order_number() ); ?></p>
-    			<br/>
-    		</div>
-    		<table widths='50%,50%'>
-    			<tr>
-    				<td>
-    				<strong>Billed To:</strong><br>
-    					<?php echo $order->get_formatted_billing_address(); ?>
-    				</td>
-    				<td style="text-align:right; ">
-    					<strong>Order Date:</strong><br>
-    					<?php echo date_format(date_create($order->order_date,timezone_open("Asia/Jakarta")),"m-d-Y"); ?><br><br>
-    				</td>
-    			</tr>
-    		</table>
-    	</div>
-    </div>
-	<div class="panel panel-default">
-    			<div class="panel-heading">
-    				<p style="text-align:center; font-size:17px; font-weight:bold;">Order Summary</p>
-    				<br/>
-    			</div>
-    			<div class="panel-body">
+	<table width="100%" widths='80%,20%'>
+		<tr>
+			<td width="80%"><?php grosh_the_custom_logo(); ?></td>
+			<td width="20%">
+    			<p style="font-size:14px; text-align:left; font-weight:normal;">
+    				4114W. Sunset Blvd<br/>
+    				Los Angeles CA 90029<br/>
+    				info@groshdigital.com<br/>
+    				www.groshdigital.com
+    			</p>
+			</td>
+		</tr>
+	</table>
 
-	<table widths='60%,15%,25%' border="1" style="width:100%" width="100%">
+	<p style="text-align:left; font-size:25px; font-weight:bold;">Invoice #<?php echo $order->get_order_number(); ?></p>
+
+	<table style="border-collapse:collapse;width:100%;vertical-align:middle; border: 1px solid #eee; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;margin-bottom: 20px;" width="100%">
 			<tr>
-				<td width="60%" class="td" scope="col" style="text-align:<?php echo $text_align; ?>;padding: 5px 10px;"><?php _e( 'Product', 'woocommerce' ); ?></td>
-				<td width="15%" class="td" scope="col" style="text-align:<?php echo $text_align; ?>;padding: 5px 10px;"><?php _e( 'Quantity', 'woocommerce' ); ?></td>
-				<td class="td" scope="col" style="text-align:<?php echo $text_align; ?>;padding: 5px 10px;"><?php _e( 'Price', 'woocommerce' ); ?></td>
+				<td width="35%" class="td" scope="col" style="text-align:<?php echo $text_align; ?>;padding: 15px 10px;font-size: 20px;font-weight:bold;vertical-align:middle; border-top: 1px solid #eee;border-bottom: 1px solid #eee; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;"><?php _e( 'Image', 'woocommerce' ); ?></td>
+				<td width="50%" class="td" scope="col" style="text-align:<?php echo $text_align; ?>;padding: 15px 10px;font-size: 20px;font-weight:bold;vertical-align:middle; border-top: 1px solid #eee;border-bottom: 1px solid #eee; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;"><?php _e( 'Product', 'woocommerce' ); ?></td>
+				<td class="td" scope="col" style="text-align:<?php echo $text_align; ?>;padding: 15px 10px;font-size: 20px;font-weight:bold;vertical-align:middle; border-top: 1px solid #eee;border-bottom: 1px solid #eee; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;"><?php _e( 'Total', 'woocommerce' ); ?></td>
 			</tr>
 			<?php echo wc_get_email_order_items( $order, array(
 				'show_sku'      => $sent_to_admin,
-				'show_image'    => false,
+				'show_image'    => true,
 				'image_size'    => array( 32, 32 ),
-				'plain_text'    => $plain_text,
+				'plain_text'    => false,
 				'sent_to_admin' => $sent_to_admin,
 			) ); ?>
 		<?php
 			if ( $totals = $order->get_order_item_totals() ) {
 				$i = 0;
 				foreach ( $totals as $total ) { 
-					if($total['value'] != 'Purchase Order'){
+					if($total['label'] != 'Payment method:'){
 						$i++;
 						?><tr>
-							<td colspan="2"><?php echo $total['label']; ?></td>
-							<td></td>
-							<td><?php echo $total['value']; ?></td>
+							<td style="padding:5px 10px;border-top: 1px solid #eee;border-bottom: 1px solid #eee;"></td>
+							<td style="padding:5px 10px;border-top: 1px solid #eee;border-bottom: 1px solid #eee;"><?php  if($total['label'] == 'Total:'){ echo str_replace(':',' rent for '.$periodRent[0].' days:',$total['label']); }else{ echo $total['label']; } ?></td>
+							<td style="padding:5px 10px;vertical-align:middle; border-top: 1px solid #eee;border-bottom: 1px solid #eee; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;"><?php echo $total['value']; ?></td>
 						</tr><?php
 					}
 				}
 			}
 		?>
 	</table>
-	</div>
-	</div>
-	</div>
+	<p style="text-align:left; font-size:25px; font-weight:bold;">Customer Details</p>
+
+	<table style="border-collapse: collapse;vertical-align:middle; border: 1px solid #eee; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;" width="100%">
+		<tr>
+			<td style="padding:5px 10px;vertical-align:middle; border-top: 1px solid #eee;border-bottom: 1px solid #eee; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;" width="40%"><strong>Email:</strong></td>
+			<td style="padding:5px 10px;vertical-align:middle; border-top: 1px solid #eee;border-bottom: 1px solid #eee; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;" width="60%"><?php echo $order->get_billing_email(); ?></td>
+		</tr>
+		<tr>
+			<td style="padding:5px 10px;vertical-align:middle; border-top: 1px solid #eee;border-bottom: : 1px solid #eee; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;"><strong>Telephone:</strong></td>
+			<td style="padding:5px 10px;vertical-align:middle; border-top: 1px solid #eee;border-bottom: 1px solid #eee; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;"><?php echo $order->get_billing_phone(); ?></td>
+		</tr>
+	</table>
+	<p style="font-size:25px;font-weight: bold;">Billed Address</p>
+	<p style="font-size: 14px;font-weight: normal;"><?php echo $order->get_formatted_billing_address(); ?></p>
 	<?php
 
 	wp_die();
