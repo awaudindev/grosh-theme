@@ -340,6 +340,8 @@ add_action( 'wp_enqueue_scripts', 'grosh_scripts' );
  */
 require get_template_directory() . '/inc/template-tags.php';
 
+require get_template_directory() . '/inc/metaboxes.php';
+
 /**
  * Custom functions that act independently of the theme templates.
  */
