@@ -33,10 +33,6 @@
             $product_number = get_post_meta( $v, 'product_number', true );
             $product_type = get_post_meta( $v, 'file_type', true );
 
-            $googlefont = applyFonts($v,'h3',$product_number);
-
-            echo $googlefont;
-
             $large_image = "";
 
             if(IsNullOrEmptyString($product_number)){
