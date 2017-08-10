@@ -25,9 +25,9 @@ function grosh_metaboxes( array $meta_boxes ) {
 		'show_names' => true, // Show field names on the left
 		'fields'     => array(
             array(
-                'name' => 'Custom page title',
-                'desc' => 'Set a custom page title here if you need.',
-                'id'   => $prefix . 'custom_title',
+                'name' => 'Font Size',
+                'desc' => 'Set a font size.',
+                'id'   => $prefix . 'font_size',
                 'type' => 'text',
             ),
 		)
