@@ -112,15 +112,26 @@ function googleFonts(){
 	return $fontsList;
 }
 
-function applyFonts($postid){
+function applyFonts($postid,$tag,$test){
+
+	global $wpdb;
+	$table_name = $wpdb->prefix.'googlefonts';
 
 	$size = get_post_meta($postid,'_grosh_font_size');
 	$font = get_post_meta($postid,'_grosh_google_font');
 
-	$result = '<style type="text/css">
-				@import url("https://fonts.googleapis.com/css?family=Roboto");
-				font-family: "Roboto", sans-serif;
-				</style>';
+	$result = $wpdb->get_results("SELECT * FROM $table_name WHERE family = '$font[0]'");
+
+	$type = ($result[0]->category == 'sans-serif') ? 'sans-serif' : 'serif';
+
+	$result = '';
+	if($font){
+
+		$result .= '<style type="text/css">
+					@import url("https://fonts.googleapis.com/css?family='.$font[0].'");
+					'.$tag.'.'.$test.'{font-family: "'.trim($font[0]).'", '.$type .'!important;font-size: '.$size[0].'!important;}
+					</style>';
+	}
 
 	return $result;
 
