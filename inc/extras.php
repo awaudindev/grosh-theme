@@ -561,8 +561,21 @@ function rental_hold($order_id) {
 		$line_total = wc_get_order_item_meta($item_values->get_id(),'_line_total', true );
 		$type = ($line_total == $total) ? 'image' : 'animation';
 
-		if(!wc_get_order_item_meta($item_values->get_id(), 'product_number',true)){ wc_add_order_item_meta( $item_values->get_id(), 'product_number', $product_number ); }
-		if(!wc_get_order_item_meta($item_values->get_id(), 'product_type',true)){ wc_add_order_item_meta( $item_values->get_id(), 'product_type', $type ); }
+		$post_meta = get_post_meta( $item_id );
+		$bundles =  json_decode( $post_meta["wcpb_bundle_products"][0], true );
+
+		if($bundles){
+			foreach ( $bundles as $key => $value ) {
+				$product_number = get_post_meta( $key, 'product_number', true );
+		        $product_type = get_post_meta( $key, 'file_type', true );
+
+		        wc_add_order_item_meta( $item_values->get_id(), 'product_number', $product_number );
+		        wc_add_order_item_meta( $item_values->get_id(), 'product_type', $product_type );
+			}
+		}else{
+			if(!wc_get_order_item_meta($item_values->get_id(), 'product_number',true)){ wc_add_order_item_meta( $item_values->get_id(), 'product_number', $product_number ); }
+			if(!wc_get_order_item_meta($item_values->get_id(), 'product_type',true)){ wc_add_order_item_meta( $item_values->get_id(), 'product_type', $type ); }
+		}
 	}
 
 }
@@ -590,8 +603,21 @@ function rental_completed($order_id) {
 		$line_total = wc_get_order_item_meta($item_values->get_id(),'_line_total', true );
 		$type = ($line_total == $total) ? 'image' : 'animation';
 
-		if(!wc_get_order_item_meta($item_values->get_id(), 'product_number',true)){ wc_add_order_item_meta( $item_values->get_id(), 'product_number', $product_number ); }
-		if(!wc_get_order_item_meta($item_values->get_id(), 'product_type',true)){ wc_add_order_item_meta( $item_values->get_id(), 'product_type', $type ); }
+		$post_meta = get_post_meta( $item_id );
+		$bundles =  json_decode( $post_meta["wcpb_bundle_products"][0], true );
+
+		if($bundles){
+			foreach ( $bundles as $key => $value ) {
+				$product_number = get_post_meta( $key, 'product_number', true );
+		        $product_type = get_post_meta( $key, 'file_type', true );
+
+		        wc_add_order_item_meta( $item_values->get_id(), 'product_number', $product_number );
+		        wc_add_order_item_meta( $item_values->get_id(), 'product_type', $product_type );
+			}
+		}else{
+			if(!wc_get_order_item_meta($item_values->get_id(), 'product_number',true)){ wc_add_order_item_meta( $item_values->get_id(), 'product_number', $product_number ); }
+			if(!wc_get_order_item_meta($item_values->get_id(), 'product_type',true)){ wc_add_order_item_meta( $item_values->get_id(), 'product_type', $type ); }
+		}
 	}
     
 }
