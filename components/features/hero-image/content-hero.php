@@ -62,7 +62,14 @@ switch ($total_step) {
                   $class = "";
                 $product_number = get_post_meta( $item, 'product_number', true );
                 $product_type = get_post_meta( $item, 'file_type', true );
-                $quote = get_post_meta( $item, 'quote_homepage', true );
+                $title = get_post_meta( $item, '_grosh_title_homepage', true );
+                $titleSize = get_post_meta( $item, '_grosh_title_font_size', true );
+                $titleFont = get_post_meta( $item, '_grosh_title_google_font', true );
+                $quote = get_post_meta( $item, '_grosh_quote_homepage', true );
+                $quoteSize = get_post_meta( $item, '_grosh_quote_font_size', true );
+                $quoteFont = get_post_meta( $item, '_grosh_quote_google_font', true );
+                $titleStyle = "font-size:".$titleSize.";font-family:'".$titleFont."',sans-serif";
+                $quoteStyle = "font-size:".$quoteSize.";font-family:'".$quoteFont."',sans-serif";
                 $large_image = "";
                 $style = "";
                 $named = "";
@@ -91,7 +98,8 @@ switch ($total_step) {
                           </div>
                           <div class="col-md-4 col-md-push-1">
                             <div class="quote-slide">
-                               <?php echo $quote; ?>
+                              <h1 style="<?php echo $titleStyle;?>"><?php echo $title; ?></h1>
+                              <h4 style="<?php echo $quoteStyle;?>"><?php echo $quote; ?></h4>
                             </div>
                           </div>
                           <?php
@@ -101,7 +109,8 @@ switch ($total_step) {
                       <a href="<?php echo get_permalink($item); ?>">
                         <img src="<?php echo $large_image; ?>" title="<?php echo get_the_title( $item ); ?>" alt="<?php echo get_the_title( $item ); ?>" style="<?php echo $style; ?>" class="img-responsive" />
                         <div class="carousel-caption">
-                          <?php echo $quote; ?>
+                          <h1 style="<?php echo $titleStyle;?>"><?php echo $title; ?></h1>
+                          <h4 style="<?php echo $quoteStyle;?>"><?php echo $quote; ?></h4>
                         </div>
                       </a>
                       <?php } ?>

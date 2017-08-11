@@ -210,7 +210,7 @@ add_action( 'widgets_init', 'grosh_widgets_init' );
  */
 function grosh_scripts() {
 
-	global $post;
+	global $post,$grosh_meta;
 
 	wp_enqueue_style( 'bootstrap', get_template_directory_uri() . '/assets/stylesheets/bootstrap.css' );
 	wp_enqueue_style( 'select', get_template_directory_uri() . '/assets/stylesheets/bootstrap-select.css' );
@@ -233,6 +233,27 @@ function grosh_scripts() {
 	wp_enqueue_script( 'grosh-videoplayer', 'http://vjs.zencdn.net/4.12/video.js', array());
 	wp_enqueue_script( 'grosh-mainjs', get_template_directory_uri() . '/assets/js/main.js', array());
 	wp_enqueue_script( 'grosh-skip-link-focus-fix', get_template_directory_uri() . '/assets/js/skip-link-focus-fix.js', array(), '20151215', true );
+
+	if(function_exists('tamatebako_google_fonts_url') && is_front_page()){
+
+		$slider = $grosh_meta['slider-homepage-select'];
+
+		$fontlist = array();
+
+		foreach ($slider as $item) {
+			$titleFont = get_post_meta( $item, '_grosh_title_google_font', true );
+			$quoteFont = get_post_meta( $item, '_grosh_quote_google_font', true );
+			array_push($fontlist, $titleFont);
+			array_push($fontlist, $quoteFont);
+		}
+		
+		$google_fonts_url = tamatebako_google_fonts_url(
+	        $fontlist,
+	        'latin,latin-ext'
+	    );
+	 
+	    wp_enqueue_style( 'my-google-fonts', $google_fonts_url  );
+	}
 	
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {

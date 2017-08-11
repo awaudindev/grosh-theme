@@ -28,26 +28,53 @@ function grosh_metaboxes( array $meta_boxes ) {
 
 	$meta_boxes[] = array(
 		'id'         => 'general_settings',
-		'title'      => 'Product General settings',
+		'title'      => 'Homepage Slide Text',
 		'pages'      => array( 'product' ), // Post type
 		'context'    => 'normal',
 		'priority'   => 'default',
 		'show_names' => true, // Show field names on the left
 		'fields'     => array(
+
+			 array(
+                'name' => 'Title Slide',
+                'desc' => '',
+                'id'   => $prefix . 'title_homepage',
+                'type' => 'text'
+             ),
             array(
-                'name' => 'Font Size',
-                'desc' => 'Set a font size.',
-                'id'   => $prefix . 'font_size',
+                'name' => 'Title Font Size',
+                'desc' => '',
+                'id'   => $prefix . 'title_font_size',
                 'type' => 'text_small',
             ),
 			array(
-				'name' => 'Google Fonts',
-				'desc' => 'Choose google font',
-				'id'   => $prefix . 'google_font',
+				'name' => 'Title Google Fonts',
+				'desc' => 'Choose google font for title',
+				'id'   => $prefix . 'title_google_font',
 				'type' => 'select',
 				'options' => $listFonts,
 				'value' => ''
 			),
+			 array(
+                'name' => 'Quote Homepage',
+                'desc' => '',
+                'id'   => $prefix . 'quote_homepage',
+                'type' => 'text'
+             ),
+              array(
+                'name' => 'quote Font Size',
+                'desc' => '',
+                'id'   => $prefix . 'quote_font_size',
+                'type' => 'text_small',
+            ),
+			array(
+				'name' => 'Quote Google Fonts',
+				'desc' => 'Choose google font for quote',
+				'id'   => $prefix . 'quote_google_font',
+				'type' => 'select',
+				'options' => $listFonts,
+				'value' => ''
+			)
 		)
 	);
 
@@ -111,28 +138,41 @@ function googleFonts(){
 
 	return $fontsList;
 }
-
-function applyFonts($postid,$tag,$test){
-
-	global $wpdb;
-	$table_name = $wpdb->prefix.'googlefonts';
-
-	$size = get_post_meta($postid,'_grosh_font_size');
-	$font = get_post_meta($postid,'_grosh_google_font');
-
-	$result = $wpdb->get_results("SELECT * FROM $table_name WHERE family = '$font[0]'");
-
-	$type = ($result[0]->category == 'sans-serif') ? 'sans-serif' : 'serif';
-
-	$result = '';
-	if($font){
-
-		$result .= '<style type="text/css">
-					@import url("https://fonts.googleapis.com/css?family='.$font[0].'");
-					'.$tag.'.'.$test.'{font-family: "'.trim($font[0]).'", '.$type .'!important;font-size: '.$size[0].'!important;}
-					</style>';
-	}
-
-	return $result;
-
+function tamatebako_google_fonts_url( $fonts, $subsets = array() ){
+ 
+    /* URL */
+    $base_url    =  "https://fonts.googleapis.com/css";
+    $font_args   = array();
+    $family      = array();
+ 
+    /* Format Each Font Family in Array */
+    foreach( $fonts as $font_name ){
+        $font_name = str_replace( ' ', '+', $font_name );
+        $family[] = trim( $font_name );
+    }
+ 
+    /* Only return URL if font family defined. */
+    if( !empty( $family ) ){
+ 
+        /* Make Font Family a String */
+        $family = implode( "|", $family );
+ 
+        /* Add font family in args */
+        $font_args['family'] = $family;
+ 
+        /* Add font subsets in args */
+        if( !empty( $subsets ) ){
+ 
+            /* format subsets to string */
+            if( is_array( $subsets ) ){
+                $subsets = implode( ',', $subsets );
+            }
+ 
+            $font_args['subset'] = urlencode( trim( $subsets ) );
+        }
+ 
+        return add_query_arg( $font_args, $base_url );
+    }
+ 
+    return '';
 }
