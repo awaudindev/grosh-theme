@@ -62,7 +62,7 @@ function grosh_metaboxes( array $meta_boxes ) {
                 'type' => 'text'
              ),
               array(
-                'name' => 'quote Font Size',
+                'name' => 'Quote Font Size',
                 'desc' => '',
                 'id'   => $prefix . 'quote_font_size',
                 'type' => 'text_small',
@@ -71,6 +71,26 @@ function grosh_metaboxes( array $meta_boxes ) {
 				'name' => 'Quote Google Fonts',
 				'desc' => 'Choose google font for quote',
 				'id'   => $prefix . 'quote_google_font',
+				'type' => 'select',
+				'options' => $listFonts,
+				'value' => ''
+			),
+			array(
+                'name' => 'By People',
+                'desc' => '',
+                'id'   => $prefix . 'user_quote',
+                'type' => 'text'
+             ),
+              array(
+                'name' => 'People Font Size',
+                'desc' => '',
+                'id'   => $prefix . 'people_font_size',
+                'type' => 'text_small',
+            ),
+			array(
+				'name' => 'People Google Fonts',
+				'desc' => 'Choose google font for people',
+				'id'   => $prefix . 'people_google_font',
 				'type' => 'select',
 				'options' => $listFonts,
 				'value' => ''

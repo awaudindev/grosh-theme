@@ -68,8 +68,12 @@ switch ($total_step) {
                 $quote = get_post_meta( $item, '_grosh_quote_homepage', true );
                 $quoteSize = get_post_meta( $item, '_grosh_quote_font_size', true );
                 $quoteFont = get_post_meta( $item, '_grosh_quote_google_font', true );
+                $people = get_post_meta( $item, '_grosh_user_quote', true );
+                $peopleSize = get_post_meta( $item, '_grosh_people_font_size', true );
+                $peopleFont = get_post_meta( $item, '_grosh_people_google_font', true );
                 $titleStyle = "font-size:".$titleSize.";font-family:'".$titleFont."',sans-serif";
                 $quoteStyle = "font-size:".$quoteSize.";font-family:'".$quoteFont."',sans-serif";
+                $peopleStyle = "font-size:".$peopleSize.";font-family:'".$peopleFont."',sans-serif";
                 $large_image = "";
                 $style = "";
                 $named = "";
@@ -99,7 +103,12 @@ switch ($total_step) {
                           <div class="col-md-4 col-md-push-1">
                             <div class="quote-slide">
                               <h1 style="<?php echo $titleStyle;?>"><?php echo $title; ?></h1>
-                              <h4 style="<?php echo $quoteStyle;?>"><?php echo $quote; ?></h4>
+                              <?php if(!empty($quote)){?>
+                              <blockquote>
+                                <h4 style="<?php echo $quoteStyle;?>"><?php echo $quote; ?></h4>
+                              </blockquote>
+                              <?php } ?>
+                              <span style="<?php echo $peopleStyle;?>"><?php echo $people; ?></span>
                             </div>
                           </div>
                           <?php
@@ -111,6 +120,7 @@ switch ($total_step) {
                         <div class="carousel-caption">
                           <h1 style="<?php echo $titleStyle;?>"><?php echo $title; ?></h1>
                           <h4 style="<?php echo $quoteStyle;?>"><?php echo $quote; ?></h4>
+                          <span style="<?php echo $peopleStyle;?>"><?php echo $people; ?></span>
                         </div>
                       </a>
                       <?php } ?>
