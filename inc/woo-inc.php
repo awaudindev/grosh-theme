@@ -88,14 +88,6 @@ function woo_add_custom_general_fields() {
 
 	);
 
-	wp_nonce_field( plugin_basename( __FILE__ ), 'quote_noncename' ); 
-    $field_value = get_post_meta( $product->id, 'quote_homepage', true );
-    
-    echo '<p class="form-field quote_homepage_field ">';
-    	echo '<label for="quote_homepage">Quote Homepage</label>';
-    	wp_editor( $field_value, 'quote_homepage' );
-    echo '</p>';
-
 }
 
 function woo_add_custom_general_fields_save( $post_id ){
@@ -105,7 +97,6 @@ function woo_add_custom_general_fields_save( $post_id ){
 	$woocommerce_number = $_POST['product_number'];
 	$woocommerce_type = $_POST['file_type'];
 	$woocommerce_groshlink = $_POST['grosh_link'];
-	$woocommerce_quote = $_POST['quote_homepage'];
 
 	if( !empty( $woocommerce_number ) )
 
@@ -119,9 +110,6 @@ function woo_add_custom_general_fields_save( $post_id ){
 
 	update_post_meta( $post_id, 'file_type', esc_html( $woocommerce_type ) );
 
-	if( !empty( $woocommerce_quote ) )
-
-	update_post_meta( $post_id, 'quote_homepage',  $woocommerce_quote  );
 
 }
 
