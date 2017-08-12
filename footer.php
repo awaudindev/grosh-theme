@@ -90,6 +90,18 @@ global $post;
         $('.navbar-nav.main-menu li:last').after('<li class="menu-item"><a title="My-Account" href="<?php echo home_url( '/my-account' ); ?>">My Account</a></li>');
     });
 </script>
+<?php }
+if(is_checkout()){ ?>
+<script language="javascript">
+if( window.self !== window.top ){
+    jQuery(function($){
+        $('#page').css({'opacity': 0,'height':0,'overflow':'hidden'});
+    });
+    //<!--
+    window.top.location = document.referrer;
+    //-->
+}
+</script>
 <?php } ?>
 </body>
 </html>
