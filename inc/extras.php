@@ -569,8 +569,12 @@ function rental_hold($order_id) {
 				$product_number = get_post_meta( $key, 'product_number', true );
 		        $product_type = get_post_meta( $key, 'file_type', true );
 
-		        wc_add_order_item_meta( $item_values->get_id(), 'product_number', $product_number );
-		        wc_add_order_item_meta( $item_values->get_id(), 'product_type', $product_type );
+		        if(!wc_get_order_item_meta($item_values->get_id(), 'product_number',true)){
+			        wc_add_order_item_meta( $item_values->get_id(), 'product_number', $product_number );
+			    }
+			    if(!wc_get_order_item_meta($item_values->get_id(), 'product_type',true)){ 
+			        wc_add_order_item_meta( $item_values->get_id(), 'product_type', $product_type );
+			    }
 			}
 		}else{
 			if(!wc_get_order_item_meta($item_values->get_id(), 'product_number',true)){ wc_add_order_item_meta( $item_values->get_id(), 'product_number', $product_number ); }
@@ -611,8 +615,12 @@ function rental_completed($order_id) {
 				$product_number = get_post_meta( $key, 'product_number', true );
 		        $product_type = get_post_meta( $key, 'file_type', true );
 
-		        wc_add_order_item_meta( $item_values->get_id(), 'product_number', $product_number );
-		        wc_add_order_item_meta( $item_values->get_id(), 'product_type', $product_type );
+		        if(!wc_get_order_item_meta($item_values->get_id(), 'product_number',true)){ 
+		        	wc_add_order_item_meta( $item_values->get_id(), 'product_number', $product_number ); 
+			        }
+			       if(!wc_get_order_item_meta($item_values->get_id(), 'product_type',true)){ 
+			       	wc_add_order_item_meta( $item_values->get_id(), 'product_type', $product_type ); 
+			       }
 			}
 		}else{
 			if(!wc_get_order_item_meta($item_values->get_id(), 'product_number',true)){ wc_add_order_item_meta( $item_values->get_id(), 'product_number', $product_number ); }
