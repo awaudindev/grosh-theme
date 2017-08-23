@@ -336,8 +336,16 @@ function product_packages( $atts, $content = ""){
       	$total_bundle = (is_array( $bundles )) ? count($bundles) : 1;
 
       	$first_key = key($bundles);
-		$product_number = get_post_meta( $first_key, 'product_number', true );
-		$large_image = getProductImage($product_number, false, false);
+
+      	$url = wp_get_attachment_url( get_post_thumbnail_id($id), 'grosh-featured-image' );
+      	$product_number = get_post_meta( $first_key, 'product_number', true );
+
+      	if(empty($url)){
+      		$large_image = getProductImage($product_number, false, false);
+      	}else{
+      		$large_image = $url;
+      	}
+      	
 		$check_animation = false;
 
 
@@ -346,7 +354,7 @@ function product_packages( $atts, $content = ""){
 	        $result .= '<div class="thumb-post">';
 
 		        $result .= '<a href="'.esc_url( get_permalink($id) ).'">';
-			    	$result .= '<img class="img-responsive" src="'.$large_image.'" alt="'.get_the_title($id).'" title="'.get_the_title($id).'"/>';
+			    	$result .= '<img width="350" height="150" class="img-responsive" src="'.$large_image.'" alt="'.get_the_title($id).'" title="'.get_the_title($id).'"/>';
 			    	$result .= '<h5 class="title-product">'.get_the_title($id).' ('.$total_bundle.')</h5>';
 			    $result .= '</a>';
 

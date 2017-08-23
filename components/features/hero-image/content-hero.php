@@ -93,9 +93,9 @@ switch ($total_step) {
                       <?php
                         if($product_type == "animation"){
                           ?>
-                          <div class="col-md-6"> 
+                          <div class="col-md-6 col-vid"> 
                             <div class="video-slide">
-                            <video class="video-js vjs-default-skin vjs-big-play-centered playerslider" data-setup='{"fluid": true}' controls autoplay preload="auto" width="670" height="400" id="player<?php echo $v;?>" data-product="<?php echo $product_number; ?>">
+                            <video class="video-js vjs-default-skin vjs-big-play-centered vjs-16-9 playerslider" data-setup='{"fluid": true}' controls autoplay preload="auto" width="" height="310" id="player<?php echo $v;?>" data-product="<?php echo $product_number; ?>">
                                 <source type="video/mp4" src="<?php echo $large_image; ?>" />
                             </video>
                             </div>
@@ -142,9 +142,18 @@ switch ($total_step) {
     </div>
     <div class="hidden-lg">
       <ol class="carousel-indicators">
-        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#myCarousel" data-slide-to="1"></li>
-        <li data-target="#myCarousel" data-slide-to="2"></li>
+        <?php
+          $a = 0;
+          $class_bullet = "";
+          foreach ($slider as $item) {
+            if($a == 0)
+              $class_bullet = 'class="active"';
+            else
+              $class_bullet = "";
+            echo '<li data-target="#myCarousel" data-slide-to="'.$a.'" '.$class_bullet.'></li>';
+            $a++;
+          }
+        ?>
       </ol>
     </div>
 </div><!--[end:page-header]-->

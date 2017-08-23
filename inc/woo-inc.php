@@ -175,7 +175,13 @@ if ( ! function_exists( 'woocommerce_get_product_thumbnail' ) ) {
 			reset($bundles);
 			$first_key = key($bundles);
 			$product_number = get_post_meta( $first_key, 'product_number', true );
-			$large_image = getProductImage($product_number, true, false);
+			$url = wp_get_attachment_url( get_post_thumbnail_id($post->ID), 'grosh-featured-image' );
+
+	      	if(empty($url)){
+	      		$large_image = getProductImage($product_number, true, false);
+	      	}else{
+	      		$large_image = $url;
+	      	}
 		}
 
 		$output = '<div class="thumb-post">';
