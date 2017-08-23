@@ -28,6 +28,26 @@ $is_animation = get_post_meta( $post->ID, 'file_type', true );
 $bundles =  json_decode( $post_meta["wcpb_bundle_products"][0], true );
 $file_type = $_REQUEST['filetype'];
 
+if ( class_exists( 'YITH_WCWL' ) ) {
+
+	$default_wishlists = is_user_logged_in() ? YITH_WCWL()->get_wishlists( array( 'is_default' => true ) ) : false;
+
+
+	if( ! empty( $default_wishlists ) ){
+		$default_wishlist = $default_wishlists[0]['ID'];
+	}
+	else{
+		$default_wishlist = false;
+	}
+
+	// exists in default wishlist
+	$exists = YITH_WCWL()->is_product_in_wishlist( $post->ID, $default_wishlist );
+	$col = ($exists) ? 12 : 6;
+}else{
+	$exists = false;
+	$col = 12;
+}
+
 ?>
 
 <?php
@@ -300,9 +320,14 @@ $file_type = $_REQUEST['filetype'];
                 </div>
                 <?php } ?>
                 <div class="clearfix">
-                  <div class="col-md-12">
+                  <div class="col-md-<?php echo $col; ?>">
                   	<a href="javascript:void(0);" onclick="jQuery('.rental-rate').attr('action','<?php echo get_permalink($post->ID).'?rent='.$post->ID.'&filetype='.$type; ?>').submit();" class="btn btn-default btn-lg text-uppercase">Add to Cart</a>
-                  </div>  
+                  </div>
+                  <?php if(!$exists){ ?> 
+                  <div class="col-md-6">
+                  	<?php echo do_shortcode('[yith_wcwl_add_to_wishlist]');?>
+                  </div>
+                  <?php } ?> 
                 </div>
                 </form>
               </div><!--[end:quote-price]-->
