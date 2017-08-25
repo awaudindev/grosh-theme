@@ -2828,3 +2828,9 @@ MEDIA QUERY
 #content{
   position: relative
 }
+.woocommerce-page table.cart td.actions .coupon{
+  float: right!important;
+}
+.woocommerce-page table.cart td.actions .coupon input{
+  width: auto!important;
+}
