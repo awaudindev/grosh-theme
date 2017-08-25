@@ -673,30 +673,11 @@ function rental_order_status_completed( $order_id ) {
 add_action( 'woocommerce_order_status_completed', 'rental_order_status_completed', 10, 1 );
 
 /**
- * Account menu items
- *
- * @param arr $items
- * @return arr
- */
-function wishlist_account_menu_items( $items ) {
- 
- 	$logout = $items['customer-logout'];
-    unset( $items['customer-logout'] );
-    $items['wishlist'] = __( 'Wishlist', 'iconic' );
-    $items['customer-logout'] = $logout;
- 
-    return $items;
- 
-}
- 
-add_filter( 'woocommerce_account_menu_items', 'wishlist_account_menu_items', 10, 1 );
-
-/**
  * Add endpoint
  */
 function wishlist_add_my_account_endpoint() {
  
-    add_rewrite_endpoint( 'wishlist', EP_PAGES );
+    add_rewrite_endpoint( 'wishlist', EP_ROOT | EP_PAGES );
  
 }
  
@@ -866,6 +847,7 @@ function wpb_woo_my_account_order() {
 		'dashboard' => __( 'Dashboard', 'woocommerce' ),
 	 	'edit-account' => __( 'Change My Details', 'woocommerce' ),
 		'orders' => __( 'Orders', 'woocommerce' ),
+		'wishlist' =>  __( 'Wishlist', 'woocommerce' ),
 	 	'edit-address' => __( 'Billing Address', 'woocommerce' ),
 	 	'customer-logout' => __( 'Logout', 'woocommerce' ),
 	 );
