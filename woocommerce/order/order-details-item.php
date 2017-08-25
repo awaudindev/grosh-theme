@@ -25,23 +25,7 @@ if ( ! apply_filters( 'woocommerce_order_item_visible', true, $item ) ) {
 }
 ?>
 <tr class="<?php echo esc_attr( apply_filters( 'woocommerce_order_item_class', 'order_item', $item, $order ) ); ?>">
-	<td class="product-img" style="width:30%">
-		<?php
-			$ids = $product->get_id();
-			$bundles =  json_decode( get_post_meta( $ids, "wcpb_bundle_products", true ), true );
-			if( is_array( $bundles ) ) {
-				$total_bundle = (is_array( $bundles )) ? count($bundles) : 1;
-      			$first_key = key($bundles);
-      			$product_number = get_post_meta( $first_key, 'product_number', true );
-			}else{
-				$product_number = get_post_meta( $ids, 'product_number', true );
-			}
-			$large_image = getProductImage($product_number, false, false);
-			echo '<img class="img-responsive" src="'.$large_image.'" alt="'.$item['name'].'" title="'.$item['name'].'"/>';
-
-		?>
-	</td>
-	<td class="product-name">
+	<td class="m_-3083831405559418415td" style="text-align:left;padding:5px 10px;width:60%;vertical-align:middle;border-top:1px solid #eee;color:#737373;border:1px solid #e4e4e4">
 		<?php
 			$is_visible        = $product && $product->is_visible();
 			$product_permalink = apply_filters( 'woocommerce_order_item_permalink', $is_visible ? $product->get_permalink( $item ) : '', $item, $order );
@@ -56,8 +40,16 @@ if ( ! apply_filters( 'woocommerce_order_item_visible', true, $item ) ) {
 
 			do_action( 'woocommerce_order_item_meta_end', $item_id, $item, $order );
 		?>
+		
 	</td>
-	<td class="product-total">
+	<td class="m_-3083831405559418415td" style="text-align:left;padding:5px 10px;vertical-align:middle;border-top:1px solid #eee;word-wrap:break-word;color:#737373;border:1px solid #e4e4e4">
+		<?php
+			$order_id = $order->get_order_number();
+			$duration = get_post_meta( $order_id, "rental_period", true );
+			echo $duration .' Days';
+		?>
+	</td>
+	<td class="m_-3083831405559418415td" style="text-align:left;padding:5px 10px;vertical-align:middle;border-top:1px solid #eee;color:#737373;border:1px solid #e4e4e4">
 		<?php echo $order->get_formatted_line_subtotal( $item ); ?>
 	</td>
 </tr>
