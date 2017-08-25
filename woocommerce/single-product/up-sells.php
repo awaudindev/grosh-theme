@@ -43,9 +43,11 @@ $woocommerce_loop['columns'] = apply_filters( 'woocommerce_up_sells_columns', $c
 
 if ( $products->have_posts() ) : ?>
 
-	<div class="up-sells upsells products">
+	<div class="related products marTop30">
 
-		<h2><?php _e( 'You may also like&hellip;', 'woocommerce' ) ?></h2>
+		<div class="container">
+			<h3 class="marBot30">You may also like:</h3>
+		</div>
 
 		<?php woocommerce_product_loop_start(); ?>
 

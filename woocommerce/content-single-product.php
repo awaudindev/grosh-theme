@@ -267,7 +267,7 @@ if ( class_exists( 'YITH_WCWL' ) ) {
 				?>
                 <h5 class="padTop20 padBot20 font500">Get a Quote</h5>   	
                 <div class="clearfix row">
-                  <div class="col-md-6 col-sm-6">
+                  <div class="col-md-6">
                     <div class="form-group">
                       <label class="padBot10">Start Date :</label>
                       <input type="text" class="form-control calendarpicker" value="<?php echo $newDate1; ?>" name="start_date" id="datepicker1">

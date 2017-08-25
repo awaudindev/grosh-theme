@@ -38,7 +38,7 @@
                 <label>I'm looking for</label>
                 <div class="cd-search-box">
                   <div class="form-group clearfix">
-                    <input type="text" class="form-control" placeholder="Find the perfect digital drop ...">
+                    <input type="text" class="form-control" placeholder="Find the perfect digital drop ..." autofocus="autofocus" />
                     <select class="selectpicker">
                       <option>Animated images</option>
                       <option>Still images</option>

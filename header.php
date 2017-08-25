@@ -69,7 +69,7 @@
 	                <label>I'm looking for</label>
 	                <div class="cd-search-box">
 	                  <div class="form-group clearfix">
-	                    <input type="text" value="<?php echo $_GET['s']; ?>" name="s" id="s" class="form-control" placeholder="Find the perfect digital drop ...">
+	                    <input type="text" value="<?php echo $_GET['s']; ?>" name="s" id="s" class="form-control" placeholder="Find the perfect digital drop ..." autofocus="autofocus" />
 	                    <select class="selectpicker" name="type" id="type">
 	                    	<option value="" <?php if($_GET['type'] == ''){ echo 'selected'; } ?>>All images</option>
 	                      	<option value="animation" <?php if($_GET['type'] == 'animation'){ echo 'selected'; } ?>>Animated images</option>

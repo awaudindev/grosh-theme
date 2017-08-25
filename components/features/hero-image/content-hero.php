@@ -71,9 +71,9 @@ switch ($total_step) {
                 $people = get_post_meta( $item, '_grosh_user_quote', true );
                 $peopleSize = get_post_meta( $item, '_grosh_people_font_size', true );
                 $peopleFont = get_post_meta( $item, '_grosh_people_google_font', true );
-                $titleStyle = "font-size:".$titleSize.";font-family:'".$titleFont."',sans-serif";
-                $quoteStyle = "font-size:".$quoteSize.";font-family:'".$quoteFont."',sans-serif";
-                $peopleStyle = "font-size:".$peopleSize.";font-family:'".$peopleFont."',sans-serif";
+                $titleStyle = "font-size:".$titleSize."px;font-family:'".$titleFont."',sans-serif";
+                $quoteStyle = "font-size:".$quoteSize."px;font-family:'".$quoteFont."',sans-serif";
+                $peopleStyle = "font-size:".$peopleSize."px;font-family:'".$peopleFont."',sans-serif";
                 $large_image = "";
                 $style = "";
                 $named = "";
@@ -93,9 +93,9 @@ switch ($total_step) {
                       <?php
                         if($product_type == "animation"){
                           ?>
-                          <div class="col-md-6"> 
+                          <div class="col-md-6 col-vid"> 
                             <div class="video-slide">
-                            <video class="video-js vjs-default-skin vjs-big-play-centered playerslider" data-setup='{"fluid": true}' controls autoplay preload="auto" width="670" height="400" id="player<?php echo $v;?>" data-product="<?php echo $product_number; ?>">
+                            <video class="video-js vjs-default-skin vjs-big-play-centered vjs-16-9 playerslider" data-setup='{"fluid": true}' controls autoplay preload="auto" width="" height="310" id="player<?php echo $v;?>" data-product="<?php echo $product_number; ?>">
                                 <source type="video/mp4" src="<?php echo $large_image; ?>" />
                             </video>
                             </div>
@@ -142,9 +142,18 @@ switch ($total_step) {
     </div>
     <div class="hidden-lg">
       <ol class="carousel-indicators">
-        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#myCarousel" data-slide-to="1"></li>
-        <li data-target="#myCarousel" data-slide-to="2"></li>
+        <?php
+          $a = 0;
+          $class_bullet = "";
+          foreach ($slider as $item) {
+            if($a == 0)
+              $class_bullet = 'class="active"';
+            else
+              $class_bullet = "";
+            echo '<li data-target="#myCarousel" data-slide-to="'.$a.'" '.$class_bullet.'></li>';
+            $a++;
+          }
+        ?>
       </ol>
     </div>
 </div><!--[end:page-header]-->
@@ -160,7 +169,7 @@ switch ($total_step) {
                 $st = $step[$i];
                 ?>
                 <div class="col-md-<?php echo $step_class;?> col-sm-<?php echo $step_class;?>">
-                  <div class="icon-feat text-center"><img src="<?php echo $st['image']; ?>"/></div>
+                  <div class="icon-feat text-center"><a href="<?php echo $pack['url']; ?>"><img src="<?php echo $st['image']; ?>"/></a></div>
                   <h5 class="title-entry text-center padTop20 padBot10"><a href="<?php echo $st['url']; ?>"><?php echo $st['title']; ?></a></h5>
                   <p class="text-center">
                     <?php echo $st['description']; ?>
@@ -172,7 +181,7 @@ switch ($total_step) {
                 $pack = $package[$i];
                 ?>
                 <div class="col-md-<?php echo $parent_class;?> col-sm-<?php echo $parent_class;?>">
-                  <div class="icon-feat text-center"><img src="<?php echo $pack['image']; ?>"/></div>
+                  <div class="icon-feat text-center"><a href="<?php echo $pack['url']; ?>"><img src="<?php echo $pack['image']; ?>"/></a></div>
                   <h5 class="title-entry text-center padTop20 padBot10"><a href="<?php echo $pack['url']; ?>"><?php echo $pack['title']; ?></a></h5>
                   <p class="text-center">
                     <?php echo $pack['description']; ?>

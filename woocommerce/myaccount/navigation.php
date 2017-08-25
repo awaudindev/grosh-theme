@@ -29,7 +29,7 @@ $current_user = wp_get_current_user();
 if ( ($current_user instanceof WP_User) ) { ?>
 <div class="col-md-12 aligncenter">
 	<figure class="text-center"><?php echo get_avatar( $current_user->user_email, 128, '', '',  array( 'class' => array('img-circle'))); ?></figure>
-	<h3 class="text-center marBot30"><?php echo $current_user->display_name; ?></h3>
+	<h3 class="text-center marBot30"><?php echo $current_user->user_email; ?></h3>
 </div>
 <span class="clearfix"></span>
 <?php } ?>

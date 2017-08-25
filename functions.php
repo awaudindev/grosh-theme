@@ -42,7 +42,7 @@ function grosh_setup() {
 	 */
 	add_theme_support( 'post-thumbnails' );
 
-	add_image_size( 'grosh-featured-image', 640, 9999 );
+	add_image_size( 'grosh-featured-image', 350, 150 );
 	add_image_size( 'grosh-hero', 1280, 1000, true );
 	add_image_size( 'grosh-thumbnail-avatar', 100, 100, true );
 	// This theme uses wp_nav_menu() in one location.
@@ -230,7 +230,7 @@ function grosh_scripts() {
 	wp_enqueue_script( 'grosh-images-loaded', get_template_directory_uri() . '/assets/js/imagesloaded.pkgd.min.js', array());
 	wp_enqueue_script( 'grosh-modernizr', get_template_directory_uri() . '/assets/js/modernizr.js', array());
 	// wp_enqueue_script( 'grosh-videoplayer', get_template_directory_uri() . '/assets/js/mediaelement-and-player.min.js', array());
-	wp_enqueue_script( 'grosh-videoplayer', 'http://vjs.zencdn.net/4.12/video.js', array());
+	wp_enqueue_script( 'grosh-videoplayer', get_template_directory_uri() . '/assets/js/video.js', array());
 	wp_enqueue_script( 'grosh-mainjs', get_template_directory_uri() . '/assets/js/main.js', array());
 	wp_enqueue_script( 'grosh-skip-link-focus-fix', get_template_directory_uri() . '/assets/js/skip-link-focus-fix.js', array(), '20151215', true );
 
