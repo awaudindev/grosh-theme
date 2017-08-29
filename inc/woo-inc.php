@@ -501,6 +501,21 @@ function change_rent_status($actions, $the_order){
   return $actions;
 
 }
+
+add_filter('woocommerce_order_items_meta_get_formatted','change_meta_item',10,2);
+function change_meta_item($formatted_meta){
+
+	foreach ($formatted_meta as $k => $v) {
+		if(in_array($v['key'],array('product_number','product_type'))){
+			unset($formatted_meta[$k]);
+		}
+	}
+
+	return $formatted_meta;
+
+}
+
+
 add_action( 'wp_ajax_rent_status', 'rent_status' );
 add_action( 'wp_ajax_nopriv_rent_status', 'rent_status' );
 function rent_status() {
