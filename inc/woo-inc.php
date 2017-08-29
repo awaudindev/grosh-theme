@@ -514,6 +514,43 @@ function rent_status() {
   exit;
 }
 
+add_action( 'woocommerce_thankyou', 'custom_woocommerce_auto_complete_paid_order', 10, 1 );
+function custom_woocommerce_auto_complete_paid_order( $order_id ) {
+  if ( ! $order_id )
+    return;
+
+  $order = wc_get_order( $order_id );
+
+  // No updated status for orders delivered with Bank wire, Cash on delivery and Cheque payment methods.
+  if ( 'yith_wcauthnet_credit_card_gateway' == get_post_meta($order_id, '_payment_method', true) ) {
+    $order->update_status( 'completed' );
+  }
+  else {
+    return;
+  }
+}
+
+function rp4wp_title_order_received( $title, $id ) {
+	if ( is_order_received_page() && get_the_ID() === $id ) {
+		global $wp;
+		$order_id  = apply_filters( 'woocommerce_thankyou_order_id', absint( $wp->query_vars['order-received'] ) );
+		$order_key = apply_filters( 'woocommerce_thankyou_order_key', empty( $_GET['key'] ) ? '' : wc_clean( $_GET['key'] ) );
+		if ( $order_id > 0 ) {
+			$order = wc_get_order( $order_id );
+			if ( $order->order_key != $order_key ) {
+				unset( $order );
+			}
+		}
+		if ( isset ( $order ) ) {
+			if($order->payment_method_title == "Purchase Order"){
+				$title = 'Order Received - Pending';
+			}
+		}
+	}
+	return $title;
+}
+add_filter( 'the_title', 'rp4wp_title_order_received', 10, 2 );
+
 add_action('admin_head', 'my_custom_fonts');
 
 function my_custom_fonts() {

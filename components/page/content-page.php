@@ -12,6 +12,9 @@
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 	<header class="entry-header">
 		<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
+		<?php 
+			$value = get_query_var('order-pay');
+		?>
 	</header>
 	<div class="entry-content">
 		<?php

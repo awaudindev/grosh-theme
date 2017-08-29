@@ -320,14 +320,15 @@ if ( class_exists( 'YITH_WCWL' ) ) {
                 </div>
                 <?php } ?>
                 <div class="clearfix">
-                  <div class="col-md-<?php echo $col; ?>">
-                  	<a href="javascript:void(0);" onclick="jQuery('.rental-rate').attr('action','<?php echo get_permalink($post->ID).'?rent='.$post->ID.'&filetype='.$type; ?>').submit();" class="btn btn-default btn-lg text-uppercase">Add to Cart</a>
-                  </div>
-                  <?php if(!$exists){ ?> 
+                <?php if(!$exists){ ?> 
                   <div class="col-md-6">
                   	<?php echo do_shortcode('[yith_wcwl_add_to_wishlist]');?>
                   </div>
                   <?php } ?> 
+                  <div class="col-md-<?php echo $col; ?>">
+                  	<a href="javascript:void(0);" onclick="jQuery('.rental-rate').attr('action','<?php echo get_permalink($post->ID).'?rent='.$post->ID.'&filetype='.$type; ?>').submit();" class="btn btn-default btn-lg text-uppercase">Add to Cart</a>
+                  </div>
+                  
                 </div>
                 </form>
               </div><!--[end:quote-price]-->
