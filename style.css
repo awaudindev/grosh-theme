@@ -85,7 +85,9 @@ audio:not([controls]) {
 }
 
 [hidden],
-template {
+template,
+.woocommerce-password-strength,
+.woocommerce-password-hint {
   display: none;
 }
 
