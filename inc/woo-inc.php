@@ -280,6 +280,9 @@ function order_fields($fields) {
     }
 
     $fields["billing"] = $ordered_fields;
+
+    unset($fields['order']['order_comments']);
+    
     return $fields;
 
 }
