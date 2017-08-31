@@ -255,7 +255,7 @@ function order_fields($fields) {
 	$fields['billing']['billing_user_gender'] = array(
 		'type' => 'select',
 		'class' => array('select_custom'),
-		'options' => array( 'dance' => 'Dance', 'collage' => 'Collage/University', 'schools' => 'Schools (K-12)', 'theater' => 'Theater', 'eventplanner' => 'Event Planner', 'prodcompany' => 'Production Company', 'church' => 'Church', 'other' => 'Other'),
+		'options' => array( 'dance' => 'Dance', 'college' => 'College/University', 'schools' => 'Schools (K-12)', 'theater' => 'Theater', 'eventplanner' => 'Event Planner', 'prodcompany' => 'Production Company', 'church' => 'Church', 'other' => 'Other'),
 		'label' => __('Industry', 'woocommerce'),
 	);
 
@@ -282,7 +282,7 @@ function order_fields($fields) {
     $fields["billing"] = $ordered_fields;
 
     unset($fields['order']['order_comments']);
-    
+
     return $fields;
 
 }
@@ -293,7 +293,7 @@ function my_custom_checkout_field( $checkout ) {
 
  	$link = (!empty($grosh_meta['term-condition-link']) && !is_null($grosh_meta['term-condition-link'])) ? get_permalink($grosh_meta['term-condition-link']) : get_site_url();
 
-    echo '<div class="my-new-field">';
+    echo '<div class="my-new-field" style="text-align: right;">';
     woocommerce_form_field( 'checkout_terms', array(
         'type'          => 'checkbox',
         'class'         => array('input-checkbox'),
@@ -568,6 +568,17 @@ function rp4wp_title_order_received( $title, $id ) {
 	return $title;
 }
 add_filter( 'the_title', 'rp4wp_title_order_received', 10, 2 );
+add_filter( 'wc_add_to_cart_message', 'custom_add_cart_message' , 10, 2 ); 
+function custom_add_cart_message(  $message, $product_id  ) {
+  global $woocommerce;
+  $added_text = get_the_title( $product_id );//sprintf( '%s has been added to your cart.', strip_tags( get_the_title( $product_id )); 
+  $added_text .= " has been added to your cart.";
+  // Output success messages
+  $message   = sprintf( '%s<a href="%s" class="button wc-forward" style="margin-left:10px;">%s</a>', esc_html( $added_text ), esc_url( wc_get_page_permalink( 'cart' ) ), esc_html__( 'View cart', 'woocommerce' ) );
+
+  return $message;
+}
+
 
 add_action('admin_head', 'my_custom_fonts');
 

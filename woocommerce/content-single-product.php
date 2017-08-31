@@ -93,7 +93,7 @@ if ( class_exists( 'YITH_WCWL' ) ) {
 				$_product = $values['data'];
 				if ( $_product->id == $post->ID ){
 					$found = true;
-					echo '<div class="col-md-12"><div class="alert alert-success" role="alert">You already add this file to cart.</div></div>';
+					echo '<div class="col-md-12"><div class="alert alert-success" role="alert">This item is already in your cart.</div></div>';
 				}
 			}
 			// if product not found, add it

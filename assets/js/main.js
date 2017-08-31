@@ -10,25 +10,25 @@ jQuery(document).ready(function($){
 	          autoclose : true,
 	          startDate: today
 	        })
-	        .on( "change", function() {
+	        .on( "changeDate", function() {
 	          $('body').append('<div class="loading" style="position:fixed;top:0;left:0;z-index:999;width:100%;height:100%;color:#fff;background:rgba(0,0,0,0.6);text-align:center;"><strong style="position:relative;top:50%;transform:translateY(-50%);font-size:40px;letter-spacing:1px;">Updating Rental Rate....</strong></div>');
 	          $('.rental-rate').submit();
-	          to.datepicker( "option", "minDate", getDate( this ) );
-	          to[0].datepicker('setStartDate', getDate( this ));
+	          $( "#datepicker2" ).datepicker('setStartDate', getDate( this, true ));
+	          $( "#datepicker2" ).datepicker('update', getDate( this, true ));
 	        }),
 	      to = $( "#datepicker2" ).datepicker({
 	        // minDate: "+1w",
 	        changeMonth: true,
 	        autoclose: true,
-	        startDate: document.getElementById("datepicker1").value
+	        //startDate: document.getElementById("datepicker1").value
 	      })
-	      .on( "change", function() {
+	      .on( "changeDate", function() {
 	      	$('body').append('<div class="loading" style="position:fixed;top:0;left:0;z-index:999;width:100%;height:100%;color:#fff;background:rgba(0,0,0,0.6);text-align:center;"><strong style="position:relative;top:50%;transform:translateY(-50%);font-size:40px;letter-spacing:1px;">Updating Rental Rate....</strong></div>');
 	        $('.rental-rate').submit();
-	        from[0].datepicker("setEndDate", getDate( this ) );
+	        from[0].datepicker("setEndDate", getDate( this, false ) );
 	      });
 	 
-	    function getDate( element ) {
+	    function getDate( element, isadded ) {
 	      var date;
 	      try {
 	        date = $.datepicker.parseDate( dateFormat, element.value );
@@ -36,9 +36,16 @@ jQuery(document).ready(function($){
 	        date = null;
 	      }
 	 		
+
 	 		date = element.value;
-	      return date;
+	 		var myDate = new Date(date);
+	 		if(isadded == true){
+	 			myDate.setDate(myDate.getDate() + 7);
+	 		}
+	      return myDate;
 	    }
+	    $( "#datepicker2" ).datepicker('setStartDate', getDate( document.getElementById("datepicker1"), true ));
+	    $( "#datepicker2" ).datepicker('update', getDate( document.getElementById("datepicker1"), true ));
 	 }
     
 	//open search form
@@ -240,7 +247,9 @@ jQuery(document).ready(function($){
 
 	// $(".playersingle").mediaelementplayer();
 	if($('#playerSingle').length){
-		var sPlayer = videojs('playerSingle');
+		var sPlayer = videojs('playerSingle', {
+			"loop":true
+		});
 		sPlayer.ready(function() {
 		  sPlayer.play();
 		});

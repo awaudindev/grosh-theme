@@ -55,6 +55,8 @@ $bundles =  json_decode( $post_meta["wcpb_bundle_products"][0], true );
 		        }
 		        $title = get_the_title($key);
 
+		        $linkProduct = get_permalink($key);
+
 		?>
 			<li class="col-md-4 col-sm-6 col-xs-12" style="cursor: pointer;">
 				<div class="thumb-post">
@@ -68,7 +70,7 @@ $bundles =  json_decode( $post_meta["wcpb_bundle_products"][0], true );
 		          		<img width="350" height="150" class="img-responsive" src="<?php echo $large_image; ?>" alt="<?php echo $title; ?>" title="<?php echo $title; ?>"/>
 		          	</a>
 		            <h5 class="title-product pad20 text-center">
-		            	<a href="#"><?php echo $title; ?></a>
+		            	<a href="<?php echo $linkProduct; ?>"><?php echo $title; ?></a>
 		            </h5>
 		         </div>
 			</li>

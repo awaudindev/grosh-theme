@@ -73,7 +73,7 @@ if ( sizeof( $checkout->checkout_fields ) > 0 ) : ?>
 		<?php do_action( 'woocommerce_checkout_after_customer_details' ); ?>
 
 	<?php endif; ?>
-	 <a class="btn btn-primary continue">Continue</a>
+	 <a class="btn btn-default continue" style="float:right;">Continue</a>
   </div>
 <div role="tabpanel" class="tab-pane" id="paymentPage">
 	<h3 id="order_review_heading"><?php _e( 'Your order', 'woocommerce' ); ?></h3>
@@ -84,7 +84,9 @@ if ( sizeof( $checkout->checkout_fields ) > 0 ) : ?>
 		<?php do_action( 'woocommerce_checkout_order_review' ); 
 			do_action('woocommerce_checkout_custom');
 		?>
+		<div style="display: inline-block; width: 90%; text-align: right;">
 		<a class="btn btn-primary back">Go Back</a>
+		</div>
 	</div>
 	<?php do_action( 'woocommerce_checkout_after_order_review' ); ?>
   </div>
@@ -96,7 +98,7 @@ if ( sizeof( $checkout->checkout_fields ) > 0 ) : ?>
 	.my-new-field .form-row label.checkbox a{font-weight: bold;color:#086FB7;}
 	.my-new-field .form-row .input-checkbox{left: 11px;top:50%;transform: translateY(-50%);margin:0!important;}
 	#order_review .place-order{opacity: 0;height: 0;overflow: hidden;padding: 0!important;margin-bottom: 15px;}
-	<?php if($checkout->get_value( 'billing_user_gender' ) != 'collage' && $checkout->get_value( 'billing_user_gender' ) != 'schools') { ?>.wc_payment_method.payment_method_purchase_order{display: none;} 
+	<?php if($checkout->get_value( 'billing_user_gender' ) != 'college' && $checkout->get_value( 'billing_user_gender' ) != 'schools') { ?>.wc_payment_method.payment_method_purchase_order{display: none;} 
 	<?php } ?>
 	.login-wrapper{
 		/*top:-50px;*/
@@ -167,7 +169,7 @@ add_action('wp_footer',function(){ ?>
 		$('#billing_user_gender').change(function() {
 			 var optionChange = $(this).find('option:selected');
 
-			 if(optionChange.val() === 'collage' || optionChange.val() === 'schools'){
+			 if(optionChange.val() === 'college' || optionChange.val() === 'schools'){
 			 	$('.wc_payment_method.payment_method_purchase_order').show();
 			 }else{
 			 	$('.wc_payment_method.payment_method_purchase_order').hide();
