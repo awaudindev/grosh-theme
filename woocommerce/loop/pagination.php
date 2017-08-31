@@ -39,8 +39,7 @@ $order_by = ($_GET['orderby']) ? $_GET['orderby'] : 'menu_order';
 <script type="text/javascript">
   jQuery(function($){
     $(document).ready( function() {
-    	$(window).on('load',function(){
-    	$('.popular-post').append('<div class="loadMore"><a href="#" class="fetch_post btn btn-default" <?php if(is_search()){ ?> data-query="<?php echo $_GET['s']; ?>"<?php } ?> data-orderby="<?php echo $order_by; ?>"  data-offset="1" data-perpage="<?php echo $per_page; ?>" >Load More</a></div>');	
+    	$(window).on('load',function(){	
     	$('.fetch_post').on('click',function(e){
     		e.preventDefault();
     		var product = $('.list_post').attr('data-meta'),offset = $(this).attr('data-offset'),orderby = $(this).attr('data-orderby'),page = $(this).attr('data-perpage');
@@ -83,19 +82,19 @@ $order_by = ($_GET['orderby']) ? $_GET['orderby'] : 'menu_order';
 	    });
   	});
 </script>
-<!-- <nav class="woocommerce-pagination"> -->
+<nav class="woocommerce-pagination">
 	<?php
-		// echo paginate_links( apply_filters( 'woocommerce_pagination_args', array(
-		// 	'base'         => esc_url_raw( str_replace( 999999999, '%#%', remove_query_arg( 'add-to-cart', get_pagenum_link( 999999999, false ) ) ) ),
-		// 	'format'       => '',
-		// 	'add_args'     => false,
-		// 	'current'      => max( 1, get_query_var( 'paged' ) ),
-		// 	'total'        => $wp_query->max_num_pages,
-		// 	'prev_text'    => '&larr;',
-		// 	'next_text'    => '&rarr;',
-		// 	'type'         => 'list',
-		// 	'end_size'     => 3,
-		// 	'mid_size'     => 3
-		// ) ) );
+		echo paginate_links( apply_filters( 'woocommerce_pagination_args', array(
+			'base'         => esc_url_raw( str_replace( 999999999, '%#%', remove_query_arg( 'add-to-cart', get_pagenum_link( 999999999, false ) ) ) ),
+			'format'       => '',
+			'add_args'     => false,
+			'current'      => max( 1, get_query_var( 'paged' ) ),
+			'total'        => $wp_query->max_num_pages,
+			'prev_text'    => '&larr;',
+			'next_text'    => '&rarr;',
+			'type'         => 'list',
+			'end_size'     => 3,
+			'mid_size'     => 3
+		) ) );
 	?>
-<!-- </nav> -->
+</nav>

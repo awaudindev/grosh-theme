@@ -255,8 +255,9 @@ function order_fields($fields) {
 	$fields['billing']['billing_user_gender'] = array(
 		'type' => 'select',
 		'class' => array('select_custom'),
-		'options' => array( 'dance' => 'Dance', 'college' => 'College/University', 'schools' => 'Schools (K-12)', 'theater' => 'Theater', 'eventplanner' => 'Event Planner', 'prodcompany' => 'Production Company', 'church' => 'Church', 'other' => 'Other'),
+		'options' => array( ' '=>'Select Industry','dance' => 'Dance', 'college' => 'College/University', 'schools' => 'Schools (K-12)', 'theater' => 'Theater', 'eventplanner' => 'Event Planner', 'prodcompany' => 'Production Company', 'church' => 'Church', 'other' => 'Other'),
 		'label' => __('Industry', 'woocommerce'),
+		'required' => true
 	);
 
     $order = array(

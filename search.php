@@ -34,7 +34,21 @@ get_header(); ?>
 
 			// the_posts_navigation();
 
-			echo '</div><div class="row"><div class="col-md-12 load-wrapper"></div></div></div>';
+			$paginate = paginate_links( array(
+				'base'         => esc_url_raw( str_replace( 999999999, '%#%', remove_query_arg( 'add-to-cart', get_pagenum_link( 999999999, false ) ) ) ),
+				'format'       => '',
+				'add_args'     => false,
+				'current'      => max( 1, get_query_var( 'paged' ) ),
+				'total'        => $wp_query->max_num_pages,
+				'prev_text'    => '&larr;',
+				'next_text'    => '&rarr;',
+				'type'         => 'list',
+				'end_size'     => 3,
+				'mid_size'     => 3
+			) );
+			
+
+			echo '</div><div class="row"><div class="col-md-12 load-wrapper woocommerce"><nav class="woocommerce-pagination">'.$paginate.'</nav></div></div></div>';
 
 		else :
 
@@ -56,8 +70,7 @@ get_footer(); ?>
   jQuery(function($){
   	$(document).ready( function() {
     	$(window).on('load',function(){
-    	if($('.article-search-wrapper article').length  >= <?php echo get_option( 'posts_per_page' ); ?>){
-	    	$('.load-wrapper').append('<div class="loadMore"><a href="#" class="fetch_post btn btn-default" data-query="<?php echo $_GET['s']; ?>"  data-offset="1" >Load More</a></div>');	
+    	if($('.article-search-wrapper article').length  >= <?php echo get_option( 'posts_per_page' ); ?>){	
 	    	$('.fetch_post').on('click',function(e){
 	    		e.preventDefault();
 	    		var offset = $(this).attr('data-offset'),query = $(this).attr('data-query');

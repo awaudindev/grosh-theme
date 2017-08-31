@@ -69,10 +69,10 @@ function main_product_category( $atts, $content = ""){
 
 		$per_page = ($_GET['per_page']) ? intval($_GET['per_page']) : intval(get_query_var('posts_per_page'));
 		$order_by = ($_GET['orderby']) ? $_GET['orderby'] : 'menu_order';
-
+		$offset = (get_query_var( 'paged' ) < 1) ? 0 : (get_query_var( 'paged' ) - 1) * $per_page;
 		$args = array(
 			'posts_per_page'   => $per_page,
-			'offset'           => 0,
+			'offset'           => $offset,
 			'post_status' => 'publish',
 			'post_type' => 'product',
 			'orderby' => $order_by,
@@ -100,9 +100,25 @@ function main_product_category( $atts, $content = ""){
 			$result .= '</ul></div>';
 		endif;
 		
-		if(($i > ($per_page-1) || $i > $per_page) && $per_page != -1){
-			add_action('wp_footer',function() use ($order_by,$per_page){get_post_ajax($order_by,$per_page);},10);
-		}
+		// if(($i > ($per_page-1) || $i > $per_page) && $per_page != -1){
+		// 	add_action('wp_footer',function() use ($order_by,$per_page){get_post_ajax($order_by,$per_page);},10);
+		// }
+		$result .= '<nav class="woocommerce-pagination">';
+
+		$result .= paginate_links(  array(
+			'base'         => esc_url_raw( str_replace( 999999999, '%#%', remove_query_arg( 'add-to-cart', get_pagenum_link( 999999999, false ) ) ) ),
+			'format'       => '',
+			'add_args'     => false,
+			'current'      => max( 1, get_query_var( 'paged' ) ),
+			'total'        => $query->max_num_pages,
+			'prev_text'    => '&larr;',
+			'next_text'    => '&rarr;',
+			'type'         => 'list',
+			'end_size'     => 3,
+			'mid_size'     => 3
+		) );
+
+		$result .= '</nav>';
 	}
 
 	return $result;
