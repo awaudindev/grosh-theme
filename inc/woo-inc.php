@@ -555,10 +555,22 @@ add_action( 'woocommerce_email_after_order_table', 'add_order_email_instructions
 function add_order_email_instructions( $order, $sent_to_admin ) {
   
   if ( ! $sent_to_admin ) {
-      echo '<p><a href="'.get_permalink(878).'"><h3>What’s Next?</h3></a></p>
+      echo '<table border="0" cellpadding="10" cellspacing="0" width="600" id="template_footer">
+<tr>
+<td valign="top">
+<table border="0" cellpadding="10" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" valign="middle" id="credit">
+<p style="text-align:center;"><a href="'.get_permalink(878).'"><h3 style="text-align:center;">What’s Next?</h3></a></p>
 <p>Please download the Grosh Digital App for your mobile device or desktop computer. Simply login to the
 APP with the same username and password you created for this online order. This helpful “How it
-works” video can assist you with step by step instructions.</p>';
+works” video can assist you with step by step instructions.</p>
+</td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+									</table>';
   }
 }
 
