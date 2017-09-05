@@ -541,11 +541,24 @@ function custom_woocommerce_auto_complete_paid_order( $order_id ) {
   $order = wc_get_order( $order_id );
 
   // No updated status for orders delivered with Bank wire, Cash on delivery and Cheque payment methods.
-  if ( 'yith_wcauthnet_credit_card_gateway' == get_post_meta($order_id, '_payment_method', true) ) {
+  // if ( 'yith_wcauthnet_credit_card_gateway' == get_post_meta($order_id, '_payment_method', true) ) {
+  if( 'authorizenet' == get_post_meta($order_id, '_payment_method', true) ){
     $order->update_status( 'completed' );
   }
   else {
     return;
+  }
+}
+
+add_action( 'woocommerce_email_after_order_table', 'add_order_email_instructions', 10, 2 );
+ 
+function add_order_email_instructions( $order, $sent_to_admin ) {
+  
+  if ( ! $sent_to_admin ) {
+      echo '<p><a href="'.get_permalink(878).'"><h3>What’s Next?</h3></a></p>
+<p>Please download the Grosh Digital App for your mobile device or desktop computer. Simply login to the
+APP with the same username and password you created for this online order. This helpful “How it
+works” video can assist you with step by step instructions.</p>';
   }
 }
 

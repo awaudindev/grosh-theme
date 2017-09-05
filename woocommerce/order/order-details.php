@@ -139,8 +139,3 @@ $day = ($periodRent > 1) ? 'days' : 'day';
 		</tr>
 	</tbody>
 </table>
-<h2>ADD THE FOLLOWING TO THE ORDER SUMMARY EMAIL</h2>
-<p><a href="http://dev.groshdigital.com/frequently-and-questions/"><h3>What’s Next?</h3></a></p>
-<p>Please download the Grosh Digital App for your mobile device or desktop computer. Simply login to the
-APP with the same username and password you created for this online order. This helpful “How it
-works” video can assist you with step by step instructions.</p>
