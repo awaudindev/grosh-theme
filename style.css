@@ -2897,3 +2897,16 @@ MEDIA QUERY
 .woocommerce-page table.cart td.actions .coupon input{
   width: auto!important;
 }
+.modal-wrapper.styled .modal{
+  height:80%;
+}
+.modal-wrapper.styled #modal-content{
+  position:absolute;
+  top:0;
+  left:0;
+  height:100%;
+  overflow-y:auto;
+}
+.modal-wrapper.styled .modal .close-modal{
+  right:15px;
+}
