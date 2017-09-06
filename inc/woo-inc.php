@@ -298,7 +298,7 @@ function my_custom_checkout_field( $checkout ) {
     woocommerce_form_field( 'checkout_terms', array(
         'type'          => 'checkbox',
         'class'         => array('input-checkbox'),
-        'label'         => __('I have read and accept the <a href="'.$link.'" target="_blank">Terms & Conditions</a>.'),
+        'label'         => __('I have read and accept the <a href="'.$link.'" target="_blank" class="modal-link">Terms & Conditions</a>.'),
         'required'  => true,
         ), false );
  
