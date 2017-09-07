@@ -396,6 +396,132 @@ function product_packages( $atts, $content = ""){
 }
 add_shortcode('packages','product_packages');
 
+function fan_packages( $atts, $content = ""){
+
+	extract(shortcode_atts(array(
+		'id' => ''
+	),$atts));
+
+	$result .= '';
+
+	$params = array(
+
+          'posts_per_page' => -1,
+
+          'post_type' => 'product',
+          
+          'meta_query' => array(
+                array(
+                  'key'     => 'wcpb_bundle_products'
+                ),
+              )
+
+    );
+
+
+    $wc_query = new WP_Query($params);
+    $result .= '<div class="popular-post">';
+    	$result .= '<ul class="clearfix">';
+
+    if ($wc_query->have_posts()) : 
+    	while ($wc_query->have_posts()) :$wc_query->the_post();
+
+      	$id = get_the_ID();
+
+      	$product = new WC_Product($id);
+
+      	$img_oid = $product->get_image_id(); 
+
+      	$image = "";
+
+      	$product_number = get_post_meta( $id, 'product_number', true );
+      	$bundles =  json_decode( get_post_meta( $id, "wcpb_bundle_products", true ), true );
+
+      	$total_bundle = (is_array( $bundles )) ? count($bundles) : 1;
+
+      	$first_key = key($bundles);
+      	
+		$check_animation = false;
+
+
+      	$result .= '<li class="text-center baraja-parent col-md-4 col-sm-6">';  
+
+	        $result .= '<div class="thumb-post">';
+
+		        $result .= '<div class="baraja-demo"><ul class="baraja-el baraja-container">';
+
+		        foreach ($bundles as $k => $v) {
+
+			      	$url = wp_get_attachment_url( get_post_thumbnail_id($k), 'grosh-featured-image' );
+			      	$product_number = get_post_meta( $k, 'product_number', true );
+
+			      	if(empty($url)){
+			      		$large_image = getProductImage($product_number, false, false);
+			      	}else{
+			      		$large_image = $url;
+			      	}
+
+			    	$result .= '<li><img width="350" height="150" class="img-responsive" src="'.$large_image.'" alt="'.get_the_title($k).'" title="'.get_the_title($k).'"/><h4>'.get_the_title($k).'</h4></li>';
+			    }
+			    	$result .= '</ul></div>';
+
+			    	$result .= '<nav class="actions light">
+									<span class="nav-prev">&lt;</span>
+									<span class="nav-next">&gt;</span>
+								</nav>';
+
+			    	$result .= '<h5 class="title-product"><a href="'.esc_url( get_permalink($id) ).'">'.get_the_title($id).' ('.$total_bundle.')</a></h5>';
+			    $result .= '';
+
+	        $result .= '</div>';
+
+        $result .= '</li>';
+
+
+      endwhile;
+
+      wp_reset_postdata();
+
+      else:
+
+        $result .= '<li>No Product</li>';
+
+      endif;
+
+      $result .= '</ul></div>';
+
+	wp_enqueue_style( 'checkbox', get_template_directory_uri() . '/assets/stylesheets/baraja.css' );
+	add_action('wp_footer',function(){
+	 ?>
+
+	<script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/assets/js/jquery.baraja.js"></script>
+	<script type="text/javascript">	
+		 jQuery(function($){
+    		$(document).ready( function() {
+
+			var $el = $( '.baraja-el' );
+			 $el.each(function(){ 
+			 	var card = $(this).baraja();
+			 	
+			 	$(this).parent().parent().on( 'click','.nav-prev', function( event ) {
+					card.previous();
+				} );
+				$(this).parent().parent().on( 'click', '.nav-next' , function( event ) {
+					card.next();
+				} );
+			 });
+
+			});
+		});
+	</script>
+	<?php
+	},30);
+
+	return $result;
+
+}
+add_shortcode('fan-package','fan_packages');
+
 add_action( 'woocommerce_before_calculate_totals', 'add_custom_price' );
 
 function add_custom_price( $cart_object ) {

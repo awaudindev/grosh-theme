@@ -96,6 +96,11 @@ global $post;
         $(document).ready(function() {
             if($('li.wpmenucartli a.wpmenucart-contents span').length){ }
             $('.navbar-nav.main-menu li:last').after('<li class="menu-item"><a title="Login" href="#" class="modal-login" data-toggle="modal" data-target="#myModal">Login</a></li>');
+
+            if($('.yith-wcwl-add-to-wishlist').length){
+                $('<div class="add-to-wishlist"><div class="yith-wcwl-add-button"><a href="#" data-toggle="modal" data-target="#myModal" rel="nofollow">Add to Wishlist</a></div><div style="clear:both"></div></div>').insertBefore('.yith-wcwl-add-to-wishlist');
+                $('.yith-wcwl-add-to-wishlist').hide().removeClass('show');
+            }
          });
         <?php if($_POST['register'] || $_POST['login']){ ?>
         $(window).on('load',function(){
