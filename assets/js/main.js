@@ -104,7 +104,15 @@ jQuery(document).ready(function($){
 	
 	var urlvideo = "";
 	if($('#my-video').length){
-		var myPlayer = videojs('my-video');
+		var myPlayer = videojs('my-video', {
+		  children: {
+		    controlBar: {
+		      children: {
+		        volumeControl: false 
+		      }
+		    }
+		  }
+		});
 
 		$('body').on('click', '.type-product .caption', function(event) {
 			$('#popupMsg').modal('show'); 

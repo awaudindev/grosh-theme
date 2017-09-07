@@ -1827,6 +1827,9 @@ Custom datepicker style
 /*----------------------------------
 WOOCOMMERCE
 ------------------------------------*/
+.woocommerce input.button.alt{
+  float: right;
+}
 .woocommerce img, .woocommerce-page img{
   border-radius: 4px;
 }
@@ -2898,15 +2901,17 @@ MEDIA QUERY
   width: auto!important;
 }
 .modal-wrapper.styled .modal{
-  height:80%;
+	height:80%;
 }
 .modal-wrapper.styled #modal-content{
-  position:absolute;
-  top:0;
-  left:0;
-  height:100%;
-  overflow-y:auto;
+	position:absolute;
+	top:0;
+	left:0;
+	height:100%;
+	overflow-y:auto;
 }
 .modal-wrapper.styled .modal .close-modal{
-  right:15px;
+	right:15px;
 }
+
+.vjs-default-skin .vjs-volume-menu-button { display: none; }

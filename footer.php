@@ -26,7 +26,7 @@ global $post;
                 <div class="modal-body">
                     <a data-dismiss="modal" class="close-modal"><span aria-hidden="true">&times;</span></a>
                     <div id="dvMsg">
-                    	<video id="my-video" class="video-js vjs-default-skin" controls preload="auto" width="100%" height="460"></video>
+                    	<video id="my-video" class="video-js vjs-default-skin" controls preload="auto" width="100%" height="260"></video>
                     </div>
                 </div>
             </div>
@@ -39,6 +39,28 @@ global $post;
                     <a data-dismiss="modal" class="close-modal"><span aria-hidden="true">&times;</span></a>
                     <div id="c_preview" style="text-align:center;">
                         <img id="img_p_bun" src="http://project.wedangsusu.com/grosh/wp-content/themes/grosh/assets/images/Spinner.gif">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade modal-sign" id="confirmation_logout" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+        aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <?php grosh_the_custom_logo(); ?>
+                </div>
+                <div class="modal-body clearfix">
+                    <div class="col-md-12 woocommerce" style="text-align: center;">
+                        <p>Are you sure you want to log out?</p>
+                    </div>
+                </div>
+                <div class="modal-footer clearfix">
+                    <div class="col-md-12 woocommerce" style="text-align: center;">
+                        <a href="<?php echo wp_logout_url(); ?>" class="btn btn-default logoutagree">OK</a>
+                        <a class="btn btn-default" data-dismiss="modal">Cancel</a>
                     </div>
                 </div>
             </div>

@@ -39,6 +39,9 @@ if ( ($current_user instanceof WP_User) ) { ?>
 				<a href="<?php echo esc_url( wc_get_account_endpoint_url( $endpoint ) ); ?>"><?php echo esc_html( $label ); ?></a>
 			</li>
 		<?php endforeach; ?>
+		<li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--customer-logout">
+			<a href="#" class="modal-login" data-toggle="modal" data-target="#confirmation_logout">Logout</a>
+		</li>
 	</ul>
 </nav>
 

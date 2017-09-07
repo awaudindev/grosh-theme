@@ -864,8 +864,8 @@ function wpb_woo_my_account_order() {
 	 	'edit-account' => __( 'Change My Details', 'woocommerce' ),
 		'orders' => __( 'Orders', 'woocommerce' ),
 		'wishlist' =>  __( 'Wishlist', 'woocommerce' ),
-	 	'edit-address' => __( 'Billing Address', 'woocommerce' ),
-	 	'customer-logout' => __( 'Logout', 'woocommerce' ),
+	 	'edit-address' => __( 'Billing Address', 'woocommerce' )
+	 	//'customer-logout' => __( 'Logout', 'woocommerce' ),
 	 );
 	 return $myorder;
 }
