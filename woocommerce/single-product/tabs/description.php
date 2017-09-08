@@ -43,5 +43,6 @@ if($paragraph == '&nbsp;')
 }else{
 	the_content();
 }
+echo sharing_display();
 ?>
 <?php //the_content(); ?>

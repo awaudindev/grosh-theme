@@ -35,30 +35,49 @@ if ( $order ) : ?>
 
 	<?php else : ?>
 
-		<p class="woocommerce-thankyou-order-received"><?php echo apply_filters( 'woocommerce_thankyou_order_received_text', __( 'Thank you. Your order has been received.', 'woocommerce' ), $order ); ?></p>
+		
+		<?php $payment_type = get_post_meta($order->id, '_payment_method', true); ?>
+		<?php if($payment_type == 'authorizenet'){?>
+			<p class="woocommerce-thankyou-order-received"><?php echo apply_filters( 'woocommerce_thankyou_order_received_text', __( 'Thank you for renting from Grosh Digital!', 'woocommerce' ), $order ); ?></p>
+			<p class="woocommerce-thankyou-order-received">Here are the next steps to start your show.</p>
+			<p>Please download the Grosh Digital App to your mobile device or desktop computer.</p>
+			<div class="col-md-12 text-center" style="margin-bottom: 20px;">
+				<div class="col-md-4 text-center">
+					<img src="http://www.groshdigital.com/dev/wp-content/uploads/2017/04/android-badges.png" alt="" width="212" height="74">
+				</div>
+				<div class="col-md-4 text-center">
+					<img src="http://www.groshdigital.com/dev/wp-content/uploads/2017/04/apple-badges.png" alt="" width="212" height="74">
+				</div>
+				<div class="col-md-4 text-center">
+					<img src="http://dev.groshdigital.com/wp-content/uploads/2017/09/download_laptop.png" alt="" width="212" height="74">
+				</div>
+			</div>
+			<p>Simply login to the app with the same email and password you created for this online order. You can edit your order sequence, activate and play your show. This helpful <a href="http://dev.groshdigital.com/frequently-and-questions/">"How it works"</a> video can assist you with step by step instructions.</p>
+		<?php }else{?>
+			<p class="woocommerce-thankyou-order-received"><?php echo apply_filters( 'woocommerce_thankyou_order_received_text', __( 'Thank you. Your order has been received.', 'woocommerce' ), $order ); ?></p>
 
-		<ul class="woocommerce-thankyou-order-details order_details">
-			<li class="order">
-				<?php _e( 'Order Number:', 'woocommerce' ); ?>
-				<strong><?php echo $order->get_order_number(); ?></strong>
-			</li>
-			<li class="date">
-				<?php _e( 'Date:', 'woocommerce' ); ?>
-				<strong><?php echo date_i18n( get_option( 'date_format' ), strtotime( $order->order_date ) ); ?></strong>
-			</li>
-			<li class="total">
-				<?php _e( 'Total:', 'woocommerce' ); ?>
-				<strong><?php echo $order->get_formatted_order_total(); ?></strong>
-			</li>
-			<?php if ( $order->payment_method_title ) : ?>
-			<li class="method">
-				<?php _e( 'Payment Method:', 'woocommerce' ); ?>
-				<strong><?php echo $order->payment_method_title; ?></strong>
-			</li>
-			<?php endif; ?>
-		</ul>
+			<ul class="woocommerce-thankyou-order-details order_details">
+				<li class="order">
+					<?php _e( 'Order Number:', 'woocommerce' ); ?>
+					<strong><?php echo $order->get_order_number(); ?></strong>
+				</li>
+				<li class="date">
+					<?php _e( 'Date:', 'woocommerce' ); ?>
+					<strong><?php echo date_i18n( get_option( 'date_format' ), strtotime( $order->order_date ) ); ?></strong>
+				</li>
+				<li class="total">
+					<?php _e( 'Total:', 'woocommerce' ); ?>
+					<strong><?php echo $order->get_formatted_order_total(); ?></strong>
+				</li>
+				<?php if ( $order->payment_method_title ) : ?>
+				<li class="method">
+					<?php _e( 'Payment Method:', 'woocommerce' ); ?>
+					<strong><?php echo $order->payment_method_title; ?></strong>
+				</li>
+				<?php endif; ?>
+			</ul>
+		<?php } ?>
 		<div class="clear"></div>
-
 	<?php endif; ?>
 
 	<?php do_action( 'woocommerce_thankyou_' . $order->payment_method, $order->id ); ?>

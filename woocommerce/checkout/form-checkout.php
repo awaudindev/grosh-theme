@@ -155,7 +155,13 @@ add_action('wp_footer',function(){ ?>
 
 		    $tabs.filter('.active').prev('li').find('a[data-toggle="tab"]').each(function () {
 		        $(this).attr("data-toggle", "").parent('li').addClass("disabled");;        
-		    })
+		    });
+
+		    if($('#billing_user_gender').val() === 'college' || $('#billing_user_gender').val() === 'schools'){
+			 	$('.wc_payment_method.payment_method_purchase_order').show();
+			 }else{
+			 	$('.wc_payment_method.payment_method_purchase_order').hide();
+			 }
 		});
 
 		$('#place_order').appendTo($('#order_review'));

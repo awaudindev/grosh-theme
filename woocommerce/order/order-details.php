@@ -40,7 +40,7 @@ $day = ($periodRent > 1) ? 'days' : 'day';
 					<tbody>
 						<tr>
 							<td id="m_833562352934177106header_wrapper" style="padding:36px 48px;display:block">
-								<h1 style="color:#ffffff;font-family:&quot;Helvetica Neue&quot;,Helvetica,Roboto,Arial,sans-serif;font-size:30px;font-weight:300;line-height:150%;margin:0;text-align:left">Grosh Digital Order</h1>
+								<h1 style="color:#ffffff;font-family:&quot;Helvetica Neue&quot;,Helvetica,Roboto,Arial,sans-serif;font-size:30px;font-weight:300;line-height:150%;margin:0;text-align:left">Grosh Digital Order # <?php echo $order->get_order_number(); ?></h1>
 							</td>
 						</tr>
 					</tbody>
