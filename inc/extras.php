@@ -501,7 +501,15 @@ function fan_packages( $atts, $content = ""){
 
 			var $el = $( '.baraja-el' );
 			 $el.each(function(){ 
-			 	var card = $(this).baraja();
+			 	var card = $(this).baraja().fan( {
+						speed : 500,
+						easing : 'ease-out',
+						range : 20,
+						direction : 'right',
+						origin : { x : 50, y : 200 },
+						center : false,
+						translation : 300
+					} );
 			 	
 			 	$(this).parent().parent().on( 'click','.nav-prev', function( event ) {
 					card.previous();
