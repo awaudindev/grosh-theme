@@ -468,7 +468,7 @@ function fan_packages( $atts, $content = ""){
 			    	$result .= '<nav class="actions light">
 									<span class="nav-prev">&lt;</span>
 									<span class="nav-next">&gt;</span>
-								</nav>';
+								</nav><div class="fan-right top"></div>';
 
 			    	$result .= '<h5 class="title-product"><a href="'.esc_url( get_permalink($id) ).'">'.get_the_title($id).' ('.$total_bundle.')</a></h5>';
 			    $result .= '';
@@ -489,11 +489,25 @@ function fan_packages( $atts, $content = ""){
       endif;
 
       $result .= '</ul></div>';
-
+	  
 	wp_enqueue_style( 'checkbox', get_template_directory_uri() . '/assets/stylesheets/baraja.css' );
 	add_action('wp_footer',function(){
 	 ?>
-
+    <style type="text/css">
+		.fan-right{
+			position:absolute;
+			top:0;
+			left:0;
+			width:100%;
+			height:100%;
+		}
+		.fan-right.top{
+			z-index:2000;
+		}
+		.fan-right.bottom{
+			z-index:1;
+		}
+	</style>
 	<script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/assets/js/jquery.baraja.js"></script>
 	<script type="text/javascript">	
 		 jQuery(function($){
@@ -501,16 +515,33 @@ function fan_packages( $atts, $content = ""){
 
 			var $el = $( '.baraja-el' );
 			 $el.each(function(){ 
-			 	var card = $(this).baraja().fan( {
+			 	var card = $(this).baraja();
+				
+				$(this).children().on('click',function(event){
+					if($(this).parent().parent().parent().find($('.fan-right')).hasClass('top')){
+						$(this).parent().parent().parent().find($('.fan-right')).removeClass('top').addClass('bottom');
+					}else if($(this).parent().parent().parent().find($('.fan-right')).hasClass('bottom')){
+						$(this).parent().parent().parent().find($('.fan-right')).removeClass('bottom').addClass('top');
+					}
+				});
+
+				$(this).parent().parent().on('click','.fan-right',function(event){
+					card.fan( {
 						speed : 500,
 						easing : 'ease-out',
 						range : 20,
 						direction : 'right',
 						origin : { x : 50, y : 200 },
-						center : false,
+						center : true,
 						translation : 300
 					} );
-			 	
+					if($(this).hasClass('top')){
+						$(this).removeClass('top').addClass('bottom');
+					}else if($(this).hasClass('bottom')){
+						$(this).removeClass('bottom').addClass('top');
+					}
+				});
+				 
 			 	$(this).parent().parent().on( 'click','.nav-prev', function( event ) {
 					card.previous();
 				} );
