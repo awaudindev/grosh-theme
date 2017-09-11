@@ -465,10 +465,7 @@ function fan_packages( $atts, $content = ""){
 			    }
 			    	$result .= '</ul></div>';
 
-			    	$result .= '<nav class="actions light">
-									<span class="nav-prev">&lt;</span>
-									<span class="nav-next">&gt;</span>
-								</nav><div class="fan-right top"></div>';
+			    	$result .= '<div class="fan-right top"></div>';
 
 			    	$result .= '<h5 class="title-product"><a href="'.esc_url( get_permalink($id) ).'">'.get_the_title($id).' ('.$total_bundle.')</a></h5>';
 			    $result .= '';
@@ -517,6 +514,15 @@ function fan_packages( $atts, $content = ""){
 			 $el.each(function(){ 
 			 	var card = $(this).baraja();
 				
+			 	card.fan( {
+					speed : 500,
+					easing : 'ease-out',
+					range : 40,
+					direction : 'right',
+					origin : { x : 0, y : 300 },
+					center : true
+				} );
+				
 				$(this).children().on('click',function(event){
 					if($(this).parent().parent().parent().find($('.fan-right')).hasClass('top')){
 						$(this).parent().parent().parent().find($('.fan-right')).removeClass('top').addClass('bottom');
@@ -529,11 +535,10 @@ function fan_packages( $atts, $content = ""){
 					card.fan( {
 						speed : 500,
 						easing : 'ease-out',
-						range : 20,
+						range : 40,
 						direction : 'right',
-						origin : { x : 50, y : 200 },
-						center : true,
-						translation : 300
+						origin : { x : 0, y : 300 },
+						center : true
 					} );
 					if($(this).hasClass('top')){
 						$(this).removeClass('top').addClass('bottom');
