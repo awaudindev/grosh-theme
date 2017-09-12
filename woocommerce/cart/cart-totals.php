@@ -134,7 +134,7 @@ $rentalDate = WC()->session->get('rental_date');
 
 <div class="col-md-5 padRight0 pull-right carttotals col-sm-12 col-xs-12"> 
 	<div class="wc-proceed-to-checkout" style="float:right;">
-		<a href="<?php echo esc_url( apply_filters( 'woocommerce_return_to_shop_redirect', wc_get_page_permalink( 'shop' ) ) ); ?>" class="checkout-button button alt wc-forward" style="float: left;margin-right: 10px;">
+		<a href="<?php echo esc_url( apply_filters( 'woocommerce_return_to_shop_redirect', wc_get_page_permalink( 'shop' ) ) ); ?>" class="btn btn-default button alt wc-forward" style="float: left;margin-right: 10px;">
 			<?php echo __( 'Return to shop', 'woocommerce' ); ?>
 		</a>
 		<?php do_action( 'woocommerce_proceed_to_checkout' ); ?>

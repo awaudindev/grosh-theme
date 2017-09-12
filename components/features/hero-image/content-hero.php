@@ -48,7 +48,7 @@ switch ($total_step) {
 }
 ?>
 <div class="page-header"><!--[start:page-header]-->
-    <div id="myCarousel" class="carousel slide">
+    <div id="slide" class="carousel slide">
       	<div class="carousel-inner">
           <?php
             $class = "";
@@ -133,10 +133,10 @@ switch ($total_step) {
           ?>
         </div>
       	<?php //get_product_search_form(); ?>  
-      	<a class="left carousel-control" href="#myCarousel" data-slide="prev">
+      	<a class="left carousel-control" href="#slide" data-slide="prev">
         	<i class="glyphicon glyphicon-chevron-left"></i>
       	</a>
-      	<a class="right carousel-control" href="#myCarousel" data-slide="next">
+      	<a class="right carousel-control" href="#slide" data-slide="next">
         	<i class="glyphicon glyphicon-chevron-right"></i>
       	</a>
     </div>
@@ -150,7 +150,7 @@ switch ($total_step) {
               $class_bullet = 'class="active"';
             else
               $class_bullet = "";
-            echo '<li data-target="#myCarousel" data-slide-to="'.$a.'" '.$class_bullet.'></li>';
+            echo '<li data-target="#slide" data-slide-to="'.$a.'" '.$class_bullet.'></li>';
             $a++;
           }
         ?>

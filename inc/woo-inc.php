@@ -605,7 +605,7 @@ function custom_add_cart_message(  $message, $product_id  ) {
   return $message;
 }
 
-
+remove_action( 'woocommerce_cart_collaterals', 'woocommerce_cross_sell_display');
 add_action('admin_head', 'my_custom_fonts');
 
 function my_custom_fonts() {

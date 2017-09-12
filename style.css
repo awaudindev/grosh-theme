@@ -3013,3 +3013,12 @@ span.nav-prev, span.nav-next {
 
 
 .vjs-default-skin .vjs-volume-menu-button { display: none; }
+
+body .cross-sells {
+    display: none !important;
+}
+
+.woocommerce .cart-collaterals .cart_totals,
+.woocommerce-page .cart-collaterals .cart_totals {
+    width: 100% !important;
+}

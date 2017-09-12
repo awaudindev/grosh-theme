@@ -49,10 +49,10 @@ if ( $order ) : ?>
 					<img src="http://www.groshdigital.com/dev/wp-content/uploads/2017/04/apple-badges.png" alt="" width="212" height="74">
 				</div>
 				<div class="col-md-4 text-center">
-					<img src="http://dev.groshdigital.com/wp-content/uploads/2017/09/download_laptop.png" alt="" width="212" height="74">
+					<img src="http://dev.groshdigital.com/wp-content/uploads/2017/09/desktop_groshdigital.png" alt="" width="212" height="74">
 				</div>
 			</div>
-			<p>Simply login to the app with the same email and password you created for this online order. You can edit your order sequence, activate and play your show. This helpful <a href="http://dev.groshdigital.com/frequently-and-questions/">"How it works"</a> video can assist you with step by step instructions.</p>
+			<p>Simply login to the app with the same email and password you created for this online order. You can edit your order sequence, activate and play your show. Please visit our <a style="font-style: italic;text-decoration: underline;" href="http://dev.groshdigital.com/faq/">Frequently Asked Questions</a> section for helpful information or contact us direct at 877-363-7998.</p>
 		<?php }else{?>
 			<p class="woocommerce-thankyou-order-received"><?php echo apply_filters( 'woocommerce_thankyou_order_received_text', __( 'Thank you. Your order has been received.', 'woocommerce' ), $order ); ?></p>
 
