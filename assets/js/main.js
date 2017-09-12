@@ -44,8 +44,9 @@ jQuery(document).ready(function($){
 	 		}
 	      return myDate;
 	    }
-	    $( "#datepicker2" ).datepicker('setStartDate', getDate( document.getElementById("datepicker1"), true ));
-	    $( "#datepicker2" ).datepicker('update', getDate( document.getElementById("datepicker1"), true ));
+	    $( "#datepicker2" )
+	    .datepicker('setStartDate', getDate( document.getElementById("datepicker1"), false ))
+	    .datepicker('update', getDate( document.getElementById("datepicker2"), false ));
 	 }
     
 	//open search form

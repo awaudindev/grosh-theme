@@ -122,14 +122,14 @@ function wc_po_gateway_init() {
 	
 			$order = wc_get_order( $order_id );
 
-			if(isset($_POST[ $this->id.'-po-number']) && trim($_POST[ $this->id.'-po-number'])!=''){
-				add_post_meta( $order_id, 'po_number', trim($_POST[ $this->id.'-po-number']) );
+			// if(isset($_POST[ $this->id.'-po-number']) && trim($_POST[ $this->id.'-po-number'])!=''){
+				// add_post_meta( $order_id, 'po_number', trim($_POST[ $this->id.'-po-number']) );
 				
 				// Mark as on-hold (we're awaiting the payment)
 				$order->update_status( 'on-hold', __( 'Awaiting purchase order', 'wc-gateway-po' ) );
 				
 				// Reduce stock levels
-				$order->reduce_order_stock();
+				// $order->reduce_order_stock();
 				
 				// Remove cart
 				WC()->cart->empty_cart();
@@ -140,21 +140,14 @@ function wc_po_gateway_init() {
 					'redirect'	=> $this->get_return_url( $order )
 				);
 
-			}else{
-				wc_add_notice( __('P.O number can not be empty', 'woothemes'), 'error' );
-				return;
-			}
+			// }else{
+			// 	wc_add_notice( __('P.O number can not be empty', 'woothemes'), 'error' );
+			// 	return;
+			// }
 		}
 
 		public function payment_fields(){
 		?>
-		<fieldset>
-			<p class="form-row form-row-wide">
-				<label for="<?php echo $this->id; ?>-po-number"><?php echo esc_attr($this->description); ?> <span class="required">*</span></label>
-				<input id="<?php echo $this->id; ?>-po-number" class="input-text" type="text" name="<?php echo $this->id; ?>-po-number">
-			</p>						
-			<div class="clear"></div>
-		</fieldset>
 		<?php
 	}
 	

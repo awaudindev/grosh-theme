@@ -1030,9 +1030,9 @@ function wh_phoneValidateCheckoutFields() {
 
 function wpb_woo_my_account_order() {
 	$myorder = array(
-		'dashboard' => __( 'Dashboard', 'woocommerce' ),
+		// 'orders' => __( 'Orders', 'woocommerce' ),
+		'dashboard' => __( 'Orders', 'woocommerce' ),
 	 	'edit-account' => __( 'Change My Details', 'woocommerce' ),
-		'orders' => __( 'Orders', 'woocommerce' ),
 		'wishlist' =>  __( 'Wishlist', 'woocommerce' ),
 	 	'edit-address' => __( 'Billing Address', 'woocommerce' )
 	 	//'customer-logout' => __( 'Logout', 'woocommerce' ),
