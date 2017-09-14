@@ -2915,7 +2915,7 @@ MEDIA QUERY
 }
 
 .baraja-demo {
-  width: 200px;
+  width: auto;
   margin: 30px auto;
   color: #aaa;
 }
@@ -2927,7 +2927,6 @@ MEDIA QUERY
 .baraja-demo h4 {
   color: #666;
   font-size: 14px;
-  padding: 8px 10px 5px;
   margin: 20px 3px 5px;
 }
 

@@ -148,6 +148,12 @@ function wc_po_gateway_init() {
 
 		public function payment_fields(){
 		?>
+		<fieldset>
+			<p class="form-row form-row-wide">
+				<label for="<?php echo $this->id; ?>-po-number"><?php echo esc_attr($this->description); ?></label>
+			</p>						
+			<div class="clear"></div>
+		</fieldset>
 		<?php
 	}
 	

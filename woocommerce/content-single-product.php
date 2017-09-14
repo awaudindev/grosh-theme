@@ -123,16 +123,22 @@ if ( class_exists( 'YITH_WCWL' ) ) {
   //   }
 
     $datetime1 = new DateTime();
-	$datetime2 = new DateTime('+7 Day');
+	$datetime2 = new DateTime();
+	$datetime2->add(new DateInterval('P7D'));
+
 
     $newDate1 = $datetime1->format('m/d/Y');
     $newDate2 = $datetime2->format('m/d/Y');
 
     if(WC()->session->get('rental_date')){
     	$rentalDate = WC()->session->get('rental_date');
-
 		$datetime1 = new DateTime($rentalDate['start']);
 		$datetime2 = new DateTime($rentalDate['expiry']);
+		if($datetime1 == $datetime2){
+			$datetime1 = new DateTime();
+			$datetime2 = new DateTime();
+			$datetime2->add(new DateInterval('P7D'));
+		}
 
     	$newDate1 = $datetime1->format('m/d/Y');
     	$newDate2 = $datetime2->format('m/d/Y');
@@ -264,7 +270,7 @@ if ( class_exists( 'YITH_WCWL' ) ) {
 						</div>
 						<?php
 					}
-				?>
+				?>	
                 <h5 class="padTop20 padBot20 font500">Get a Quote</h5>   	
                 <div class="clearfix row">
                   <div class="col-md-6">

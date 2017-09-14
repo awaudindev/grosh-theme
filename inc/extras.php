@@ -280,7 +280,7 @@ function archive_product_filter($per_page = 12,$order_by = 'menu_order'){
 	$result .= '<div class="filter-sort clearfix">
 					<div class="filter-sort-box pull-left">
 						<form class="woocommerce-items-perpage" method="get">
-							<label>Show: </label>
+							<label>View: </label>
 							<div class="selector wrap-selector">
 							<select name="per_page" class="per_page selectpicker" onchange="this.form.submit()">
 									'.$per_page_data.'
@@ -444,7 +444,7 @@ function fan_packages( $atts, $content = ""){
 		$check_animation = false;
 
 
-      	$result .= '<li class="text-center baraja-parent col-md-4 col-sm-6">';  
+      	$result .= '<li class="baraja-parent col-md-12 col-sm-12">';  
 
 	        $result .= '<div class="thumb-post">';
 
@@ -461,7 +461,7 @@ function fan_packages( $atts, $content = ""){
 			      		$large_image = $url;
 			      	}
 
-			    	$result .= '<li><img width="350" height="150" class="img-responsive" src="'.$large_image.'" alt="'.get_the_title($k).'" title="'.get_the_title($k).'"/><h4>'.get_the_title($k).'</h4></li>';
+			    	$result .= '<li><img width="350" height="150" class="img-responsive" src="'.$large_image.'" alt="'.get_the_title($k).'" title="'.get_the_title($k).'"/><h4 class="text-center">'.get_the_title($k).'</h4></li>';
 			    }
 			    	$result .= '</ul></div>';
 
@@ -517,10 +517,12 @@ function fan_packages( $atts, $content = ""){
 			 	card.fan( {
 					speed : 500,
 					easing : 'ease-out',
-					range : 40,
+					range : 20,
 					direction : 'right',
-					origin : { x : 0, y : 300 },
-					center : true
+					origin : { x : 0, y : 200 },
+					center : false,
+					translation : 300,
+					scatter : true
 				} );
 				
 				$(this).children().on('click',function(event){
@@ -535,10 +537,12 @@ function fan_packages( $atts, $content = ""){
 					card.fan( {
 						speed : 500,
 						easing : 'ease-out',
-						range : 40,
+						range : 20,
 						direction : 'right',
-						origin : { x : 0, y : 300 },
-						center : true
+						origin : { x : 0, y : 200 },
+						center : false,
+						translation : 300,
+						scatter : true
 					} );
 					if($(this).hasClass('top')){
 						$(this).removeClass('top').addClass('bottom');
