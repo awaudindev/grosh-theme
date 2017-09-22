@@ -1227,7 +1227,7 @@ CAROUSEL
   opacity: 1;
   text-shadow: none;
   font-size: 18px;
-
+  width: 10%;
 }
 .carousel-control:hover,
 .carousel-control:focus {
@@ -1580,6 +1580,7 @@ SITE FOOTER
   text-align: left;
   vertical-align: middle;
 }
+.fan-right.top{z-index: 1 !important;}
 @media screen and (min-width: 37.5em) {
     .content-area {
       /*float: left;

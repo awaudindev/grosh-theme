@@ -443,23 +443,40 @@ function fan_packages( $atts, $content = ""){
       	
 		$check_animation = false;
 
+		$content = get_the_content($id);
+		$start = strpos($content, '<p>');
+		echo $start;
+		$end = strpos($content, '</p>', $start);
+		echo $end;
+		$paragraph = substr($content, $start, $end-$start+6);
+		if($paragraph == '&nbsp;')
+		{
+			$content = substr_replace($content, '', 0 , 6);
+		}
 
-      	$result .= '<li class="baraja-parent col-md-12 col-sm-12">';  
+		if (str_word_count($content, 0) > 100) {
+	        $words = str_word_count($content, 2);
+	        $pos = array_keys($words);
+	        $content = substr($content, 0, $pos[100]) . '...';
+	    }
+
+		$url = wp_get_attachment_url( get_post_thumbnail_id($id), 'grosh-featured-image' );
+
+      	$result .= '<li class="baraja-parent col-md-12 col-sm-12" style="position:relative; padding:60px 0; margin-bottom:100px;">';  
 
 	        $result .= '<div class="thumb-post">';
 
 		        $result .= '<div class="baraja-demo"><ul class="baraja-el baraja-container">';
 
-		        foreach ($bundles as $k => $v) {
+		        if(!empty($url)){
+		        	$result .= '<li><img width="350" height="150" class="img-responsive" src="'.$url.'" alt="'.get_the_title($id).'" title="'.get_the_title($id).'"/><h4 class="text-center">'.get_the_title($id).'</h4></li>';
+		        }
 
-			      	$url = wp_get_attachment_url( get_post_thumbnail_id($k), 'grosh-featured-image' );
+		        foreach ($bundles as $k => $v) {
+			      	
 			      	$product_number = get_post_meta( $k, 'product_number', true );
 
-			      	if(empty($url)){
-			      		$large_image = getProductImage($product_number, false, false);
-			      	}else{
-			      		$large_image = $url;
-			      	}
+			      	$large_image = getProductImage($product_number, true, false);
 
 			    	$result .= '<li><img width="350" height="150" class="img-responsive" src="'.$large_image.'" alt="'.get_the_title($k).'" title="'.get_the_title($k).'"/><h4 class="text-center">'.get_the_title($k).'</h4></li>';
 			    }
@@ -467,10 +484,16 @@ function fan_packages( $atts, $content = ""){
 
 			    	$result .= '<div class="fan-right top"></div>';
 
-			    	$result .= '<h5 class="title-product"><a href="'.esc_url( get_permalink($id) ).'">'.get_the_title($id).' ('.$total_bundle.')</a></h5>';
+			    	$result .= '<div class="col-md-6" style="width:30%; position:absolute;top:0;right:-100px; z-index:10; background:#fff; padding:20px; -webkit-box-shadow: 0px 0px 8px -1px rgba(0,0,0,0.30);-moz-box-shadow: 0px 0px 8px -1px rgba(0,0,0,0.30);box-shadow: 0px 0px 8px -1px rgba(0,0,0,0.30); border-radius:4px;">';
+			    	$result .= '<h5 class="title-product" style="padding-bottom:10px;"><a href="'.esc_url( get_permalink($id) ).'">'.get_the_title($id).' ('.$total_bundle.')</a></h5><h5 class="font700">Product Description</h5>';
+			    	$result .= $content;
+			    	$result .= '</div>';
+
 			    $result .= '';
 
 	        $result .= '</div>';
+
+	        //$result .= '<h5 class="title-product"><a href="'.esc_url( get_permalink($id) ).'">'.get_the_title($id).' ('.$total_bundle.')</a></h5>';
 
         $result .= '</li>';
 
