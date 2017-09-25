@@ -1073,5 +1073,6 @@ add_action( 'woocommerce_order_item_add_action_buttons', 'pdf_button' );
 function pdf_button( $order ){
 
 	echo '<button type="button" class="button save-pdf" data-product="'.$order->get_id().'">Save as PDF</button>';
+	echo '<div><input type="text" id="po_number"><button type="button" class="button saveponumber">Insert PO Number</button></div>';
 
 }

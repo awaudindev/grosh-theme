@@ -506,6 +506,26 @@ function change_rent_status($actions, $the_order){
 
 }
 
+add_filter( 'manage_edit-shop_order_columns', 'wc_new_order_column' );
+function wc_new_order_column( $columns ) {
+    $columns['teritory'] = 'Teritory';
+    return $columns;
+}
+
+add_action( 'manage_shop_order_posts_custom_column', 'sv_wc_cogs_add_order_profit_column_content' );
+function sv_wc_cogs_add_order_profit_column_content( $column ) {
+    global $woocommerce, $post;
+    $order_id = $post->ID;
+    $order = wc_get_order($order_id);
+
+
+    if ( $column == 'teritory' ) {
+    	$city = $order->get_billing_city();
+    	$ca = $order->get_billing_state();
+        echo $city . ' ' . $ca;
+    }
+}
+
 add_filter('woocommerce_order_items_meta_get_formatted','change_meta_item',10,2);
 function change_meta_item($formatted_meta){
 
