@@ -518,11 +518,24 @@ function sv_wc_cogs_add_order_profit_column_content( $column ) {
     $order_id = $post->ID;
     $order = wc_get_order($order_id);
 
-
     if ( $column == 'teritory' ) {
     	$city = $order->get_billing_city();
     	$ca = $order->get_billing_state();
-        echo $city . ' ' . $ca;
+
+    	$args = array(
+		    'meta_query' => array(
+		        array(
+		            'key' => 'state',
+		            'value' => $ca
+		        )
+		    ),
+		    'post_type' => 'territory',
+		    'posts_per_page' => 1
+		);
+		$posts = get_posts($args);
+		$code = get_post_meta($posts[0]->ID,'code',true);
+
+        echo $code;
     }
 }
 

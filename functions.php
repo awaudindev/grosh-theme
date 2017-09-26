@@ -417,6 +417,11 @@ require get_template_directory() . '/inc/purchase-order.php';
  * Load sales tools.
  */
 require get_template_directory() . '/inc/sales-tool.php';
+
+/**
+ * Load territory tools.
+ */
+require get_template_directory() . '/inc/teritory.php';
 /**
  *
  * Breadcrumb
