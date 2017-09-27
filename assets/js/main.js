@@ -230,7 +230,7 @@ jQuery(document).ready(function($){
 
 
 
-		$('body').on('click', '.type-product .caption', function(event) {
+		$('body').on('click', '.thumb-post .caption', function(event) {
 
 			$('#popupMsg').modal('show'); 
 

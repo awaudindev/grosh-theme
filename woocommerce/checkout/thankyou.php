@@ -40,14 +40,15 @@ if ( $order ) : ?>
 		<?php if($payment_type == 'authorizenet'){?>
 			<p class="woocommerce-thankyou-order-received"><?php echo apply_filters( 'woocommerce_thankyou_order_received_text', __( 'Thank you for renting from Grosh Digital!', 'woocommerce' ), $order ); ?></p>
 			<p class="woocommerce-thankyou-order-received">Here are the next steps to start your show.</p>
-			<p>Please download the Grosh Digital App to your mobile device or desktop computer.</p>
+			<!--<p>Please download the Grosh Digital App to your mobile device or desktop computer.</p>-->
+			<p>Please download the Grosh Digital App to your desktop computer.</p>
 			<div class="col-md-12 text-center" style="margin-bottom: 20px;">
-				<div class="col-md-4 text-center">
+				<!--<div class="col-md-4 text-center">
 					<img src="http://www.groshdigital.com/dev/wp-content/uploads/2017/04/android-badges.png" alt="" width="212" height="74">
 				</div>
 				<div class="col-md-4 text-center">
 					<img src="http://www.groshdigital.com/dev/wp-content/uploads/2017/04/apple-badges.png" alt="" width="212" height="74">
-				</div>
+				</div>-->
 				<div class="col-md-4 text-center">
 					<img src="http://dev.groshdigital.com/wp-content/uploads/2017/09/desktop_groshdigital.png" alt="" width="212" height="74">
 				</div>
