@@ -70,7 +70,7 @@
 		    <select id="state" name="state">
 		    	<?php
 		    		foreach ($default_county_states as $key => $value) {
-		    			echo '<option value="'.$value.'" '.selected( $meta_element_class, $value) .'>'.$value.'</option>';
+		    			echo '<option value="'.$key.'" '.selected( $meta_element_class, $key) .'>'.$value.'</option>';
 		    		}
 		    	?>
 			</select>
@@ -81,7 +81,7 @@
 		    <select id="state_US" name="state_US">
 		    	<?php
 		    		foreach ($country_US as $key => $value) {
-		    			echo '<option value="'.$value.'" '.selected( $meta_element_class, $value) .'>'.$value.'</option>';
+		    			echo '<option value="'.$key.'" '.selected( $meta_element_class, $key) .'>'.$value.'</option>';
 		    		}
 		    	?>
 			</select>
