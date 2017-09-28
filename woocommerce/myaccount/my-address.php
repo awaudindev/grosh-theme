@@ -21,7 +21,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $customer_id = get_current_user_id();
-
+$user_last = get_user_meta( $customer_id, "my_unique_id", true ); 
+//echo 'Unique Id '. $user_last;
 if ( ! wc_ship_to_billing_address_only() && wc_shipping_enabled() ) {
 	$get_addresses = apply_filters( 'woocommerce_my_account_get_addresses', array(
 		'billing' => __( 'Billing Address', 'woocommerce' ),

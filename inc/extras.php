@@ -1076,3 +1076,10 @@ function pdf_button( $order ){
 	echo '<div><input type="text" id="po_number"><button type="button" class="button saveponumber">Insert PO Number</button></div>';
 
 }
+
+add_action( 'user_register', 'updated_customer_id_handler' );
+function updated_customer_id_handler( $user_id ) {
+    $unique_id = 1000 + $user_id;
+    $str_id = "D".$unique_id;
+    update_user_meta( $user_id, 'my_unique_id', $str_id );
+}
