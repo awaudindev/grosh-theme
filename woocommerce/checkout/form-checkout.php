@@ -124,13 +124,14 @@ if ( sizeof( $checkout->checkout_fields ) > 0 ) : ?>
 add_action('wp_footer',function(){ ?> 
 <script type="text/javascript">
 	jQuery(document).ready(function($){
-		if($('#billing_user_gender').val() == 'college' || $('#billing_user_gender').val() == 'schools'){
+		if($('#billing_user_gender').val() === 'college' || $('#billing_user_gender').val() === 'schools'){
 			 	$('.wc_payment_method.payment_method_purchase_order').show();
+			 }else if(!$('#billing_user_gender').val()){
+				$('.wc_payment_method.payment_method_purchase_order').hide();
 			 }else{
 			 	$('.wc_payment_method.payment_method_purchase_order').hide();
 			 }
-	});
-	  jQuery(function($){
+
 		$(".disabled").click(function (e) {
 	        e.preventDefault();
 	        return false;
