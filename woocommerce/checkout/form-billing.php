@@ -38,7 +38,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<?php foreach ( $checkout->checkout_fields['billing'] as $key => $field ) : ?>
 
-		<?php if(in_array($key, array('billing_first_name','billing_last_name','billing_company'))) woocommerce_form_field( $key, $field, $checkout->get_value( $key ) ); ?>
+		<?php 
+		if(in_array($key, array('billing_first_name','billing_last_name','billing_company','billing_email'))){
+			if($key == 'billing_email'){
+				$field['class'] = array('form-row-wide');
+			}
+			woocommerce_form_field( $key, $field, $checkout->get_value( $key ) ); 
+		} 
+		?>
 
 	<?php endforeach; ?>
 
@@ -76,7 +83,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	
 	<?php foreach ( $checkout->checkout_fields['billing'] as $key => $field ) : ?>
 
-		<?php $field['class'] = array('form-row-wide'); if($key == 'billing_phone' || $key == 'billing_email'){ woocommerce_form_field( $key, $field, $checkout->get_value( $key ) );} ?>
+		<?php $field['class'] = array('form-row-wide'); if($key == 'billing_phone'){
+		 woocommerce_form_field( $key, $field, $checkout->get_value( $key ) );} ?>
 
 	<?php endforeach; ?>
 
