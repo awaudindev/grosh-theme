@@ -262,8 +262,8 @@ function order_fields($fields) {
 
     $order = array(
         "billing_first_name", 
-        "billing_last_name", 
-        "billing_company", 
+        "billing_last_name",
+        "billing_company",
         "billing_address_1", 
         "billing_address_2", 
         "billing_user_gender", 
@@ -280,6 +280,7 @@ function order_fields($fields) {
         $ordered_fields[$field] = $fields["billing"][$field];
     }
 
+
     $fields["billing"] = $ordered_fields;
 
     unset($fields['order']['order_comments']);
@@ -287,6 +288,27 @@ function order_fields($fields) {
     return $fields;
 
 }
+
+add_filter( 'woocommerce_available_payment_gateways', 'wpchris_filter_gateways', 1);
+
+function wpchris_filter_gateways( $gateways ){
+    global $woocommerce;
+
+    foreach ($gateways as $gateway) {
+        $gateway->chosen = 0;
+    }
+
+    return $gateways;
+}
+
+add_action( 'woocommerce_admin_order_data_after_billing_address', 'my_custom_checkout_field_display_admin_order_meta', 10, 1 );
+
+function my_custom_checkout_field_display_admin_order_meta($order){
+	$user_id = get_post_meta($order->id, '_customer_user', true);
+    echo '<p><strong>'.__('Customer ID').':</strong> <br/>' . get_user_meta( $user_id, 'my_unique_id', true ) . '</p>';
+}
+    
+
 add_action('woocommerce_checkout_custom', 'my_custom_checkout_field');
  
 function my_custom_checkout_field( $checkout ) {
