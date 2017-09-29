@@ -1068,12 +1068,25 @@ function wpb_woo_my_account_order() {
 }
 add_filter ( 'woocommerce_account_menu_items', 'wpb_woo_my_account_order' );
 
+add_action( 'wp_ajax_save_po', 'save_po' );
+add_action( 'wp_ajax_nopriv_save_po', 'save_po' );
+function save_po() {
+
+	if(update_post_meta( $_GET['id'], 'po_number',$_GET['po'])){
+		echo 1;
+	}else{
+		echo 0;
+	}
+
+	wp_die();
+}
+
 add_action( 'woocommerce_order_item_add_action_buttons', 'pdf_button' );
 
 function pdf_button( $order ){
 
 	echo '<button type="button" class="button save-pdf" data-product="'.$order->get_id().'">Save as PDF</button>';
-	echo '<div><input type="text" id="po_number"><button type="button" class="button saveponumber">Insert PO Number</button></div>';
+	echo '<div><input type="text" id="po_number"><button type="button" data-po="'.$order->get_id().'" id="po_number_button">Insert PO Number</button></div>';
 
 }
 

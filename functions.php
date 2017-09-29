@@ -558,6 +558,23 @@ function pdf_admin_scripts( $hook ) {
 							  }
 							});
 					       });
+				    	$('#po_number_button').on('click',function(e){
+				    		e.preventDefault();
+				    		var product = $(this).attr('data-po'),
+				    			number = $('#po_number').val();
+					    	$.ajax({
+							  type: 'POST',
+							  url: '<?php echo admin_url('admin-ajax.php'); ?>/?action=save_po&id='+product+'&po='+number,
+							  beforeSend:function(){	
+							  },
+							  success: function(data){
+							  	$('#po_number_button').parent().html('<button>PO Number Save</button>');
+							  },
+							  error:function(jqXHR,textStatus,errorThrown){
+							  	console.log(textStatus);
+							  }
+							});
+					       });
 				    		});
 					    });
 				  	});
