@@ -300,6 +300,13 @@ function wpchris_filter_gateways( $gateways ){
 
     return $gateways;
 }
+
+add_action( 'woocommerce_admin_order_data_after_billing_address', 'my_custom_checkout_field_display_admin_order_meta', 10, 1 );
+
+function my_custom_checkout_field_display_admin_order_meta($order){
+	$user_id = get_post_meta($order->id, '_customer_user', true);
+    echo '<p><strong>'.__('Customer ID').':</strong> <br/>' . get_user_meta( $user_id, 'my_unique_id', true ) . '</p>';
+}
     
 
 add_action('woocommerce_checkout_custom', 'my_custom_checkout_field');
