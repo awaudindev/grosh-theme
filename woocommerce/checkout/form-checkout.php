@@ -127,8 +127,10 @@ add_action('wp_footer',function(){ ?>
 		if($('#billing_user_gender').val() === 'college' || $('#billing_user_gender').val() === 'schools'){
 			 	$('.wc_payment_method.payment_method_purchase_order').show();
 			 }else if(!$('#billing_user_gender').val()){
+			 	$('#payment_method_purchase_order').attr('disabled','disabled');
 				$('.wc_payment_method.payment_method_purchase_order').hide();
 			 }else{
+			 	$('#payment_method_purchase_order').attr('disabled','disabled');
 			 	$('.wc_payment_method.payment_method_purchase_order').hide();
 			 }
 
@@ -164,9 +166,10 @@ add_action('wp_footer',function(){ ?>
 		        $(this).attr("data-toggle", "").parent('li').addClass("disabled");;        
 		    });
 
-		    if($('#billing_user_gender').val() == 'college' || $('#billing_user_gender').val() == 'schools'){
+		    if($('#billing_user_gender').val() === 'college' || $('#billing_user_gender').val() === 'schools'){
 			 	$('.wc_payment_method.payment_method_purchase_order').show();
 			 }else{
+			 	$('#payment_method_purchase_order').attr('disabled','disabled');
 			 	$('.wc_payment_method.payment_method_purchase_order').hide();
 			 }
 		});
@@ -185,6 +188,7 @@ add_action('wp_footer',function(){ ?>
 			 if(optionChange.val() === 'college' || optionChange.val() === 'schools'){
 			 	$('.wc_payment_method.payment_method_purchase_order').show();
 			 }else{
+			 	$('#payment_method_purchase_order').attr('disabled','disabled');
 			 	$('.wc_payment_method.payment_method_purchase_order').hide();
 			 }
 		});
