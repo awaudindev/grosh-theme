@@ -126,6 +126,7 @@ add_action('wp_footer',function(){ ?>
 	jQuery(document).ready(function($){
 		if($('#billing_user_gender').val() === 'college' || $('#billing_user_gender').val() === 'schools'){
 			 	$('.wc_payment_method.payment_method_purchase_order').show();
+			 	$('#payment_method_purchase_order').removeAttr('disabled');
 			 }else if(!$('#billing_user_gender').val()){
 			 	$('#payment_method_purchase_order').attr('disabled','disabled');
 				$('.wc_payment_method.payment_method_purchase_order').hide();
@@ -167,6 +168,7 @@ add_action('wp_footer',function(){ ?>
 		    });
 
 		    if($('#billing_user_gender').val() === 'college' || $('#billing_user_gender').val() === 'schools'){
+		    	$('#payment_method_purchase_order').removeAttr('disabled');
 			 	$('.wc_payment_method.payment_method_purchase_order').show();
 			 }else if(!$('#billing_user_gender').val()){
 			 	$('#payment_method_purchase_order').attr('disabled','disabled');
@@ -189,6 +191,7 @@ add_action('wp_footer',function(){ ?>
 			 var optionChange = $(this).find('option:selected');
 
 			 if(optionChange.val() === 'college' || optionChange.val() === 'schools'){
+			 	$('#payment_method_purchase_order').removeAttr('disabled');
 			 	$('.wc_payment_method.payment_method_purchase_order').show();
 			 }else if(!$('#billing_user_gender').val()){
 			 	$('#payment_method_purchase_order').attr('disabled','disabled');
