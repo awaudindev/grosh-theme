@@ -568,7 +568,7 @@ function pdf_admin_scripts( $hook ) {
 							  beforeSend:function(){	
 							  },
 							  success: function(data){
-							  	$('#po_number_button').parent().html('<button>PO Number Save</button>');
+							  	location.reload();
 							  },
 							  error:function(jqXHR,textStatus,errorThrown){
 							  	console.log(textStatus);
