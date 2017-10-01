@@ -49,8 +49,19 @@ if ( $order ) : ?>
 				<div class="col-md-4 text-center">
 					<img src="http://www.groshdigital.com/dev/wp-content/uploads/2017/04/apple-badges.png" alt="" width="212" height="74">
 				</div>-->
+				<script type="text/javascript">
+					jQuery(document).ready(function () {
+						var mac = navigator.platform.match(/(Mac|iPhone|iPod|iPad)/i) ? true : false;
+						var url = "http://cdn.groshdigital.com/app/groshdigital.exe";
+						if(mac){
+							url = "http://cdn.groshdigital.com/app/groshdigital.dmg";
+						}
+
+						jQuery('#download_desktop').attr('href',url);
+					});
+				</script>
 				<div class="col-md-4 text-center">
-					<img src="http://dev.groshdigital.com/wp-content/uploads/2017/09/desktop_groshdigital.png" alt="" width="212" height="74">
+					<a href="#" id="download_desktop"><img src="http://dev.groshdigital.com/wp-content/uploads/2017/09/desktop_groshdigital.png" alt="" width="212" height="74"></a>
 				</div>
 			</div>
 			<p>Simply login to the app with the same email and password you created for this online order. You can edit your order sequence, activate and play your show. Please visit our <a style="font-style: italic;text-decoration: underline;" href="http://dev.groshdigital.com/faq/">Frequently Asked Questions</a> section for helpful information or contact us direct at 877-363-7998.</p>

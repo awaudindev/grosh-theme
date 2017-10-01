@@ -751,7 +751,7 @@ function save_rental_date($order_id){
 		add_post_meta( $order_id, 'status', 'new' );
 		add_post_meta( $order_id, 'activated_date_time', '' );
 
-	    WC()->session->__unset('rental_date');
+	    //WC()->session->__unset('rental_date');
 	}
 }
 
@@ -1086,8 +1086,14 @@ add_action( 'woocommerce_order_item_add_action_buttons', 'pdf_button' );
 function pdf_button( $order ){
 
 	echo '<button type="button" class="button save-pdf" data-product="'.$order->get_id().'">Save as PDF</button>';
-	if ('authorizenet' != get_post_meta($order_id, '_payment_method', true)) {
-		echo '<div><input type="text" id="po_number"><button type="button" class="button" data-po="'.$order->get_id().'" id="po_number_button">Insert PO Number</button></div>';
+	if ('authorizenet' != get_post_meta($order->get_id(), '_payment_method', true)) {
+		$po_number = get_post_meta($order->get_id(), 'po_number', true);
+		if(empty($po_number) || is_null($po_number)){
+			echo '<div><input type="text" id="po_number"><button type="button" class="button" data-po="'.$order->get_id().'" id="po_number_button">Insert PO Number</button></div>';
+		}else{
+			echo 'PO Number for this Order is '. $po_number;
+		}
+		
 	}
 
 }

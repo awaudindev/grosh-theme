@@ -603,6 +603,8 @@ function custom_woocommerce_auto_complete_paid_order( $order_id ) {
   else {
     return;
   }
+
+  WC()->session->__unset('rental_date');
 }
 
 add_action( 'woocommerce_email_after_order_table', 'add_order_email_instructions', 10, 2 );

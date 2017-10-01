@@ -71,17 +71,17 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
 							<?php elseif ( 'order-actions' === $column_id ) : ?>
 								<?php
 									$actions = array(
-										'pay'    => array(
+										/*'pay'    => array(
 											'url'  => $order->get_checkout_payment_url(),
 											'name' => __( 'Pay', 'woocommerce' )
-										),
-										'view'   => array(
-											'url'  => $order->get_view_order_url(),
-											'name' => __( 'View', 'woocommerce' )
 										),
 										'cancel' => array(
 											'url'  => $order->get_cancel_order_url( wc_get_page_permalink( 'myaccount' ) ),
 											'name' => __( 'Cancel', 'woocommerce' )
+										),*/
+										'view'   => array(
+											'url'  => $order->get_view_order_url(),
+											'name' => __( 'View', 'woocommerce' )
 										)
 									);
 

@@ -130,5 +130,16 @@ if( window.self !== window.top ){
 }
 </script>
 <?php } ?>
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        var mac = navigator.platform.match(/(Mac|iPhone|iPod|iPad)/i) ? true : false;
+        var url = "http://cdn.groshdigital.com/app/groshdigital.exe";
+        if(mac){
+            url = "http://cdn.groshdigital.com/app/groshdigital.dmg";
+        }
+
+        jQuery('#download_app_desktop').attr('href',url);
+    });
+</script>
 </body>
 </html>
