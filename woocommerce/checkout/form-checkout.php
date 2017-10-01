@@ -123,17 +123,30 @@ if ( sizeof( $checkout->checkout_fields ) > 0 ) : ?>
 <?php do_action( 'woocommerce_after_checkout_form', $checkout ); 
 add_action('wp_footer',function(){ ?> 
 <script type="text/javascript">
+
+	jQuery(function($) {
+	    $.ajaxSetup({
+	        complete: function(xhr, textStatus) {
+	            // will be raised whenever an AJAX request completes (success or failure)
+	        },
+	        success: function(result) {
+	            // will be raised whenever an AJAX request succeeds
+	            
+			if($('#billing_user_gender').val() === 'college' || $('#billing_user_gender').val() === 'schools'){
+				 	$('.wc_payment_method.payment_method_purchase_order').show();
+				 	$('#payment_method_purchase_order').removeAttr('disabled');
+				 }else if(!$('#billing_user_gender').val()){
+				 	$('#payment_method_purchase_order').attr('disabled','disabled');
+					$('.wc_payment_method.payment_method_purchase_order').hide();
+				 }else{
+				 	$('#payment_method_purchase_order').attr('disabled','disabled');
+				 	$('.wc_payment_method.payment_method_purchase_order').hide();
+				 }
+	        }
+	    });
+	});
+
 	jQuery(document).ready(function($){
-		if($('#billing_user_gender').val() === 'college' || $('#billing_user_gender').val() === 'schools'){
-			 	$('.wc_payment_method.payment_method_purchase_order').show();
-			 	$('#payment_method_purchase_order').removeAttr('disabled');
-			 }else if(!$('#billing_user_gender').val()){
-			 	$('#payment_method_purchase_order').attr('disabled','disabled');
-				$('.wc_payment_method.payment_method_purchase_order').hide();
-			 }else{
-			 	$('#payment_method_purchase_order').attr('disabled','disabled');
-			 	$('.wc_payment_method.payment_method_purchase_order').hide();
-			 }
 
 		$(".disabled").click(function (e) {
 	        e.preventDefault();
