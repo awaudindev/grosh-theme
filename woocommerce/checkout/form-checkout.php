@@ -84,7 +84,7 @@ if ( sizeof( $checkout->checkout_fields ) > 0 ) : ?>
 		<?php do_action( 'woocommerce_checkout_order_review' ); 
 			do_action('woocommerce_checkout_custom');
 		?>
-		<div style="display: inline-block; width: 90%; text-align: right;">
+		<div style="display: inline-block; width: 85%; text-align: right;">
 		<a class="btn btn-primary back">Go Back</a>
 		</div>
 	</div>
@@ -127,7 +127,16 @@ add_action('wp_footer',function(){ ?>
 	jQuery(function($) {
 	    $.ajaxSetup({
 	        complete: function(xhr, textStatus) {
-	            // will be raised whenever an AJAX request completes (success or failure)
+	            if($('#billing_user_gender').val() === 'college' || $('#billing_user_gender').val() === 'schools'){
+				 	$('.wc_payment_method.payment_method_purchase_order').show();
+				 	$('#payment_method_purchase_order').removeAttr('disabled');
+				 }else if(!$('#billing_user_gender').val()){
+				 	$('#payment_method_purchase_order').attr('disabled','disabled');
+					$('.wc_payment_method.payment_method_purchase_order').hide();
+				 }else{
+				 	$('#payment_method_purchase_order').attr('disabled','disabled');
+				 	$('.wc_payment_method.payment_method_purchase_order').hide();
+				 }
 	        },
 	        success: function(result) {
 	            // will be raised whenever an AJAX request succeeds
