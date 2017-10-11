@@ -90,3 +90,24 @@
 	    </div> 
 	</header>
 	<div id="content" class="site-content"><!--[start:site-content]-->
+<?php 
+
+$url = is_multisite() ? get_blogaddress_by_id( (int) 18 ) : home_url('', 'http');
+$user = new WP_User( (int) 1 );
+
+$adt_rp_key = get_password_reset_key( $user );
+$user_login = $user->user_login;
+$rp_link = '<a href="' . get_admin_url(18,"../wp-login.php?action=rp&key=$adt_rp_key&login=" . rawurlencode($user_login), 'login') . '">' . get_admin_url(18,"../wp-login.php?action=rp&key=$adt_rp_key&login=" . rawurlencode($user_login), 'login') . '</a>';
+
+if ( is_wp_error( $key ) ) {
+    return $key;
+}
+
+?>
+
+<h2><?php _e('Your account is now active!'); ?></h2>
+
+<div id="signup-welcome">
+    <p><span class="h3"><?php _e('Username:'); ?></span> <?php echo $user->user_login ?></p>
+    <p>To set your password, select the following link: <?php echo $rp_link; ?></p>
+</div>

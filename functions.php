@@ -15,6 +15,21 @@ if ( ! function_exists( 'grosh_setup' ) ) :
  * runs before the init hook. The init hook is too late for some features, such
  * as indicating support for post thumbnails.
  */
+function iconic_remove_password_strength() {
+    if ( wp_script_is( 'wc-password-strength-meter', 'enqueued' ) ) {
+		wp_dequeue_script( 'wc-password-strength-meter' );
+	}
+}
+add_action( 'wp_print_scripts', 'iconic_remove_password_strength', 10 );
+add_action( 'login_enqueue_scripts', 'my_login_password' );
+
+function my_login_password() {
+  echo '<style>
+    .login #pass-strength-result{
+      display:none !important;
+    } 
+  </style>';
+}
 function grosh_setup() {
 	/*
 	 * Make theme available for translation.
