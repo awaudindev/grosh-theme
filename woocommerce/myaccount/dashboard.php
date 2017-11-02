@@ -46,7 +46,7 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
 			<?php foreach ( $customer_orders->orders as $customer_order ) :
 				$order      = wc_get_order( $customer_order );
 				$item_count = $order->get_item_count();
-				if(get_post_meta($order->get_order_number(), '_payment_method', true ) != 'purchase_order'):
+				//if(get_post_meta($order->get_order_number(), '_payment_method', true ) == 'purchase_order'):
 				?>
 				<tr class="order">
 					<?php foreach ( wc_get_account_orders_columns() as $column_id => $column_name ) : ?>
@@ -104,7 +104,7 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
 					<?php endforeach; ?>
 				</tr>
 			<?php 
-			endif;
+			//endif;
 			endforeach; ?>
 		</tbody>
 	</table>

@@ -254,7 +254,7 @@ function order_fields($fields) {
 
 	$fields['billing']['billing_user_gender'] = array(
 		'type' => 'select',
-		'class' => array('select_custom'),
+		'class' => array('address-field select_custom'),
 		'options' => array( ' '=>'Select Industry','dance' => 'Dance', 'college' => 'College/University', 'schools' => 'Schools (K-12)', 'theater' => 'Theater', 'eventplanner' => 'Event Planner', 'prodcompany' => 'Production Company', 'church' => 'Church', 'other' => 'Other'),
 		'label' => __('Industry', 'woocommerce'),
 		'required' => true
@@ -306,6 +306,14 @@ add_action( 'woocommerce_admin_order_data_after_billing_address', 'my_custom_che
 function my_custom_checkout_field_display_admin_order_meta($order){
 	$user_id = get_post_meta($order->id, '_customer_user', true);
     echo '<p><strong>'.__('Customer ID').':</strong> <br/>' . get_user_meta( $user_id, 'my_unique_id', true ) . '</p>';
+}
+
+add_action( 'woocommerce_admin_order_data_after_order_details', 'add_custom_date_order', 10, 1 );
+function add_custom_date_order($order){
+	$startDate = get_post_meta($order->id, 'start_date', true);
+	$endDate = get_post_meta($order->id, 'end_date', true);
+	echo '<p><strong>'.__('Start Date').':</strong> <br/>'.$startDate;
+	echo '<p><strong>'.__('End Date').':</strong> <br/>'.$endDate;
 }
     
 

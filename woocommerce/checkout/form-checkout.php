@@ -137,6 +137,10 @@ add_action('wp_footer',function(){ ?>
 				 	$('#payment_method_purchase_order').attr('disabled','disabled');
 				 	$('.wc_payment_method.payment_method_purchase_order').hide();
 				 }
+
+				 if($("#billing_user_gender_field").hasClass('woocommerce-invalid')){
+				  		$("#billing_user_gender_field").removeClass('woocommerce-invalid');
+				  	}
 	        },
 	        success: function(result) {
 	            // will be raised whenever an AJAX request succeeds
@@ -163,6 +167,10 @@ add_action('wp_footer',function(){ ?>
 		});
 
 	  	var $tabs = $('.tabs-wrap li');
+
+	  	if($("#billing_user_gender_field").hasClass('woocommerce-invalid')){
+	  		$("#billing_user_gender_field").removeClass('woocommerce-invalid');
+	  	}
 
 		$(".back").click(function (e) {
 		    $tabs.filter('.active').prev('li').removeClass("disabled");

@@ -750,6 +750,8 @@ function save_rental_date($order_id){
 		add_post_meta( $order_id, 'rental_period', ($length < 7) ? 7 : $length );
 		add_post_meta( $order_id, 'status', 'new' );
 		add_post_meta( $order_id, 'activated_date_time', '' );
+		add_post_meta( $order_id, 'start_date', $rangedate['start'] );
+		add_post_meta( $order_id, 'end_date', $rangedate['expiry'] );
 
 	    //WC()->session->__unset('rental_date');
 	}
