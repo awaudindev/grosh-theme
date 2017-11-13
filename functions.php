@@ -234,7 +234,7 @@ function grosh_scripts() {
 	wp_enqueue_style( 'datepicker', 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css' );
 	wp_enqueue_style( 'fontawesome', get_template_directory_uri() . '/assets/stylesheets/font-awesome.min.css' );	
 	// wp_enqueue_style( 'mediaelement-style', get_template_directory_uri() . '/assets/stylesheets/mediaelementplayer.css' );
-	wp_enqueue_style( 'mediaelement-style', 'http://vjs.zencdn.net/4.12/video-js.css' );	
+	wp_enqueue_style( 'mediaelement-style', '//vjs.zencdn.net/4.12/video-js.css' );	
 	wp_enqueue_style( 'grosh-style', get_stylesheet_uri() );
 
 	wp_enqueue_script( 'grosh-navigation', get_template_directory_uri() . '/assets/js/navigation.js', array(), '20151215', true );
@@ -437,6 +437,11 @@ require get_template_directory() . '/inc/sales-tool.php';
  * Load territory tools.
  */
 require get_template_directory() . '/inc/teritory.php';
+
+/**
+ * Load territory tools.
+ */
+require get_template_directory() . '/inc/sales-off.php';
 /**
  *
  * Breadcrumb

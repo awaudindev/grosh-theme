@@ -957,9 +957,9 @@ add_action( 'manage_product_posts_custom_column', 'wpso23858236_product_column_n
 function wpso23858236_product_column_number( $column, $postid ) {
 	if($column == 'thumbnumber'){
 		if(get_post_meta( $postid, 'product_number', true )){
-			echo '<img style="max-width:100%;height:auto;" src="http://s3.amazonaws.com/groshdigital/thumbnails/watermark/'.get_post_meta( $postid, 'product_number', true ).'.jpg" alt="">';
+			echo '<img style="max-width:100%;height:auto;" src="//s3.amazonaws.com/groshdigital/thumbnails/watermark/'.get_post_meta( $postid, 'product_number', true ).'.jpg" alt="">';
 		}else{
-			echo '<img style="max-width:100%;height:auto;" src="http://placehold.it/225x127.jpg" alt="">';
+			echo '<img style="max-width:100%;height:auto;" src="//placehold.it/225x127.jpg" alt="">';
 		}
 	}
     if ( $column == 'number' ) {

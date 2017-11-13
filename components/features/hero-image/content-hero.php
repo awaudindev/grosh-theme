@@ -78,12 +78,12 @@ switch ($total_step) {
                 $style = "";
                 $named = "";
                 if($product_type == "animation"){
-                  $url = "http://s3.amazonaws.com/groshdigital/".$product_number.".mp4";
+                  $url = "//s3.amazonaws.com/groshdigital/".$product_number.".mp4";
                   $large_image = $url;//getProductImage($product_number, false, true);
                   $style = "width:100%";
                   $named = "mep_" + $v;
                 }else{
-                  $url = "http://s3.amazonaws.com/groshdigital/".$product_number.".jpg";
+                  $url = "//s3.amazonaws.com/groshdigital/".$product_number.".jpg";
                   $large_image = $url;//getProductImage($product_number, false, false);
                   $named = "img_0";
                 }
@@ -169,7 +169,7 @@ switch ($total_step) {
                 $st = $step[$i];
                 ?>
                 <div class="col-md-<?php echo $step_class;?> col-sm-<?php echo $step_class;?>">
-                  <div class="icon-feat text-center"><a href="<?php echo $pack['url']; ?>"><img src="<?php echo $st['image']; ?>"/></a></div>
+                  <div class="icon-feat text-center"><a href="<?php echo $st['url']; ?>"><img src="<?php echo $st['image']; ?>"/></a></div>
                   <h5 class="title-entry text-center padTop20 padBot10"><a href="<?php echo $st['url']; ?>"><?php echo $st['title']; ?></a></h5>
                   <p class="text-center">
                     <?php echo $st['description']; ?>

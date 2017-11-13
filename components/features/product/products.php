@@ -36,7 +36,7 @@
             $large_image = "";
 
             if(IsNullOrEmptyString($product_number)){
-              $large_image = "http://placehold.it/360x199";
+              $large_image = "//placehold.it/360x199";
             }else{
               $large_image = getProductImage($product_number, false, false);
             }
@@ -58,7 +58,7 @@
           $product_type = get_post_meta( $id, 'file_type', true );
           $large_image = "";
           if(IsNullOrEmptyString($product_number)){
-            $large_image = "http://placehold.it/1200x496";
+            $large_image = "//placehold.it/1200x496";
           }else{
             $large_image = getProductImage($product_number, false, false);
           }

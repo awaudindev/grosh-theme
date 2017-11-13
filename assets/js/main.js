@@ -186,7 +186,7 @@ jQuery(document).ready(function($){
 
 		if(product_number){
 
-			var url = "http://s3.amazonaws.com/groshdigital/watermark/" + product_number +".jpg";
+			var url = "//s3.amazonaws.com/groshdigital/watermark/" + product_number +".jpg";
 
 			$('#p_preview_b #img_p_bun').attr('src',url);
 
@@ -198,7 +198,7 @@ jQuery(document).ready(function($){
 
 	$('#p_preview_b').on("hidden.bs.modal", function () {
 
-		$('#p_preview_b #img_p_bun').attr('src','http://project.wedangsusu.com/grosh/wp-content/themes/grosh/assets/images/Spinner.gif');
+		$('#p_preview_b #img_p_bun').attr('src','//groshdigital.com/wp-content/themes/grosh/assets/images/Spinner.gif');
 
 	});
 
@@ -238,7 +238,7 @@ jQuery(document).ready(function($){
 
 			if(product_number){
 
-				var url = "http://s3.amazonaws.com/groshdigital/watermark/" + product_number +".mp4";
+				var url = "//s3.amazonaws.com/groshdigital/watermark/" + product_number +".mp4";
 
 				urlvideo = url;
 

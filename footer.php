@@ -38,7 +38,7 @@ global $post;
                 <div class="modal-body">
                     <a data-dismiss="modal" class="close-modal"><span aria-hidden="true">&times;</span></a>
                     <div id="c_preview" style="text-align:center;">
-                        <img id="img_p_bun" src="http://dev.groshdigital.com/wp-content/themes/grosh/assets/images/Spinner.gif">
+                        <img id="img_p_bun" src="<?php echo get_template_directory_uri() ?>/assets/images/Spinner.gif">
                     </div>
                 </div>
             </div>
