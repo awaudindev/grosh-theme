@@ -615,6 +615,16 @@ function custom_woocommerce_auto_complete_paid_order( $order_id ) {
   WC()->session->__unset('rental_date');
 }
 
+add_action( 'woocommerce_new_order_item', 'wc_order_item_added',  1, 3 );
+
+function wc_order_item_added($item_id, $item, $order_id) {
+
+	$item_meta = wc_get_order_item_meta($item_id,'_product_id');
+	$post_meta = get_post_meta($item_meta,'file_type',true);
+
+	wc_update_order_item_meta($item_id,'product_type',$post_meta);
+}
+
 add_action( 'woocommerce_email_after_order_table', 'add_order_email_instructions', 10, 2 );
  
 function add_order_email_instructions( $order, $sent_to_admin ) {
