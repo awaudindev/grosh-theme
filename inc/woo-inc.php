@@ -619,10 +619,37 @@ add_action( 'woocommerce_new_order_item', 'wc_order_item_added',  1, 3 );
 
 function wc_order_item_added($item_id, $item, $order_id) {
 
+	global $grosh_meta;
+
+	$order = wc_get_order( $order_id );
+
 	$item_meta = wc_get_order_item_meta($item_id,'_product_id');
 	$post_meta = get_post_meta($item_meta,'file_type',true);
 
+	$base_price_image = ($grosh_meta['base-image-price']) ? $grosh_meta['base-image-price'] : 65;
+ 	$base_price_motion = ($grosh_meta['base-motion-price']) ? $grosh_meta['base-motion-price'] : 115;
+
+ 	$recurring_price_image = ($grosh_meta['recurring-image-price']) ? $grosh_meta['recurring-image-price'] : 3.25;
+ 	$recurring_price_motion = ($grosh_meta['recurring-motion-price']) ? $grosh_meta['recurring-motion-price'] : 5.75;
+
+ 	$base_price = ($post_meta == 'image') ? $base_price_image : $base_price_motion;
+ 	$recurring_price = ($post_meta == 'image') ? $recurring_price_image : $recurring_price_motion; 
+
+ 	$length = get_post_meta($order_id, 'rental_period',true);
+
+ 	$extra = $length - 7;
+
+ 	$total = ($length > 7) ? $base_price + ($extra * $recurring_price) : $base_price;
+
 	wc_update_order_item_meta($item_id,'product_type',$post_meta);
+	wc_update_order_item_meta($item_id,'_line_subtotal',$total);
+	wc_update_order_item_meta($item_id,'_line_total',$total);
+}
+
+add_action('woocommerce_before_save_order_items','custom_save_order_items',1,3);
+
+function custom_save_order_items($order_id, $items){
+
 }
 
 add_action( 'woocommerce_email_after_order_table', 'add_order_email_instructions', 10, 2 );

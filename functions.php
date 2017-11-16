@@ -540,63 +540,88 @@ function pdf_admin_scripts( $hook ) {
 				  jQuery(function($){
 				    $(document).ready( function() {
 				    	$(window).on('load',function(){
-				    	$('.save-pdf').on('click',function(e){
-				    		e.preventDefault();
-				    		var product = $(this).attr('data-product');
-					    	$.ajax({
-							  type: 'POST',
-							  url: '<?php echo admin_url('admin-ajax.php'); ?>/?action=save_pdf&id='+product,
-							  beforeSend:function(){
-							  	$('.download-loading,.temp-box').remove();
-							  	$('body').append('<div style="position:fixed;top:0;left:0;z-index:9999;width:100%;height:100%;text-align:center;padding-top:300px;background:rgba(0,0,0,0.5);color:#fff;font-weight:bold;font-size:24px;" class="download-loading">Processing....</div><div class="temppdf" style="width:900px;"></div>');
-							  },
-							  success: function(data){
-							  	$('.temppdf').html(data);
-									html2canvas(document.querySelector('.temppdf'), {
-										allowTaint : true,
-										taintTest: true,
-										useCORS: true,
-							            onrendered: function (canvas) {
-							                var dataCanvas = canvas.toDataURL();
-							                var docDefinition = {
-							                    content: [{
-							                        image: dataCanvas,
-							                        width: 500,
-							                    }]
-							                };
-							                $('.temppdf').imagesLoaded().done(function() {
-								                pdfMake.createPdf(docDefinition).download('invoice #'+product+'.pdf',function(){
-									                $('.temppdf').remove();
-							    					$('.download-loading').remove();
-									            });
-								            });
-							            }
-							        });	
-							  },
-							  error:function(jqXHR,textStatus,errorThrown){
-							  	console.log(textStatus);
-							  }
-							});
-					       });
-				    	$('#po_number_button').on('click',function(e){
-				    		e.preventDefault();
-				    		var product = $(this).attr('data-po'),
-				    			number = $('#po_number').val();
-					    	$.ajax({
-							  type: 'POST',
-							  url: '<?php echo admin_url('admin-ajax.php'); ?>/?action=save_po&id='+product+'&po='+number,
-							  beforeSend:function(){	
-							  },
-							  success: function(data){
-							  	location.reload();
-							  },
-							  error:function(jqXHR,textStatus,errorThrown){
-							  	console.log(textStatus);
-							  }
-							});
-					       });
+						    	$('.save-pdf').on('click',function(e){
+						    		e.preventDefault();
+						    		var product = $(this).attr('data-product');
+							    	$.ajax({
+									  type: 'POST',
+									  url: '<?php echo admin_url('admin-ajax.php'); ?>/?action=save_pdf&id='+product,
+									  beforeSend:function(){
+									  	$('.download-loading,.temp-box').remove();
+									  	$('body').append('<div style="position:fixed;top:0;left:0;z-index:9999;width:100%;height:100%;text-align:center;padding-top:300px;background:rgba(0,0,0,0.5);color:#fff;font-weight:bold;font-size:24px;" class="download-loading">Processing....</div><div class="temppdf" style="width:900px;"></div>');
+									  },
+									  success: function(data){
+									  	$('.temppdf').html(data);
+											html2canvas(document.querySelector('.temppdf'), {
+												allowTaint : true,
+												taintTest: true,
+												useCORS: true,
+									            onrendered: function (canvas) {
+									                var dataCanvas = canvas.toDataURL();
+									                var docDefinition = {
+									                    content: [{
+									                        image: dataCanvas,
+									                        width: 500,
+									                    }]
+									                };
+									                $('.temppdf').imagesLoaded().done(function() {
+										                pdfMake.createPdf(docDefinition).download('invoice #'+product+'.pdf',function(){
+											                $('.temppdf').remove();
+									    					$('.download-loading').remove();
+											            });
+										            });
+									            }
+									        });	
+									  },
+									  error:function(jqXHR,textStatus,errorThrown){
+									  	console.log(textStatus);
+									  }
+									});
+							       });
+						    	$('#po_number_button').on('click',function(e){
+						    		e.preventDefault();
+						    		var product = $(this).attr('data-po'),
+						    			number = $('#po_number').val();
+							    	$.ajax({
+									  type: 'POST',
+									  url: '<?php echo admin_url('admin-ajax.php'); ?>/?action=save_po&id='+product+'&po='+number,
+									  beforeSend:function(){	
+									  },
+									  success: function(data){
+									  	location.reload();
+									  },
+									  error:function(jqXHR,textStatus,errorThrown){
+									  	console.log(textStatus);
+									  }
+									});
+						       });
+
+						    	if($('input[value="product_type"]').length){
+						    		$('input[value="product_type"]').each(function(){
+						    			var textarea = $(this).parent().find($('textarea')),
+						    				textareaName = textarea.attr('name'),
+						    				textareaValue = textarea.text();
+						    				imageSelect = ( textareaValue === 'image') ? 'selected' : '';
+						    				animationSelect = ( textareaValue === 'animation') ? 'selected' : '';
+						    			$('<select name="'+textareaName+'" style="margin-top:10px;"><option value="animation" '+animationSelect+'>Animation</option><option value="image" '+imageSelect+'>Image</option></select>').insertAfter(textarea);
+						    			textarea.remove();
+						    		});
+						    	}
 				    		});
 					    });
+				    	$( document ).ajaxComplete(function( event, request, settings ) {
+					    	if($('input[value="product_type"]').length){
+					    		$('input[value="product_type"]').each(function(){
+					    			var textarea = $(this).parent().find($('textarea')),
+					    				textareaName = textarea.attr('name'),
+					    				textareaValue = textarea.text();
+					    				imageSelect = ( textareaValue === 'image') ? 'selected' : '';
+					    				animationSelect = ( textareaValue === 'animation') ? 'selected' : '';
+					    			$('<select name="'+textareaName+'" style="margin-top:10px;"><option value="animation" '+animationSelect+'>Animation</option><option value="image" '+imageSelect+'>Image</option></select>').insertAfter(textarea);
+					    			textarea.remove();
+					    		});
+					    	}
+				    	});
 				  	});
 				</script>
             	<?php
