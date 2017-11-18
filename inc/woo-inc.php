@@ -615,13 +615,11 @@ function custom_woocommerce_auto_complete_paid_order( $order_id ) {
   WC()->session->__unset('rental_date');
 }
 
-add_action( 'woocommerce_new_order_item', 'wc_order_item_added',  1, 3 );
+add_action( 'woocommerce_ajax_add_order_item_meta', 'wc_order_item_added',  1, 3 );
 
-function wc_order_item_added($item_id, $item, $order_id) {
+function wc_order_item_added($item_id, $item, $order) {
 
 	global $grosh_meta;
-
-	$order = wc_get_order( $order_id );
 
 	$item_meta = wc_get_order_item_meta($item_id,'_product_id');
 	$post_meta = get_post_meta($item_meta,'file_type',true);
@@ -635,7 +633,7 @@ function wc_order_item_added($item_id, $item, $order_id) {
  	$base_price = ($post_meta == 'image') ? $base_price_image : $base_price_motion;
  	$recurring_price = ($post_meta == 'image') ? $recurring_price_image : $recurring_price_motion; 
 
- 	$length = get_post_meta($order_id, 'rental_period',true);
+ 	$length = get_post_meta($order->get_id(), 'rental_period',true);
 
  	$extra = $length - 7;
 
@@ -646,10 +644,11 @@ function wc_order_item_added($item_id, $item, $order_id) {
 	wc_update_order_item_meta($item_id,'_line_total',$total);
 }
 
-add_action('woocommerce_before_save_order_items','custom_save_order_items',1,3);
+add_action('woocommerce_ajax_added_order_items','custom_save_order_items',1,3);
 
-function custom_save_order_items($order_id, $items){
-
+function custom_save_order_items($item_id, $item, $order){
+	$order->update_taxes();
+	$order->calculate_totals( true );
 }
 
 add_action( 'woocommerce_email_after_order_table', 'add_order_email_instructions', 10, 2 );
