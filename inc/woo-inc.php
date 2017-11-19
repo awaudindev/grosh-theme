@@ -695,6 +695,35 @@ function rp4wp_title_order_received( $title, $id ) {
 	}
 	return $title;
 }
+//add_filter( 'init', 'update_sku', 10, 1);
+function update_sku( $sku ){
+	$args = array(
+
+   		'post_type' => 'product',
+
+  		'posts_per_page' => -1
+
+   	);
+
+   	$loop = new WP_Query( $args );
+
+   	if ( $loop->have_posts() ) {
+
+    	while ( $loop->have_posts() ) : $loop->the_post();
+			$product_number = get_post_meta( $loop->post->ID, 'product_number', true );
+
+			update_post_meta($loop->post->ID,'_sku',$product_number);
+
+        endwhile;
+
+    } else {
+
+    	echo __( 'No products found' );
+
+    }
+    wp_reset_postdata();
+
+}
 add_filter( 'the_title', 'rp4wp_title_order_received', 10, 2 );
 add_filter( 'wc_add_to_cart_message', 'custom_add_cart_message' , 10, 2 ); 
 function custom_add_cart_message(  $message, $product_id  ) {

@@ -441,7 +441,7 @@ require get_template_directory() . '/inc/teritory.php';
 /**
  * Load territory tools.
  */
-require get_template_directory() . '/inc/sales-off.php';
+//require get_template_directory() . '/inc/sales-off.php';
 /**
  *
  * Breadcrumb
